@@ -4695,11 +4695,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Workspace\\Familia\\Familia\\src\\services\\FML.Identidade.API\\FML.Identidade.API.csproj",
+      "projectUniqueName": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\services\\FML.Identidade.API\\FML.Identidade.API.csproj",
       "projectName": "FML.Identidade.API",
-      "projectPath": "C:\\Workspace\\Familia\\Familia\\src\\services\\FML.Identidade.API\\FML.Identidade.API.csproj",
+      "projectPath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\services\\FML.Identidade.API\\FML.Identidade.API.csproj",
       "packagesPath": "C:\\Users\\icaro\\.nuget\\packages\\",
-      "outputPath": "C:\\Workspace\\Familia\\Familia\\src\\services\\FML.Identidade.API\\obj\\",
+      "outputPath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\services\\FML.Identidade.API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

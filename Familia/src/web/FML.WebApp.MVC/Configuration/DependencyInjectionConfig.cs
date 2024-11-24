@@ -1,7 +1,6 @@
 ﻿using Familia.WebApp.MVC.Extensions;
-using Familia.WebApp.MVC.Services;
-using FML.WebApp.MVC.Services;
-using FML.WebApp.MVC.Services.Interface;
+using FML.WebApp.MVC.Clients.HttpServices;
+using FML.WebApp.MVC.Clients.HttpServices.Interface;
 
 namespace Familia.WebApp.MVC.Configuration
 {
@@ -9,9 +8,9 @@ namespace Familia.WebApp.MVC.Configuration
     {
         public static void RegisterServices(this IServiceCollection services)
         {
-            services.AddHttpClient<IAutenticacaoService, AutenticacaoService>();
-            services.AddHttpClient<IEventoService, EventoService>();
-            services.AddHttpClient<IFamiliaService, FamiliaService>();
+            services.AddHttpClient<IAutenticacaoHttpService, AutenticacaoHttpService>();
+            services.AddHttpClient<IEventoHttpService, EventoHttpService>();
+            services.AddHttpClient<IFamiliaHttpService, FamiliaHttpService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUser, AspNetUser>();

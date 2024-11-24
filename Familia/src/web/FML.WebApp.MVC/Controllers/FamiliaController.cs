@@ -1,5 +1,4 @@
-﻿using Familia.WebApp.MVC.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FML.WebApp.MVC.Controllers
@@ -7,9 +6,9 @@ namespace FML.WebApp.MVC.Controllers
     [Authorize]
     public class FamiliaController : Controller
     {
-        private readonly IFamiliaService _familiaService;
+        private readonly IFamiliaHttpService _familiaService;
 
-        public FamiliaController(IFamiliaService familiaService)
+        public FamiliaController(IFamiliaHttpService familiaService)
         {
             _familiaService = familiaService;
         }
@@ -159,5 +158,7 @@ namespace FML.WebApp.MVC.Controllers
 
             return View(resposta);
         }
+
+
     }
 }

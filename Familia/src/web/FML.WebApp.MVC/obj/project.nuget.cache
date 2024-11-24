@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UP2eltShrMY=",
+  "dgSpecHash": "Llsv9qcN4/c=",
   "success": true,
-  "projectFilePath": "C:\\Workspace\\Familia\\Familia\\src\\web\\FML.WebApp.MVC\\FML.WebApp.MVC.csproj",
+  "projectFilePath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\web\\FML.WebApp.MVC\\FML.WebApp.MVC.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\icaro\\.nuget\\packages\\microsoft.identitymodel.abstractions\\7.0.3\\microsoft.identitymodel.abstractions.7.0.3.nupkg.sha512",
     "C:\\Users\\icaro\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\7.0.3\\microsoft.identitymodel.jsonwebtokens.7.0.3.nupkg.sha512",

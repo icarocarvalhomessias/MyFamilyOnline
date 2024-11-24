@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Workspace\\Familia\\Familia\\src\\services\\FML.Familiares.API\\FML.Familiares.API.csproj": {}
+    "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\services\\FML.Familiares.API\\FML.Familiares.API.csproj": {}
   },
   "projects": {
-    "C:\\Workspace\\Familia\\Familia\\src\\building blocks\\FML.Core\\FML.Core.csproj": {
+    "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\FML.Core\\FML.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Workspace\\Familia\\Familia\\src\\building blocks\\FML.Core\\FML.Core.csproj",
+        "projectUniqueName": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\FML.Core\\FML.Core.csproj",
         "projectName": "FML.Core",
-        "projectPath": "C:\\Workspace\\Familia\\Familia\\src\\building blocks\\FML.Core\\FML.Core.csproj",
+        "projectPath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\FML.Core\\FML.Core.csproj",
         "packagesPath": "C:\\Users\\icaro\\.nuget\\packages\\",
-        "outputPath": "C:\\Workspace\\Familia\\Familia\\src\\building blocks\\FML.Core\\obj\\",
+        "outputPath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\FML.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -69,14 +69,14 @@
         }
       }
     },
-    "C:\\Workspace\\Familia\\Familia\\src\\services\\FML.Familiares.API\\FML.Familiares.API.csproj": {
+    "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\services\\FML.Familiares.API\\FML.Familiares.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Workspace\\Familia\\Familia\\src\\services\\FML.Familiares.API\\FML.Familiares.API.csproj",
+        "projectUniqueName": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\services\\FML.Familiares.API\\FML.Familiares.API.csproj",
         "projectName": "FML.Familiares.API",
-        "projectPath": "C:\\Workspace\\Familia\\Familia\\src\\services\\FML.Familiares.API\\FML.Familiares.API.csproj",
+        "projectPath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\services\\FML.Familiares.API\\FML.Familiares.API.csproj",
         "packagesPath": "C:\\Users\\icaro\\.nuget\\packages\\",
-        "outputPath": "C:\\Workspace\\Familia\\Familia\\src\\services\\FML.Familiares.API\\obj\\",
+        "outputPath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\services\\FML.Familiares.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -98,8 +98,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Workspace\\Familia\\Familia\\src\\building blocks\\FML.Core\\FML.Core.csproj": {
-                "projectPath": "C:\\Workspace\\Familia\\Familia\\src\\building blocks\\FML.Core\\FML.Core.csproj"
+              "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\FML.Core\\FML.Core.csproj": {
+                "projectPath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\FML.Core\\FML.Core.csproj"
               }
             }
           }

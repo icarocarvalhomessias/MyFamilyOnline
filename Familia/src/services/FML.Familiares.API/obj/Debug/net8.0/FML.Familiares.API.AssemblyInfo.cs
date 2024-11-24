@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FML.Familiares.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e50a7abb44da5874229b796b4231b1fc62b9c6ad")]
 [assembly: System.Reflection.AssemblyProductAttribute("FML.Familiares.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FML.Familiares.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

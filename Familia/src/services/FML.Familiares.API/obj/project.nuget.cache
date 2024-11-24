@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8jEso2I+VYE=",
+  "dgSpecHash": "7OEN7KSP9Y8=",
   "success": true,
-  "projectFilePath": "C:\\Workspace\\Familia\\Familia\\src\\services\\FML.Familiares.API\\FML.Familiares.API.csproj",
+  "projectFilePath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\services\\FML.Familiares.API\\FML.Familiares.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\icaro\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\icaro\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

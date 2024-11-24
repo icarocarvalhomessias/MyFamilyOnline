@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Workspace\\Familia\\Familia\\src\\web\\FML.WebApp.MVC\\FML.WebApp.MVC.csproj": {}
+    "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\web\\FML.WebApp.MVC\\FML.WebApp.MVC.csproj": {}
   },
   "projects": {
-    "C:\\Workspace\\Familia\\Familia\\src\\web\\FML.WebApp.MVC\\FML.WebApp.MVC.csproj": {
+    "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\web\\FML.WebApp.MVC\\FML.WebApp.MVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Workspace\\Familia\\Familia\\src\\web\\FML.WebApp.MVC\\FML.WebApp.MVC.csproj",
+        "projectUniqueName": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\web\\FML.WebApp.MVC\\FML.WebApp.MVC.csproj",
         "projectName": "FML.WebApp.MVC",
-        "projectPath": "C:\\Workspace\\Familia\\Familia\\src\\web\\FML.WebApp.MVC\\FML.WebApp.MVC.csproj",
+        "projectPath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\web\\FML.WebApp.MVC\\FML.WebApp.MVC.csproj",
         "packagesPath": "C:\\Users\\icaro\\.nuget\\packages\\",
-        "outputPath": "C:\\Workspace\\Familia\\Familia\\src\\web\\FML.WebApp.MVC\\obj\\",
+        "outputPath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\web\\FML.WebApp.MVC\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

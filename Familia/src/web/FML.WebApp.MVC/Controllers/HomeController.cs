@@ -1,5 +1,5 @@
 ﻿using Familia.WebApp.MVC.Models;
-using FML.WebApp.MVC.Services.Interface;
+using FML.WebApp.MVC.Clients.HttpServices.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +8,9 @@ namespace Familia.WebApp.MVC.Controllers
     [Authorize]
     public class HomeController : MainController
     {
-        private readonly IEventoService _eventoService;
+        private readonly IEventoHttpService _eventoService;
 
-        public HomeController(IEventoService eventoService)
+        public HomeController(IEventoHttpService eventoService)
         {
             _eventoService = eventoService;
         }

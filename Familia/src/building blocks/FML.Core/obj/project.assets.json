@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Workspace\\Familia\\Familia\\src\\building blocks\\FML.Core\\FML.Core.csproj",
+      "projectUniqueName": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\FML.Core\\FML.Core.csproj",
       "projectName": "FML.Core",
-      "projectPath": "C:\\Workspace\\Familia\\Familia\\src\\building blocks\\FML.Core\\FML.Core.csproj",
+      "projectPath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\FML.Core\\FML.Core.csproj",
       "packagesPath": "C:\\Users\\icaro\\.nuget\\packages\\",
-      "outputPath": "C:\\Workspace\\Familia\\Familia\\src\\building blocks\\FML.Core\\obj\\",
+      "outputPath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\FML.Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

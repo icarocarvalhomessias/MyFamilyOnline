@@ -1,5 +1,5 @@
 ﻿using Familia.WebApp.MVC.Controllers;
-using FML.WebApp.MVC.Services.Interface;
+using FML.WebApp.MVC.Clients.HttpServices.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,10 +8,10 @@ namespace FML.WebApp.MVC.Controllers
     [Authorize]
     public class EventoController : MainController
     {
-        private readonly IEventoService _eventoService;
+        private readonly IEventoHttpService _eventoService;
 
 
-        public EventoController(IEventoService eventoService)
+        public EventoController(IEventoHttpService eventoService)
         {
             _eventoService = eventoService;
         }
@@ -29,7 +29,7 @@ namespace FML.WebApp.MVC.Controllers
 
             resultado = ImproveResults(resultado);
 
-            return View("AmigoOculto", resultado);
+            return View("Index", resultado);
         }
 
         private static List<SecretSantaPair> ImproveResults(List<SecretSantaPair> resultado)
@@ -66,7 +66,7 @@ namespace FML.WebApp.MVC.Controllers
 
             resultado = ImproveResults(resultado);
 
-            return View("AmigoOculto", resultado);
+            return View("Index", resultado);
 
         }
 
