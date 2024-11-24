@@ -1,0 +1,34 @@
+[
+  {
+    "ContainingType": "Familia.Identidade.API.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/identidade/autenticar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuarioLogin",
+        "Type": "Familia.Identidade.API.Models.UsuarioLogin",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Familia.Identidade.API.Controllers.AuthController",
+    "Method": "Registrar",
+    "RelativePath": "api/identidade/nova-conta",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuarioRegistro",
+        "Type": "Familia.Identidade.API.Models.UsuarioRegistro",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

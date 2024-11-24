@@ -1,0 +1,70 @@
+﻿@model List<SecretSantaPair>
+
+@{
+    ViewData["Title"] = "Realizar Amigo Oculto";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="post" asp-action="RealizarAmigoOculto">
+    <button type="submit" class="btn btn-primary">Realizar Sorteio</button>
+</form>
+
+<form method="post" asp-action="RefazAmigoOculto">
+    <button type="submit" class="btn btn-success">Refaz Sorteio</button>
+</form>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Selecionar</th>
+                <th>#</th>
+                <th>Meu Nome</th>
+                <th>Telefone</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int rowNumber = 1;
+            }
+            @foreach (var pair in Model)
+            {
+                <tr>
+                    <td><input type="checkbox" name="selectPair_@rowNumber" /></td>
+                    <td>@rowNumber</td>
+                    <td>@pair.MeuNome</td>
+                    <td>@pair.Telefone</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" onclick="copyToClipboard(this)" data-message="@pair.Message">Copiar Mensagem</button>
+                        <a href="https://wa.me/@(pair.Telefone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", ""))?text=@Uri.EscapeDataString("")"
+                           target="_blank" class="btn btn-success">Enviar WhatsApp</a>
+                    </td>
+                </tr>
+                rowNumber++;
+            }
+        </tbody>
+    </table>
+}
+
+<script>
+    function copyToClipboard(button) {
+        var message = button.getAttribute('data-message');
+        navigator.clipboard.writeText(message).then(function () {
+            alert('Mensagem copiada para a área de transferência');
+        }, function (err) {
+            console.error('Erro ao copiar a mensagem: ', err);
+        });
+    }
+
+    function showAmigoOculto(elementId) {
+        var element = document.getElementById(elementId);
+        if (element.style.display === "none") {
+            element.style.display = "inline";
+        } else {
+            element.style.display = "none";
+        }
+    }
+</script>

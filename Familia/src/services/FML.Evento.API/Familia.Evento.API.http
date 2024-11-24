@@ -1,0 +1,6 @@
+@Familia.Evento.API_HostAddress = http://localhost:5057
+
+GET {{Familia.Evento.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

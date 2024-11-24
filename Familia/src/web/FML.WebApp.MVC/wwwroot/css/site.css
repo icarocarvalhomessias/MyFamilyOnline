@@ -1,0 +1,48 @@
+﻿html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+}
+
+footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    height: 60px; /* Altura do footer */
+    background-color: #f8f9fa; /* Cor de fundo do footer */
+}
+
+
+.familia-tree {
+    display: flex;
+    flex-direction: column;
+}
+
+.familia-section {
+    margin-bottom: 20px;
+}
+
+.familia-members {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.familia-member {
+    margin-right: 10px;
+    position: relative;
+}
+
+    .familia-member::after {
+        content: '→';
+        position: absolute;
+        right: -10px;
+        top: 50%;
+        transform: translateY(-50%);
+    }

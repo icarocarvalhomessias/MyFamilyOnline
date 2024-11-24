@@ -1,0 +1,197 @@
+﻿@{
+    ViewData["Title"] = "Lightbox Example";
+}
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewData["Title"]</title>
+
+    <style>
+        /* Preload images */
+        body:after {
+            content: url(https://raw.githubusercontent.com/lokesh/lightbox2/master/dist/images/close.png) url(https://raw.githubusercontent.com/lokesh/lightbox2/master/dist/images/loading.gif) url(https://raw.githubusercontent.com/lokesh/lightbox2/master/dist/images/prev.png) url(https://raw.githubusercontent.com/lokesh/lightbox2/master/dist/images/next.png);
+            display: none;
+        }
+
+        body.lb-disable-scrolling {
+            overflow: hidden;
+        }
+
+        .lightboxOverlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            background-color: black;
+            filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+            opacity: 0.8;
+            display: none;
+        }
+
+        .lightbox {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            z-index: 10000;
+            text-align: center;
+            line-height: 0;
+            font-weight: normal;
+        }
+
+        .lightbox .lb-image {
+            display: block;
+            height: auto;
+            max-width: inherit;
+            border-radius: 3px;
+        }
+
+        .lightbox a img {
+            border: none;
+        }
+
+        .lb-outerContainer {
+            position: relative;
+            background-color: white;
+            *zoom: 1;
+            width: 250px;
+            height: 250px;
+            margin: 0 auto;
+            border-radius: 4px;
+        }
+
+        .lb-outerContainer:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .lb-container {
+            padding: 4px;
+        }
+
+        .lb-loader {
+            position: absolute;
+            top: 43%;
+            left: 0;
+            height: 25%;
+            width: 100%;
+            text-align: center;
+            line-height: 0;
+        }
+
+        .lb-cancel {
+            display: block;
+            width: 32px;
+            height: 32px;
+            margin: 0 auto;
+            background: url(https://raw.githubusercontent.com/lokesh/lightbox2/master/dist/images/loading.gif) no-repeat;
+        }
+
+        .lb-nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .lb-container > .nav {
+            left: 0;
+        }
+
+        .lb-nav a {
+            outline: none;
+            background-image: url('data:image/gif;base64,R0lGODlhAQABAPAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==');
+        }
+
+        .lb-prev, .lb-next {
+            height: 100%;
+            cursor: pointer;
+            display: block;
+        }
+
+        .lb-nav a.lb-prev {
+            width: 34%;
+            left: 0;
+            float: left;
+            background: url(https://raw.githubusercontent.com/lokesh/lightbox2/master/dist/images/prev.png) left 48% no-repeat;
+            filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+            opacity: 0;
+            -webkit-transition: opacity 0.6s;
+            -moz-transition: opacity 0.6s;
+            -o-transition: opacity 0.6s;
+            transition: opacity 0.6s;
+        }
+
+        .lb-nav a.lb-prev:hover {
+            filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+            opacity: 1;
+        }
+
+        .lb-nav a.lb-next {
+            width: 64%;
+            right: 0;
+            float: right;
+            background: url(https://raw.githubusercontent.com/lokesh/lightbox2/master/dist/images/next.png) right 48% no-repeat;
+            filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+            opacity: 0;
+            -webkit-transition: opacity 0.6s;
+            -moz-transition: opacity 0.6s;
+            -o-transition: opacity 0.6s;
+            transition: opacity 0.6s;
+        }
+
+        .lb-nav a.lb-next:hover {
+            filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <section>
+        <h3>Duas imagens individuais</h3>
+        <div>
+            <a class="example-image-link" href="http://lokeshdhakar.com/projects/lightbox2/images/image-1.jpg" data-lightbox="example-1">
+                <img class="example-image" src="http://lokeshdhakar.com/projects/lightbox2/images/thumb-1.jpg" alt="image-1" />
+            </a>
+            <a class="example-image-link" href="http://lokeshdhakar.com/projects/lightbox2/images/image-2.jpg" data-lightbox="example-2" data-title="Optional caption.">
+                <img class="example-image" src="http://lokeshdhakar.com/projects/lightbox2/images/thumb-2.jpg" alt="image-1" />
+            </a>
+        </div>
+
+        <hr />
+
+        <h3>Um conjunto de 4 imagens</h3>
+        <div>
+            <a class="example-image-link" href="http://lokeshdhakar.com/projects/lightbox2/images/image-3.jpg" data-lightbox="example-set" data-title="Click the right half of the image to move forward.">
+                <img class="example-image" src="http://lokeshdhakar.com/projects/lightbox2/images/thumb-3.jpg" alt="" />
+            </a>
+            <a class="example-image-link" href="http://lokeshdhakar.com/projects/lightbox2/images/image-4.jpg" data-lightbox="example-set" data-title="Or press the right arrow on your keyboard.">
+                <img class="example-image" src="http://lokeshdhakar.com/projects/lightbox2/images/thumb-4.jpg" alt="" />
+            </a>
+            <a class="example-image-link" href="http://lokeshdhakar.com/projects/lightbox2/images/image-5.jpg" data-lightbox="example-set" data-title="The next image in the set is preloaded as you're viewing.">
+                <img class="example-image" src="http://lokeshdhakar.com/projects/lightbox2/images/thumb-5.jpg" alt="" />
+            </a>
+            <a class="example-image-link" href="http://lokeshdhakar.com/projects/lightbox2/images/image-6.jpg" data-lightbox="example-set" data-title="Click anywhere outside the image or the X to the right to close.">
+                <img class="example-image" src="http://lokeshdhakar.com/projects/lightbox2/images/thumb-6.jpg" alt="" />
+            </a>
+        </div>
+    </section>
+
+    <section>
+        <p>
+            Para mais informações, visite <a href="http://lokeshdhakar.com/projects/lightbox2/">http://lokeshdhakar.com/projects/lightbox2/</a>
+        </p>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox-plus-jquery.min.js"></script>
+
+    <!-- Para chamar seu arquivo lightbox-plus-jquery.min.js direto de seu diretório retire o comentário da tag script abaixo -->
+    <!-- <script src="~/dist/js/lightbox-plus-jquery.min.js"></script> -->
+
+</body>
+</html>

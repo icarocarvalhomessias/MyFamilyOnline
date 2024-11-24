@@ -1,0 +1,92 @@
+[
+  {
+    "ContainingType": "FML.Familiares.API.Controllers.FamiliaController",
+    "Method": "AdicionarFamilia",
+    "RelativePath": "api/familia",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "family",
+        "Type": "Family",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FML.Familiares.API.Controllers.FamiliaController",
+    "Method": "AtualizarFamilia",
+    "RelativePath": "api/familia/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FML.Familiares.API.Controllers.FamiliaController",
+    "Method": "DeletarFamilia",
+    "RelativePath": "api/familia/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FML.Familiares.API.Controllers.FamiliaController",
+    "Method": "GetFamilyById",
+    "RelativePath": "api/familia/familiares/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FML.Familiares.API.Controllers.RelativeController",
+    "Method": "Add",
+    "RelativePath": "api/relative",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FML.Familiares.API.Controllers.RelativeController",
+    "Method": "GetRelativeByFamilyId",
+    "RelativePath": "family/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

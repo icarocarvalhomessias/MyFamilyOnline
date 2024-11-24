@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\FML.Evento.API.props" />
+</Project>
