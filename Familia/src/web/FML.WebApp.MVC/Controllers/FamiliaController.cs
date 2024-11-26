@@ -1,164 +1,123 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FML.WebApp.MVC.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FML.WebApp.MVC.Controllers
 {
     [Authorize]
     public class FamiliaController : Controller
     {
-        private readonly IFamiliaHttpService _familiaService;
+        private readonly IFamiliaService _familiaService;
 
-        public FamiliaController(IFamiliaHttpService familiaService)
+        public FamiliaController(IFamiliaService familiaService)
         {
             _familiaService = familiaService;
         }
 
-        public IActionResult Index(Guid familyId)
+        public async Task<IActionResult> Index(Guid familyId)
         {
-            familyId = Guid.Parse("63c3763d-81f7-47e5-8978-b9e1a1f369e7");
-            var parentes = _familiaService.GetRelativeByFamilyId(familyId).Result;
-
-            var matriarca = parentes.FirstOrDefault(p => p.Matriarch == true);
-            var patriarca = parentes.FirstOrDefault(p => p.Patriarch == true);
-
-            if (patriarca == null || matriarca == null)
-            {
-                // Handle the case where there is no matriarca or patriarca
-                return View(new Dictionary<string, List<Relative>>());
-            }
-
-            var resposta = new Dictionary<string, Dictionary<Relative, Relative>>();
-
-            var patriarcas = new Dictionary<Relative, Relative>
-            {
-                { patriarca, matriarca }
-            };
-
-            resposta.Add("Patriarcas", patriarcas);
-
-
-            var filhos = parentes.Where(p => p.FatherId == patriarca.Id)
-                                 .Concat(parentes.Where(p => p.MotherId == patriarca.Id)).ToList();
-
-            var filhosComConjugues = new Dictionary<Relative, Relative>();
-
-            foreach (var filho in filhos)
-            {
-                var conjuge = parentes.FirstOrDefault(p => p.Id == filho.Spouse);
-
-                if (conjuge != null)
-                {
-                    filhosComConjugues.Add(filho, conjuge);
-                }
-            }
-
-            var filhosSemConjugues = filhos.Except(filhosComConjugues.Keys).ToList();
-
-            foreach (var filho in filhosSemConjugues)
-            {
-                filhosComConjugues.Add(filho, null);
-            }
-
-            resposta.Add("Filhos", filhosComConjugues);
-
-
-            var netos = new List<Relative>();
-
-            foreach (var filho in filhos)
-            {
-                var filhoDosFilhos = parentes.Where(p => p.FatherId == filho.Id)
-                                              .Concat(parentes.Where(p => p.MotherId == filho.Id)).ToList();
-
-                netos.AddRange(filhoDosFilhos);
-            }
-
-            var netosComConjugues = new Dictionary<Relative, Relative>();
-
-            foreach (var neto in netos)
-            {
-                var conjuge = parentes.FirstOrDefault(p => p.Id == neto.Spouse);
-
-                if (conjuge != null)
-                {
-                    netosComConjugues.Add(neto, conjuge);
-                }
-            }
-
-            var netosSemConjugues = netos.Except(netosComConjugues.Keys).ToList();
-
-            foreach (var neto in netosSemConjugues)
-            {
-                netosComConjugues.Add(neto, null);
-            }
-
-            resposta.Add("Netos", netosComConjugues);
-
-            var bisnetos = new List<Relative>();
-
-            foreach (var neto in netos)
-            {
-                var filhoDosNetos = parentes.Where(p => p.FatherId == neto.Id)
-                                            .Concat(parentes.Where(p => p.MotherId == neto.Id)).ToList();
-
-                bisnetos.AddRange(filhoDosNetos);
-            }
-
-            var bisnetosComConjugues = new Dictionary<Relative, Relative>();
-
-            foreach (var bisneto in bisnetos)
-            {
-                var conjuge = parentes.FirstOrDefault(p => p.Id == bisneto.Spouse);
-
-                if (conjuge != null)
-                {
-                    bisnetosComConjugues.Add(bisneto, conjuge);
-                }
-            }
-
-            var bisnetosSemConjugues = bisnetos.Except(bisnetosComConjugues.Keys).ToList();
-
-            foreach (var bisneto in bisnetosSemConjugues)
-            {
-                bisnetosComConjugues.Add(bisneto, null);
-            }
-
-            resposta.Add("Bisnetos", bisnetosComConjugues);
-
-            var trinetos = new List<Relative>();
-
-            foreach (var bisneto in bisnetos)
-            {
-                var filhoDosBisnetos = parentes.Where(p => p.FatherId == bisneto.Id)
-                                               .Concat(parentes.Where(p => p.MotherId == bisneto.Id)).ToList();
-
-                trinetos.AddRange(filhoDosBisnetos);
-            }
-
-            var trinetosComConjugues = new Dictionary<Relative, Relative>();
-
-            foreach (var trineto in trinetos)
-            {
-                var conjuge = parentes.FirstOrDefault(p => p.Id == trineto.Spouse);
-
-                if (conjuge != null)
-                {
-                    trinetosComConjugues.Add(trineto, conjuge);
-                }
-            }
-
-            var trinetosSemConjugues = trinetos.Except(trinetosComConjugues.Keys).ToList();
-
-            foreach (var trineto in trinetosSemConjugues)
-            {
-                trinetosComConjugues.Add(trineto, null);
-            }
-
-            resposta.Add("Trinetos", trinetosComConjugues);
-
-
-            return View(resposta);
+            familyId = Guid.Parse("417d7e43-fe2f-44d6-a8c4-4070e841ad53");
+            var relatives = await _familiaService.GetRelativesByFamilyId(familyId);
+            return View(relatives);
         }
 
+        public async Task<IActionResult> Create()
+        {
+            var familyId = Guid.Parse("417d7e43-fe2f-44d6-a8c4-4070e841ad53");
+            var relatives = await _familiaService.GetRelativesByFamilyId(familyId);
+            var homens = relatives.Where(x => x.Gender == Gender.Male).ToList();
+            var mulheres = relatives.Where(x => x.Gender == Gender.Female).ToList();
 
+            ViewBag.Homens = new SelectList(homens, "Id", "FullName");
+            ViewBag.Mulheres = new SelectList(mulheres, "Id", "FullName");
+
+            await PopulateDropDownLists(familyId);
+
+            return View("Create", new Relative());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Relative relative)
+        {
+            if (ModelState.IsValid)
+            {
+                await _familiaService.AddRelative(relative);
+                return RedirectToAction(nameof(Index), new { familyId = relative.FamilyId });
+            }
+
+            await PopulateDropDownLists(relative.FamilyId);
+            return View(relative);
+        }
+
+        public async Task<IActionResult> ParenteEdit(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                return NotFound();
+            }
+
+            var relative = await _familiaService.GetRelativeById(id);
+            if (relative == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Relative = relative;
+            await PopulateDropDownLists(relative.FamilyId);
+
+            return View("Create", relative);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Relative model)
+        {
+            if (!ModelState.IsValid)
+            {
+                LogModelErrors();
+                await PopulateDropDownLists(model.FamilyId);
+                return View("Create", model);
+            }
+
+            await _familiaService.UpdateRelative(model);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> RemoveRelative(Relative relative)
+        {
+            await _familiaService.RemoveRelative(relative.Id);
+            return RedirectToAction("Index");
+        }
+
+        private async Task PopulateDropDownLists(Guid familyId)
+        {
+            var family = await _familiaService.GetRelativesByFamilyId(familyId);
+            var homens = family.Where(x => x.Gender == Gender.Male).ToList();
+            var mulheres = family.Where(x => x.Gender == Gender.Female).ToList();
+
+            ViewBag.Homens = new SelectList(homens, "Id", "FirstName");
+            ViewBag.Mulheres = new SelectList(mulheres, "Id", "FirstName");
+
+            var familias = await _familiaService.GetFamilies();
+            var houses = await _familiaService.GetHousesByFamilyId(familyId);
+
+            ViewBag.Familias = new SelectList(familias, "Id", "Name");
+            ViewBag.Casas = new SelectList(houses, "Id", "Name");
+            ViewBag.Spouses = new SelectList(family, "Id", "FirstName");
+        }
+
+        private void LogModelErrors()
+        {
+            foreach (var state in ModelState)
+            {
+                foreach (var error in state.Value.Errors)
+                {
+                    Console.WriteLine($"Property: {state.Key} Error: {error.ErrorMessage}");
+                }
+            }
+        }
     }
 }

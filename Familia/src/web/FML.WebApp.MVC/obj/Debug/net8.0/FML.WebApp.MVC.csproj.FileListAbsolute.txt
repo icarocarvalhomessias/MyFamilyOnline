@@ -77,3 +77,6 @@ C:\Workspace\MinhaFamiliaOnline\Familia\src\web\FML.WebApp.MVC\obj\Debug\net8.0\
 C:\Workspace\MinhaFamiliaOnline\Familia\src\web\FML.WebApp.MVC\obj\Debug\net8.0\FML.WebApp.MVC.pdb
 C:\Workspace\MinhaFamiliaOnline\Familia\src\web\FML.WebApp.MVC\obj\Debug\net8.0\FML.WebApp.MVC.genruntimeconfig.cache
 C:\Workspace\MinhaFamiliaOnline\Familia\src\web\FML.WebApp.MVC\obj\Debug\net8.0\ref\FML.WebApp.MVC.dll
+C:\Workspace\MinhaFamiliaOnline\Familia\src\web\FML.WebApp.MVC\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Workspace\MinhaFamiliaOnline\Familia\src\web\FML.WebApp.MVC\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Workspace\MinhaFamiliaOnline\Familia\src\web\FML.WebApp.MVC\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll

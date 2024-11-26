@@ -21,27 +21,9 @@ namespace FML.Familiares.API.Data.Repository
             return await _context.Houses.AsNoTracking().Where(h => h.FamilyId == familyId).ToListAsync();
         }
 
-        public async Task<IEnumerable<House>> GetHousesByHouseId(Guid houseId)
-        {
-            return await _context.Houses.AsNoTracking().Where(h => h.Id == houseId).ToListAsync();
-        }
-
-
         public async Task AddHouse(House house)
         {
             await _context.Houses.AddAsync(house);
-            await _context.SaveChangesAsync(); // Certifique-se de salvar as mudanças
-        }
-
-        public void RemoveHouse(House house)
-        {
-            house.IsActive = false;
-            UpdateHouse(house);
-        }
-
-        public void UpdateHouse(House house)
-        {
-            _context.Update(house);
         }
 
         public void Dispose()

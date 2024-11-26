@@ -17,7 +17,11 @@ namespace FML.Familiares.API.Data.Repository
 
         public async Task<IEnumerable<Relative>> GetRelativesByFamilyId(Guid familyId)
         {
-            return await _context.Relatives.AsNoTracking().Where(r => r.FamilyId == familyId).ToListAsync();
+            return await _context.Relatives
+                .Include(r => r.Family)
+                .Include(r => r.House)
+                .AsNoTracking()
+                .Where(r => r.FamilyId == familyId).ToListAsync();
         }
 
         public async Task<IEnumerable<Relative>> GetRelativesByFatherId(Guid fatherId)
@@ -63,17 +67,22 @@ namespace FML.Familiares.API.Data.Repository
         }
 
 
-        public async Task RemoveRelative(Relative relative)
+        public async Task<bool> RemoveRelative(Guid relativeId)
         {
-            relative.IsActive = false;
+            _context.Relatives.Remove(new Relative { Id = relativeId });
+            return await _context.SaveChangesAsync() > 0;
 
-            await UpdateRelative(relative);
         }
 
-        public async Task UpdateRelative(Relative relative)
+        public async Task<bool> UpdateRelative(Relative relative)
         {
             _context.Relatives.Update(relative);
-            await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<Relative> GetRelativeById(Guid relativeId)
+        {
+            return await _context.Relatives.AsNoTracking().FirstOrDefaultAsync(r => r.Id == relativeId);
         }
 
 

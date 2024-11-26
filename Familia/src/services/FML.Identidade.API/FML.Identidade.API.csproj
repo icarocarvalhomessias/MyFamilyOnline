@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Configuration\" />
+    <ProjectReference Include="..\..\building blocks\Familia.Core\FML.WebApi.Core\FML.WebApi.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,4 @@
 ﻿using FML.Core.Data;
-using FML.Familiares.API.Data.Mappings;
 using Microsoft.EntityFrameworkCore;
 
 namespace FML.Familiares.API.Data
@@ -16,18 +15,38 @@ namespace FML.Familiares.API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            foreach (var property in modelBuilder.Model.GetEntityTypes()
-                .SelectMany(e => e.GetProperties()
-                    .Where(p => p.ClrType == typeof(string))))
-            {
-                property.SetColumnType("varchar(100)");
-            }
-
-            modelBuilder.ApplyConfiguration(new RelativeMapping());
-            modelBuilder.ApplyConfiguration(new HouseMapping());
-            modelBuilder.ApplyConfiguration(new FamilyMapping());
-
             base.OnModelCreating(modelBuilder);
+
+            // Configure Family-Relative relationship
+            modelBuilder.Entity<Family>()
+                .HasMany(f => f.Relatives)
+                .WithOne(r => r.Family)
+                .HasForeignKey(r => r.FamilyId);
+
+            // Configure House-Relative relationship
+            modelBuilder.Entity<House>()
+                .HasMany(h => h.Residents)
+                .WithOne(r => r.House)
+                .HasForeignKey(r => r.HouseId);
+
+            // Configure Relative-Spouse relationship
+            modelBuilder.Entity<Relative>()
+                .HasOne(r => r.SpouseObj)
+                .WithOne()
+                .HasForeignKey<Relative>(r => r.Spouse);
+
+            // Configure Relative-Children relationship
+            modelBuilder.Entity<Relative>()
+                .HasMany(r => r.Children)
+                .WithOne()
+                .HasForeignKey(r => r.FatherId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Relative>()
+                .HasMany(r => r.Children)
+                .WithOne()
+                .HasForeignKey(r => r.MotherId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
         public async Task<bool> Commit()

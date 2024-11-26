@@ -60,9 +60,9 @@ namespace FML.WebApp.MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult RefazAmigoOculto()
+        public async Task<IActionResult> RefazAmigoOculto()
         {
-            var resultado = _eventoService.RefazAmigoOculto().Result;
+            var resultado = await _eventoService.RefazAmigoOculto();
 
             resultado = ImproveResults(resultado);
 

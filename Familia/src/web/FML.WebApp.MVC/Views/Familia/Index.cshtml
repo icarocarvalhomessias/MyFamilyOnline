@@ -1,57 +1,66 @@
-﻿@model Dictionary<string, Dictionary<Relative, Relative>>
+﻿@model List<Relative>
 
 @{
     ViewData["Title"] = "Familia";
     Layout = "~/Views/Shared/_Layout.cshtml"; // Assuming you have a shared layout file
 }
 
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
 <div class="container">
-    <h2>Família Carvalho</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nome do Parente</th>
-                <th>Vínculo</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var group in Model)
-            {
-                foreach (var pair in group.Value)
+    <div class="row">
+        <div class="col-md-8">
+        </div>
+        <div class="col-md-4 right pull-right">
+            <a class="btn btn-primary btn-s pull-right" asp-area="" asp-controller="Familia" asp-action="Create">Adicionar Familiar</a>
+        </div>
+
+    </div>
+    <div class="row col-md-12">
+        <table class="table table-striped custab">
+            <thead>
+                <tr>
+                    <th>Nome do Parente</th>
+                    <th>Data nascimento</th>
+                    <th>Casa</th></>
+                    <th>Familia</th></>
+                    <th>Id</th></>
+                    <th class="text-center">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var parent in Model)
                 {
                     <tr>
-                        <td>@pair.Key.FirstName</td>
-                        <td>Parente</td>
+                        <td>@parent.FirstName</td>
+                        <td>@parent.BirthDate.ToShortDateString()</td>
+                        <td>@parent.House?.Name</td>
+                        <td>@parent.Family?.Name</td>
+                        <td>@parent.Id</td>
+                        <td class="text-center">
+                            <a class='btn btn-info btn-xs' asp-area="" asp-controller="Familia" asp-action="ParenteEdit" asp-route-id="@parent.Id"><span class="glyphicon glyphicon-edit"></span> Editar</a>
+                            <a class='btn btn-danger btn-xs' asp-area="" asp-controller="Familia" asp-action="RemoveRelative" asp-route-id="@parent.Id"><span class="glyphicon glyphicon-remove"></span> Remover</a>
+                        </td>
                     </tr>
-                    @if (pair.Value != null)
-                    {
-                        <tr>
-                            <td>@pair.Value.FirstName</td>
-                            <td>Conjugue</td>
-                        </tr>
-                    }
                 }
-            }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <style>
-    .table {
-        width: 100%;
-        border-collapse: collapse;
+    .custab {
+        border: 1px solid #ccc;
+        padding: 5px;
+        margin: 5% 0;
+        box-shadow: 3px 3px 2px #ccc;
+        transition: 0.5s;
     }
 
-    .table th, .table td {
-        border: 1px solid #ddd;
-        padding: 8px;
-    }
-
-    .table th {
-        padding-top: 12px;
-        padding-bottom: 12px;
-        text-align: left;
-        background-color: #f2f2f2;
-        color: black;
-    }
+        .custab:hover {
+            box-shadow: 3px 3px 0px transparent;
+            transition: 0.5s;
+        }
 </style>

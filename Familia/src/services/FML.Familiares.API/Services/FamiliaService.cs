@@ -1,6 +1,4 @@
-﻿using FML.Familiares.API.Data.Repository.Interface;
-
-namespace FML.Familiares.API.Services
+﻿namespace FML.Familiares.API.Services
 {
     public class FamilyService : IFamilyService
     {
@@ -38,5 +36,10 @@ namespace FML.Familiares.API.Services
             return family.FirstOrDefault();
         }
 
+        public async Task<List<Family>> GetFamilies()
+        {
+            var families = await _familyRepository.GetAll();
+            return families.ToList();
+        }
     }
 }

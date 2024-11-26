@@ -262,7 +262,6 @@ C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Identidade.API\obj\Debu
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Identidade.API\obj\Debug\net8.0\FML.Identidade.API.AssemblyInfoInputs.cache
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Identidade.API\obj\Debug\net8.0\FML.Identidade.API.AssemblyInfo.cs
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Identidade.API\obj\Debug\net8.0\FML.Identidade.API.csproj.CoreCompileInputs.cache
-C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Identidade.API\obj\Debug\net8.0\FML.Identidade.API.MvcApplicationPartsAssemblyInfo.cs
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Identidade.API\obj\Debug\net8.0\FML.Identidade.API.MvcApplicationPartsAssemblyInfo.cache
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Identidade.API\obj\Debug\net8.0\FML.Identidade.API.sourcelink.json
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Identidade.API\obj\Debug\net8.0\staticwebassets.build.json
@@ -279,3 +278,5 @@ C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Identidade.API\obj\Debu
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Identidade.API\obj\Debug\net8.0\FML.Identidade.API.pdb
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Identidade.API\obj\Debug\net8.0\FML.Identidade.API.genruntimeconfig.cache
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Identidade.API\obj\Debug\net8.0\ref\FML.Identidade.API.dll
+C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Identidade.API\bin\Debug\net8.0\FML.WebApi.Core.dll
+C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Identidade.API\bin\Debug\net8.0\FML.WebApi.Core.pdb

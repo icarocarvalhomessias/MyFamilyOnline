@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Text.Json.Serialization;
 
 internal class Program
 {
@@ -62,6 +63,14 @@ internal class Program
                 ValidIssuer = appSettings.Emissor
             };
         });
+
+        builder.Services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+                options.JsonSerializerOptions.MaxDepth = 64; // Increase the maximum depth if needed
+            });
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();

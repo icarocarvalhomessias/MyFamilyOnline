@@ -1,6 +1,5 @@
 ﻿using FML.Familiares.API.Data.Repository.Interface;
 using FML.Familiares.API.Services.Interface;
-using Twilio.TwiML.Voice;
 
 namespace FML.Familiares.API.Services
 {
@@ -10,7 +9,10 @@ namespace FML.Familiares.API.Services
         private readonly IFamilyRepository _familyRepository;
         private readonly IHouseRepository _houseRepository;
 
-        public RelativeService(IRelativeRepository relativeRepository, IFamilyRepository familyRepository, IHouseRepository houseRepository)
+        public RelativeService(
+            IRelativeRepository relativeRepository, 
+            IFamilyRepository familyRepository, 
+            IHouseRepository houseRepository)
         {
             _relativeRepository = relativeRepository;
             _familyRepository = familyRepository;
@@ -20,8 +22,7 @@ namespace FML.Familiares.API.Services
 
         public async Task<IEnumerable<Relative>> GetRelativeByFamilyId(Guid id)
         {
-            var relatives = await _relativeRepository.GetRelativesByFamilyId(id);
-            return relatives;
+            return await _relativeRepository.GetRelativesByFamilyId(id);
         }
 
         public async Task<Guid> Add()
@@ -157,128 +158,30 @@ namespace FML.Familiares.API.Services
             return familia.Id;
         }
 
-        private static void Final(Relative inha, Relative cacalo, Relative icaro, Relative lidiaMara, Relative natasha, Relative marcela, Relative lidinha, Relative arthur, Relative luizGustavo, Relative roseli, Relative jurandyr, Relative belisa, Relative eduardo, Relative manuela, Relative benicio, Relative tina, Relative renataAscencio, Relative rodrigo, Relative daniela, Relative adrianoMaretti, Relative julia, Relative duda, Relative guilherme, Relative drizinho, Relative henrique, Relative mayra, Relative adrianoDorna, Relative marina, Relative gustavo, Relative otavio)
+        public async Task<bool> Update(Relative relative)
         {
-            mayra.SecretSanta = true;
-            mayra.Phone = "35 98416-2072";
-            mayra.LastName = "https://www.4shared.com/s/frJ5GQ--qku";
-
-            adrianoDorna.SecretSanta = true;
-            adrianoDorna.Phone = "35 98416-2072";
-            adrianoDorna.LastName = "https://www.4shared.com/s/fnywX4ftege";
-
-            gustavo.SecretSanta = true;
-            gustavo.Phone = "35 98416-2072";
-            gustavo.LastName = "https://www.4shared.com/s/f2kzDKgEpku";
-
-            otavio.SecretSanta = true;
-            otavio.Phone = "35 98416-2072";
-            otavio.LastName = "https://www.4shared.com/s/f3Kt_lLg5ku";
-
-            daniela.SecretSanta = true;
-            daniela.Phone = "35 99132-1023";
-            daniela.LastName = "https://www.4shared.com/s/f817LopWzjq";
-
-            drizinho.SecretSanta = true;
-            drizinho.Phone = "35 98851-0305";
-            drizinho.LastName = "https://www.4shared.com/s/fYdAiX2Osku";
-
-            henrique.SecretSanta = true;
-            henrique.Phone = "35 99670-0003";
-            henrique.LastName = "https://www.4shared.com/s/fqsU817LJku";
-
-            natasha.SecretSanta = true;
-            natasha.Phone = "1 857 289-6282";
-            natasha.LastName = "https://www.4shared.com/s/fdSX8S8vXku";
-
-            cacalo.SecretSanta = true;
-            cacalo.Phone = "35 98865-8438";
-            cacalo.LastName = "https://www.4shared.com/s/fXDizycDmku";
-
-            inha.SecretSanta = true;
-            inha.Phone = "35 98865-8438";
-            inha.LastName = "https://www.4shared.com/s/fSbUBXRTIge";
-
-            jurandyr.SecretSanta = true;
-            jurandyr.Phone = "35 99958 7625";
-            jurandyr.LastName = "https://www.4shared.com/s/fbWn0UZZHku";
-
-            roseli.SecretSanta = true;
-            roseli.Phone = "35 99977-5328";
-            roseli.LastName = "https://www.4shared.com/s/fAINCk69ifa";
-
-            manuela.SecretSanta = true;
-            manuela.Phone = "13 998837-7952";
-            manuela.LastName = "https://www.4shared.com/s/f8P-w8FCLjq";
-
-            marina.SecretSanta = true;
-            marina.Phone = "35 99773-4377";
-            marina.LastName = "https://www.4shared.com/s/f-nlsftRxku";
-
-            tina.SecretSanta = true;
-            tina.Phone = "35 98896-6049";
-            tina.LastName = "https://www.4shared.com/s/fXRU487uLku";
-
-            marcela.SecretSanta = true;
-            marcela.Phone = "35 99107-8315";
-            marcela.LastName = "https://www.4shared.com/s/fjGOez6Nmku";
-
-            benicio.SecretSanta = true;
-            benicio.Phone = "19 997146-3545";
-            benicio.LastName = "https://www.4shared.com/s/fpAQC46Duge";
-
-            belisa.SecretSanta = true;
-            belisa.Phone = "19 997146-3545";
-            belisa.LastName = "https://www.4shared.com/s/fU4DfWhyIku";
-
-            eduardo.SecretSanta = true;
-            eduardo.Phone = "19 99904-7854";
-            eduardo.LastName = "https://www.4shared.com/s/ftPHpSOAXge";
-
-            rodrigo.SecretSanta = true;
-            rodrigo.Phone = "35 99977-3050";
-            rodrigo.LastName = "https://www.4shared.com/s/fr6ZHqnF6jq";
-
-            renataAscencio.SecretSanta = true;
-            renataAscencio.Phone = "35 99977-5279";
-            renataAscencio.LastName = "https://www.4shared.com/s/fOM_Ol8aPjq";
-
-            julia.SecretSanta = true;
-            julia.Phone = "35 99977-5279";
-            julia.LastName = "https://www.4shared.com/s/fKkAP0grtge";
-
-            lidinha.SecretSanta = true;
-            lidinha.Phone = "35 98869-6794";
-            lidinha.LastName = "https://www.4shared.com/s/fN8ToXBQIjq";
-
-            arthur.SecretSanta = true;
-            arthur.Phone = "35 98869-6794";
-            arthur.LastName = "https://www.4shared.com/s/fglD4K3uFge";
-
-            luizGustavo.SecretSanta = true;
-            luizGustavo.Phone = "35 98869-6794";
-            luizGustavo.LastName = "https://www.4shared.com/s/fieTlJRjFku";
-
-            icaro.SecretSanta = true;
-            icaro.Phone = "35 98436-9551";
-            icaro.LastName = "https://www.4shared.com/s/fpr9mL_PFjq";
-
-            lidiaMara.SecretSanta = true;
-            lidiaMara.Phone = "44 9173-3999";
-            lidiaMara.LastName = "https://www.4shared.com/s/fbV0LCnq9ku";
-
-            duda.SecretSanta = true;
-            duda.Phone = "35 99236-5971";
-            duda.LastName = "https://www.4shared.com/s/fYbXEIC-Uku";
-
-            guilherme.SecretSanta = true;
-            guilherme.Phone = "35 99112-8337";
-            guilherme.LastName = "https://www.4shared.com/s/fsSriT0OXfa";
-
-            adrianoMaretti.SecretSanta = true;
-            adrianoMaretti.Phone = "35 98805-3000";
-            adrianoMaretti.LastName = "https://www.4shared.com/s/fYB2J4TFejq";
+            return await _relativeRepository.UpdateRelative(relative);
         }
+
+
+        public async Task<Relative> GetRelativeById(Guid relativeId)
+        {
+            return await _relativeRepository.GetRelativeById(relativeId);
+        }
+
+        public async Task<bool> AddRelative(Relative relative)
+        {
+            return await _familyRepository.AddRelative(relative);
+        }
+
+        public async Task<bool> RemoveRelative(Guid relativeId)
+        {
+            return await _relativeRepository.RemoveRelative(relativeId);
+        }
+
+
+        #region Private Methods
+
 
         private static void CarvalhoJunqueira(House carvalhoJunqueira, Relative chicada, Relative mariaJovita, out Relative dalila, out Relative airthon, out Relative mayra, out Relative adrianoDorna, out Relative bruna, out Relative leonardo, out Relative marina, out Relative gustavo, out Relative otavio)
         {
@@ -908,5 +811,133 @@ namespace FML.Familiares.API.Services
             mariaJovita.Spouse = chicada.Id;
         }
 
+        private static void Final(Relative inha, Relative cacalo, Relative icaro, Relative lidiaMara, Relative natasha, Relative marcela, Relative lidinha, Relative arthur, Relative luizGustavo, Relative roseli, Relative jurandyr, Relative belisa, Relative eduardo, Relative manuela, Relative benicio, Relative tina, Relative renataAscencio, Relative rodrigo, Relative daniela, Relative adrianoMaretti, Relative julia, Relative duda, Relative guilherme, Relative drizinho, Relative henrique, Relative mayra, Relative adrianoDorna, Relative marina, Relative gustavo, Relative otavio)
+        {
+            mayra.SecretSanta = true;
+            mayra.Phone = "35 98416-2072";
+            mayra.LinkName = "https://www.4shared.com/s/frJ5GQ--qku";
+
+            adrianoDorna.SecretSanta = true;
+            adrianoDorna.Phone = "35 98416-2072";
+            adrianoDorna.LinkName = "https://www.4shared.com/s/fnywX4ftege";
+
+            gustavo.SecretSanta = true;
+            gustavo.Phone = "35 98416-2072";
+            gustavo.LinkName = "https://www.4shared.com/s/f2kzDKgEpku";
+
+            otavio.SecretSanta = true;
+            otavio.Phone = "35 98416-2072";
+            otavio.LinkName = "https://www.4shared.com/s/f3Kt_lLg5ku";
+
+            daniela.SecretSanta = true;
+            daniela.Phone = "35 99132-1023";
+            daniela.LinkName = "https://www.4shared.com/s/f817LopWzjq";
+
+            drizinho.SecretSanta = true;
+            drizinho.Phone = "35 98851-0305";
+            drizinho.LinkName = "https://www.4shared.com/s/fYdAiX2Osku";
+
+            henrique.SecretSanta = true;
+            henrique.Phone = "35 99670-0003";
+            henrique.LinkName = "https://www.4shared.com/s/fqsU817LJku";
+
+            natasha.SecretSanta = true;
+            natasha.Phone = "1 857 289-6282";
+            natasha.LinkName = "https://www.4shared.com/s/fdSX8S8vXku";
+
+            cacalo.SecretSanta = true;
+            cacalo.Phone = "35 98865-8438";
+            cacalo.LinkName = "https://www.4shared.com/s/fXDizycDmku";
+
+            inha.SecretSanta = true;
+            inha.Phone = "35 98865-8438";
+            inha.LinkName = "https://www.4shared.com/s/fSbUBXRTIge";
+
+            jurandyr.SecretSanta = true;
+            jurandyr.Phone = "35 99958 7625";
+            jurandyr.LinkName = "https://www.4shared.com/s/fbWn0UZZHku";
+
+            roseli.SecretSanta = true;
+            roseli.Phone = "35 99977-5328";
+            roseli.LinkName = "https://www.4shared.com/s/fAINCk69ifa";
+
+            manuela.SecretSanta = true;
+            manuela.Phone = "13 998837-7952";
+            manuela.LinkName = "https://www.4shared.com/s/f8P-w8FCLjq";
+
+            marina.SecretSanta = true;
+            marina.Phone = "35 99773-4377";
+            marina.LinkName = "https://www.4shared.com/s/f-nlsftRxku";
+
+            tina.SecretSanta = true;
+            tina.Phone = "35 98896-6049";
+            tina.LinkName = "https://www.4shared.com/s/fXRU487uLku";
+
+            marcela.SecretSanta = true;
+            marcela.Phone = "35 99107-8315";
+            marcela.LinkName = "https://www.4shared.com/s/fjGOez6Nmku";
+
+            benicio.SecretSanta = true;
+            benicio.Phone = "19 997146-3545";
+            benicio.LinkName = "https://www.4shared.com/s/fpAQC46Duge";
+
+            belisa.SecretSanta = true;
+            belisa.Phone = "19 997146-3545";
+            belisa.LinkName = "https://www.4shared.com/s/fU4DfWhyIku";
+
+            eduardo.SecretSanta = true;
+            eduardo.Phone = "19 99904-7854";
+            eduardo.LinkName = "https://www.4shared.com/s/ftPHpSOAXge";
+
+            rodrigo.SecretSanta = true;
+            rodrigo.Phone = "35 99977-3050";
+            rodrigo.LinkName = "https://www.4shared.com/s/fr6ZHqnF6jq";
+
+            renataAscencio.SecretSanta = true;
+            renataAscencio.Phone = "35 99977-5279";
+            renataAscencio.LinkName = "https://www.4shared.com/s/fOM_Ol8aPjq";
+
+            julia.SecretSanta = true;
+            julia.Phone = "35 99977-5279";
+            julia.LinkName = "https://www.4shared.com/s/fKkAP0grtge";
+
+            lidinha.SecretSanta = true;
+            lidinha.Phone = "35 98869-6794";
+            lidinha.LinkName = "https://www.4shared.com/s/fN8ToXBQIjq";
+
+            arthur.SecretSanta = true;
+            arthur.Phone = "35 98869-6794";
+            arthur.LinkName = "https://www.4shared.com/s/fglD4K3uFge";
+
+            luizGustavo.SecretSanta = true;
+            luizGustavo.Phone = "35 98869-6794";
+            luizGustavo.LinkName = "https://www.4shared.com/s/fieTlJRjFku";
+
+            icaro.SecretSanta = true;
+            icaro.Phone = "35 98436-9551";
+            icaro.LinkName = "https://www.4shared.com/s/fpr9mL_PFjq";
+
+            lidiaMara.SecretSanta = true;
+            lidiaMara.Phone = "44 9173-3999";
+            lidiaMara.LinkName = "https://www.4shared.com/s/fbV0LCnq9ku";
+
+            duda.SecretSanta = true;
+            duda.Phone = "35 99236-5971";
+            duda.LinkName = "https://www.4shared.com/s/fYbXEIC-Uku";
+
+            guilherme.SecretSanta = true;
+            guilherme.Phone = "35 99112-8337";
+            guilherme.LinkName = "https://www.4shared.com/s/fsSriT0OXfa";
+
+            adrianoMaretti.SecretSanta = true;
+            adrianoMaretti.Phone = "35 98805-3000";
+            adrianoMaretti.LinkName = "https://www.4shared.com/s/fYB2J4TFejq";
+        }
+
+        
+
+
+
+        #endregion
     }
 }

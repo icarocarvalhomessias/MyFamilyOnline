@@ -138,6 +138,14 @@ C:\Workspace\Familia\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\re
 C:\Workspace\Familia\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.pdb
 C:\Workspace\Familia\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.genruntimeconfig.cache
 C:\Workspace\Familia\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\ref\FML.Familiares.API.dll
+C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.csproj.AssemblyReference.cache
+C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.AssemblyInfoInputs.cache
+C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.AssemblyInfo.cs
+C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.csproj.CoreCompileInputs.cache
+C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.MvcApplicationPartsAssemblyInfo.cs
+C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.sourcelink.json
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debug\net8.0\appsettings.Development.json
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debug\net8.0\appsettings.json
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debug\net8.0\FML.Familiares.API.exe
@@ -257,14 +265,6 @@ C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debu
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debug\net8.0\FML.Core.dll
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debug\net8.0\FML.Core.pdb
-C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.csproj.AssemblyReference.cache
-C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.GeneratedMSBuildEditorConfig.editorconfig
-C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.AssemblyInfoInputs.cache
-C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.AssemblyInfo.cs
-C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.csproj.CoreCompileInputs.cache
-C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.MvcApplicationPartsAssemblyInfo.cs
-C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.MvcApplicationPartsAssemblyInfo.cache
-C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.sourcelink.json
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\staticwebassets.build.json
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\staticwebassets.development.json
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\staticwebassets\msbuild.FML.Familiares.API.Microsoft.AspNetCore.StaticWebAssets.props
@@ -279,3 +279,6 @@ C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debu
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.pdb
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.genruntimeconfig.cache
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\ref\FML.Familiares.API.dll
+C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debug\net8.0\FML.WebApi.Core.dll
+C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debug\net8.0\FML.WebApi.Core.pdb

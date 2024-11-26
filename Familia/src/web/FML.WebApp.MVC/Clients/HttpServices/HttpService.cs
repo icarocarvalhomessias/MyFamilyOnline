@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text;
 using Familia.WebApp.MVC.Extensions;
+using System.Text.Json.Serialization;
 
 namespace FML.WebApp.MVC.Clients.HttpServices
 {
@@ -18,7 +19,9 @@ namespace FML.WebApp.MVC.Clients.HttpServices
         {
             var options = new JsonSerializerOptions
             {
-                PropertyNameCaseInsensitive = true
+                PropertyNameCaseInsensitive = true,
+                ReferenceHandler = ReferenceHandler.Preserve,
+                MaxDepth = 64
             };
 
             return JsonSerializer.Deserialize<T>(await responseMessage.Content.ReadAsStringAsync(), options);
@@ -41,5 +44,6 @@ namespace FML.WebApp.MVC.Clients.HttpServices
             response.EnsureSuccessStatusCode();
             return true;
         }
+
     }
 }

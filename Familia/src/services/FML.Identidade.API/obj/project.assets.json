@@ -1684,6 +1684,19 @@
             "rid": "win"
           }
         }
+      },
+      "FML.WebApi.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.0"
+        },
+        "compile": {
+          "bin/placeholder/FML.WebApi.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FML.WebApi.Core.dll": {}
+        }
       }
     }
   },
@@ -4672,10 +4685,16 @@
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "FML.WebApi.Core/1.0.0": {
+      "type": "project",
+      "path": "../../building blocks/Familia.Core/FML.WebApi.Core/FML.WebApi.Core.csproj",
+      "msbuildProject": "../../building blocks/Familia.Core/FML.WebApi.Core/FML.WebApi.Core.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "FML.WebApi.Core >= 1.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 8.0.0",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 8.0.0",
       "Microsoft.AspNetCore.Identity.UI >= 8.0.0",
@@ -4720,7 +4739,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\Familia.Core\\FML.WebApi.Core\\FML.WebApi.Core.csproj": {
+              "projectPath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\Familia.Core\\FML.WebApi.Core\\FML.WebApi.Core.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

@@ -67,7 +67,7 @@ namespace FML.Familiares.API.Data.Mappings
             builder.Property(r => r.LinkName)
                 .HasColumnType("varchar(100)");
 
-            builder.Property(r => r.Spouse)
+            builder.Property(r => r.SpouseObj)
                 .HasColumnType("uniqueidentifier");
 
             builder.Property(r => r.SecretSanta)

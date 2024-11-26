@@ -1,4 +1,5 @@
 ﻿using FML.Core.DomainObjects;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public abstract class Entity
 {
@@ -35,12 +36,15 @@ public class Relative : Entity, IAggregateRoot
     public bool IsAlive { get; set; } = true;
 
     public string? LinkName { get; set; }
-    public Guid? Spouse { get; set; }
     public bool SecretSanta { get; set; } = false;
-    public List<Relative> Childrens { get; set; }
 
-    public Family Family { get; set; }
-    public House House { get; set; }
+    public Guid? Spouse { get; set; }
+    public Relative? SpouseObj { get; set; }
+    public List<Relative>? Children { get; set; }
+
+    // Navigation properties
+    public Family? Family { get; set; }
+    public House? House { get; set; }
 
     // Novo método para definir o HouseId
     public void SetHouseId(House house)
@@ -62,7 +66,9 @@ public class House : Entity, IAggregateRoot
     public string? State { get; set; }
     public string? ZipCode { get; set; }
 
+    [NotMapped]
     public Family Family { get; set; }
+    [NotMapped]
     public List<Relative> Residents { get; set; }
 }
 

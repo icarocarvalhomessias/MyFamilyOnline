@@ -4,5 +4,9 @@
     {
         Task<IEnumerable<Relative>> GetRelativeByFamilyId(Guid id);
         Task<Guid> Add();
+        Task<bool> Update(Relative relative);
+        Task<bool> AddRelative(Relative relative);
+        Task<bool> RemoveRelative(Guid relativeId);
+        Task<Relative> GetRelativeById(Guid relativeId);
     }
 }

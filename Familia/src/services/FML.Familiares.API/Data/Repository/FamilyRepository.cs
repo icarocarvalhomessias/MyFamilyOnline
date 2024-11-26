@@ -1,5 +1,4 @@
 ﻿using FML.Core.Data;
-using FML.Familiares.API.Data.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace FML.Familiares.API.Data.Repository
@@ -15,36 +14,45 @@ namespace FML.Familiares.API.Data.Repository
 
         public IUnitOfWork UnitOfWork => _context;
 
-        public async Task<IEnumerable<Family>> GetFamiliesByFamilyId(Guid familyId)
-        {
-            return await _context.Families.AsNoTracking().Where(f => f.Id == familyId).ToListAsync();
-        }
-
-        public async Task<IEnumerable<Family>> GetFamiliesByHouseId(Guid houseId)
-        {
-            return await _context.Families
-                .AsNoTracking()
-                .Where(f => f.Houses.Any(h => h.Id == houseId))
-                .ToListAsync();
-        }
 
         public async Task<bool> AddFamily(Family family)
         {
-            _context.Add(family);
-            return await _context.Commit();
-        }
-
-        public async Task<bool> RemoveFamily(Family family)
-        {
-            family.IsActive = false;
-            _context.Update(family);
-            return await _context.Commit();
+            _context.Families.Add(family);
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<bool> UpdateFamily(Family family)
         {
-            _context.Update(family);
-            return await _context.Commit();
+            _context.Families.Update(family);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> RemoveFamily(Family family)
+        {
+            _context.Families.Remove(family);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<IEnumerable<Family>> GetFamiliesByFamilyId(Guid familyId)
+        {
+            return await _context.Families
+                .Include(f => f.Relatives)
+                .Include(f => f.Houses)
+                .Where(f => f.Id == familyId)
+                .ToListAsync();
+        }
+
+        public async Task<bool> AddRelative(Relative relative)
+        {
+            _context.Relatives.Add(relative);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<IEnumerable<Family>> GetAll()
+        {
+            return await _context.Families
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public void Dispose()
