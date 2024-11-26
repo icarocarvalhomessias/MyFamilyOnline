@@ -75,23 +75,5 @@ namespace FML.WebApp.MVC.Clients.HttpServices
             return await DeserializarObjetoResponse<List<SecretSantaPair>>(response);
         }
 
-        public async Task<List<Parente>> GetParentes()
-        {
-            var response = await _httpClient.GetAsync("/api/eventos/parentes");
-
-            try
-            {
-                if (!TratarErrosResponse(response))
-                {
-                    return await DeserializarObjetoResponse<List<Parente>>(response);
-                }
-            }
-            catch
-            {
-                return new List<Parente>();
-            }
-
-            return await DeserializarObjetoResponse<List<Parente>>(response);
-        }
     }
 }

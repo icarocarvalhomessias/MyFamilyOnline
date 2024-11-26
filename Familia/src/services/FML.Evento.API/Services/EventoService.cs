@@ -3,10 +3,32 @@
 namespace FML.Evento.API.Services
 {
     using FML.Evento.API.Controllers;
+    using FML.Evento.API.Data.Entities;
+    using FML.Evento.API.Data.Repositorys.Interfaces;
     using FML.Evento.API.Models;
 
     public class EventoService : IEventoService
     {
+
+        private readonly IListaDeDesejosRepository _listaDeDesejosRepository;
+
+        public EventoService(IListaDeDesejosRepository listaDeDesejosRepository)
+        {
+            _listaDeDesejosRepository = listaDeDesejosRepository;
+        }
+
+
+        public async Task<IEnumerable<ListaDeDesejos>> ListaDeDesejos()
+        {
+            return await _listaDeDesejosRepository.GetListaDeDesejos();
+        }
+
+        public async Task<bool> AddListaDeDesejos(ListaDeDesejos desejo)
+        {
+            return await _listaDeDesejosRepository.AddAsync(desejo);
+        }
+
+
         public List<SecretSantaPair> RealizarAmigoOculto(Guid familiaId)
         {
             return FamiliaCarvalhoStub.DrawSecretSanta();
@@ -57,5 +79,7 @@ namespace FML.Evento.API.Services
             // Implement the logic to remove an event
             throw new NotImplementedException();
         }
+
+       
     }
 }

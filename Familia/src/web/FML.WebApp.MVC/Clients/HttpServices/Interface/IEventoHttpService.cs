@@ -7,7 +7,6 @@ namespace FML.WebApp.MVC.Clients.HttpServices.Interface
         Task<List<SecretSantaPair>> RealizaAmigoOculto();
         Task<List<SecretSantaPair>> RefazAmigoOculto();
 
-        Task<List<Parente>> GetParentes();
 
     }
 }

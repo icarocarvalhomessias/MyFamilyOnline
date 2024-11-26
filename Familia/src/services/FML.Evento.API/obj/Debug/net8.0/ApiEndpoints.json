@@ -28,5 +28,31 @@
     "Order": 0,
     "Parameters": [],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FML.Evento.API.Controllers.ListaDeDesejosController",
+    "Method": "ListaDeDesejos",
+    "RelativePath": "api/lista-de-desejos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FML.Evento.API.Controllers.ListaDeDesejosController",
+    "Method": "AddListaDeDesejos",
+    "RelativePath": "api/lista-de-desejos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "desejoModel",
+        "Type": "FML.Evento.API.Models.DesejoModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]
