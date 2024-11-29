@@ -369,6 +369,26 @@
       "PackagePath": "staticwebassets\\sorteios\\AmigoOculto_20241126_090457.txt"
     },
     {
+      "Id": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\web\\FML.WebApp.MVC\\wwwroot\\sorteios\\AmigoOculto_20241127_091433.txt",
+      "PackagePath": "staticwebassets\\sorteios\\AmigoOculto_20241127_091433.txt"
+    },
+    {
+      "Id": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\web\\FML.WebApp.MVC\\wwwroot\\sorteios\\AmigoOculto_20241127_151007.txt",
+      "PackagePath": "staticwebassets\\sorteios\\AmigoOculto_20241127_151007.txt"
+    },
+    {
+      "Id": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\web\\FML.WebApp.MVC\\wwwroot\\sorteios\\AmigoOculto_20241128_085331.txt",
+      "PackagePath": "staticwebassets\\sorteios\\AmigoOculto_20241128_085331.txt"
+    },
+    {
+      "Id": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\web\\FML.WebApp.MVC\\wwwroot\\sorteios\\AmigoOculto_20241128_125342.txt",
+      "PackagePath": "staticwebassets\\sorteios\\AmigoOculto_20241128_125342.txt"
+    },
+    {
+      "Id": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\web\\FML.WebApp.MVC\\wwwroot\\sorteios\\AmigoOculto_20241129_150449.txt",
+      "PackagePath": "staticwebassets\\sorteios\\AmigoOculto_20241129_150449.txt"
+    },
+    {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.FML.WebApp.MVC.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

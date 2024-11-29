@@ -1,0 +1,111 @@
+﻿@model FML.WebApp.MVC.Models.ListaDeDesejos
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="~/js/formUtils.js"></script>
+
+<style>
+    h11 {
+        color: red;
+    }
+
+    #logo {
+        width: 50%;
+        height: 50%;
+    }
+
+    .panel-heading {
+        font-size: 150%;
+    }
+</style>
+
+<h1>@ViewData["Title"]</h1>
+
+<form class="form-horizontal" asp-controller="ListaDeDesejos" asp-action="@((Model.Id == Guid.Empty) ? "Save" : "Update")" method="post" id="editForm">
+    <fieldset>
+        <div class="panel panel-primary">
+            <div class="panel-heading">@((Model.Id == Guid.Empty) ? "Criar Desejo" : "Editar Desejo")</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-md-11 control-label">
+                        <p class="help-block"><h11>*</h11> Campo Obrigatório </p>
+                    </div>
+                </div>
+
+                <input type="hidden" asp-for="Id" />
+
+                <!-- Nome -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Nome">Nome <h11>*</h11></label>
+                    <div class="col-md-4">
+                        <input asp-for="Nome" class="form-control input-md" required="" type="text">
+                        <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Descricao -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Descricao">Descrição <h11>*</h11></label>
+                    <div class="col-md-4">
+                        <input asp-for="Descricao" class="form-control input-md" required="" type="text">
+                        <span asp-validation-for="Descricao" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Preco -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Preco">Preço <h11>*</h11></label>
+                    <div class="col-md-4">
+                        <input asp-for="Preco" class="form-control input-md" required="" type="text">
+                        <span asp-validation-for="Preco" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Link -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Link">Link</label>
+                    <div class="col-md-4">
+                        <input asp-for="Link" class="form-control input-md" type="url">
+                        <span asp-validation-for="Link" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Loja -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Loja">Loja</label>
+                    <div class="col-md-4">
+                        <input asp-for="Loja" class="form-control input-md" type="text">
+                        <span asp-validation-for="Loja" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Observacao -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Observacao">Observação</label>
+                    <div class="col-md-4">
+                        <input asp-for="Observacao" class="form-control input-md" type="text">
+                        <span asp-validation-for="Observacao" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-group">
+                    <div class="col-md-2 col-md-offset-2">
+                        <input type="submit" value="Salvar" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script>
+    document.getElementById('editForm').addEventListener('submit', function () {
+        // Add any custom JavaScript validation or actions here
+    });
+</script>

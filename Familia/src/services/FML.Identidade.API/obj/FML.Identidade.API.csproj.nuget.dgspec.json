@@ -4,14 +4,14 @@
     "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\services\\FML.Identidade.API\\FML.Identidade.API.csproj": {}
   },
   "projects": {
-    "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\Familia.Core\\FML.WebApi.Core\\FML.WebApi.Core.csproj": {
+    "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\FML.WebApi.Core\\FML.WebApi.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\Familia.Core\\FML.WebApi.Core\\FML.WebApi.Core.csproj",
+        "projectUniqueName": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\FML.WebApi.Core\\FML.WebApi.Core.csproj",
         "projectName": "FML.WebApi.Core",
-        "projectPath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\Familia.Core\\FML.WebApi.Core\\FML.WebApi.Core.csproj",
+        "projectPath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\FML.WebApi.Core\\FML.WebApi.Core.csproj",
         "packagesPath": "C:\\Users\\icaro\\.nuget\\packages\\",
-        "outputPath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\Familia.Core\\FML.WebApi.Core\\obj\\",
+        "outputPath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\FML.WebApi.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -104,8 +104,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\Familia.Core\\FML.WebApi.Core\\FML.WebApi.Core.csproj": {
-                "projectPath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\Familia.Core\\FML.WebApi.Core\\FML.WebApi.Core.csproj"
+              "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\FML.WebApi.Core\\FML.WebApi.Core.csproj": {
+                "projectPath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\building blocks\\FML.WebApi.Core\\FML.WebApi.Core.csproj"
+              },
+              "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\web\\FML.WebApp.MVC\\FML.WebApp.MVC.csproj": {
+                "projectPath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\web\\FML.WebApp.MVC\\FML.WebApp.MVC.csproj"
               }
             }
           }
@@ -166,6 +169,88 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.6.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\web\\FML.WebApp.MVC\\FML.WebApp.MVC.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\web\\FML.WebApp.MVC\\FML.WebApp.MVC.csproj",
+        "projectName": "FML.WebApp.MVC",
+        "projectPath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\web\\FML.WebApp.MVC\\FML.WebApp.MVC.csproj",
+        "packagesPath": "C:\\Users\\icaro\\.nuget\\packages\\",
+        "outputPath": "C:\\Workspace\\MinhaFamiliaOnline\\Familia\\src\\web\\FML.WebApp.MVC\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\icaro\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
+              "target": "Package",
+              "version": "[1.21.0, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [

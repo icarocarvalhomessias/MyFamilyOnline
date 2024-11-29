@@ -1,0 +1,41 @@
+services:
+  webapp.mvc:
+    image: webapp.mvc:latest
+    container_name: webapp.mvc
+    build:
+      context: ../src
+      dockerfile: ./web/FML.WebApp.MVC/Dockerfile
+    ports:
+      - "5000:80"
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=htpp://*:500
+    
+
+  identidade.api:
+    build:
+      context: ../src
+      dockerfile: ./services/FML.Identidade.API/Dockerfile
+    image: identidade.api:latest
+    ports:
+      - "5001:80"
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=htpp://*:500
+
+
+  # familiares.api:
+  #   build:
+  #     context: ../src
+  #     dockerfile: ./services/FML.Familiares.API/Dockerfile
+  #   image: familiares.api:latest
+  #   ports:
+  #     - "5002:80"
+
+  # eventos.api:
+  #   build:
+  #     context: ../src
+  #     dockerfile: ./services/FML.Evento.API/Dockerfile
+  #   image: eventos.api:latest
+  #   ports:
+  #     - "5003:80"

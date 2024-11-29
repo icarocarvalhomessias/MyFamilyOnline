@@ -1,4 +1,4 @@
-﻿namespace Familia.WebApp.MVC.Extensions
+﻿namespace FML.WebApp.MVC.Extensions
 {
     public class AppSettings
     {

@@ -1,5 +1,5 @@
-﻿using Familia.Identidade.API.Extensions;
-using Familia.Identidade.API.Models;
+﻿using Familia.Identidade.API.Models;
+using FML.WebApi.Core.Identidade;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;

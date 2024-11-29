@@ -19,5 +19,7 @@
 
         Task<IEnumerable<ListaDeDesejos>> ListaDeDesejos();
         Task<bool> AddListaDeDesejos(ListaDeDesejos desejo);
+        Task<bool> UpdateListaDeDesejos(ListaDeDesejos desejo);
+        Task<bool> DeleteListaDeDesejos(Guid id);
     }
 }

@@ -10,8 +10,8 @@ namespace FML.Familiares.API.Configuration
             {
                 c.SwaggerDoc("v1", new OpenApiInfo()
                 {
-                    Title = "Minha Familia Online",
-                    Description = "Sistema que deixa a familia junta o tempo todo.",
+                    Title = "Familia Online API - Familiares",
+                    Description = "Recupera e faz ação em familiares.",
                     Contact = new OpenApiContact() { Name = "Icaro Carvalho", Email = "icarusdev12@gmail.com" },
                     License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
                 });

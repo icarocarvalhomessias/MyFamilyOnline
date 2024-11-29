@@ -1,12 +1,13 @@
 ﻿using FML.Evento.API.Data.Entities;
 using FML.Evento.API.Models;
 using FML.Evento.API.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FML.Evento.API.Controllers
 {
     [Route("api/lista-de-desejos")]
-
+    [Authorize]
     public class ListaDeDesejosController : MainController
     {
         private readonly IEventoService _eventoService;
@@ -23,6 +24,7 @@ namespace FML.Evento.API.Controllers
             var listaDeDesejos = await _eventoService.ListaDeDesejos();
             var listaDeDesejoModels = listaDeDesejos.Select(desejo => new ListaDeDesejoModel
             {
+                Id = desejo.Id,
                 Nome = desejo.Nome,
                 Descricao = desejo.Descricao,
                 Preco = desejo.Preco,
@@ -35,9 +37,32 @@ namespace FML.Evento.API.Controllers
             return CustomResponse(listaDeDesejoModels);
         }
 
+        [HttpPatch]
+        public async Task<IActionResult> UpdateListaDeDesejos(DesejoModel desejoModel)
+        {
+            var desejo = new ListaDeDesejos
+            {
+                Id = desejoModel.Id,
+                Nome = desejoModel.Nome,
+                Descricao = desejoModel.Descricao,
+                Preco = desejoModel.Preco,
+                Link = desejoModel.Link,
+                Loja = desejoModel.Loja,
+                Observacao = desejoModel.Observacao,
+                ParenteId = desejoModel.ParenteId
+            };
+
+            return CustomResponse(await _eventoService.UpdateListaDeDesejos(desejo));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> RemoveListaDeDesejos(Guid id)
+        {
+            return CustomResponse(await _eventoService.DeleteListaDeDesejos(id));
+        }
 
         [HttpPost]
-        public async Task<IActionResult> AddListaDeDesejos(DesejoModel desejoModel)
+        public async Task<IActionResult> Create(DesejoModel desejoModel)
         {
             var desejo = new ListaDeDesejos
             {
@@ -50,7 +75,11 @@ namespace FML.Evento.API.Controllers
                 ParenteId = desejoModel.ParenteId
             };
 
-            return CustomResponse(await _eventoService.AddListaDeDesejos(desejo));
+            desejo.Id = Guid.NewGuid();
+            await _eventoService.AddListaDeDesejos(desejo);
+
+            return CustomResponse(desejo);
+
         }
 
     }

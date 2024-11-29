@@ -1,10 +1,7 @@
-﻿using FML.WebApp.MVC.Services.Interfaces;
+﻿using FML.WebApp.MVC.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FML.WebApp.MVC.Controllers
 {
@@ -18,17 +15,18 @@ namespace FML.WebApp.MVC.Controllers
             _familiaService = familiaService;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index(Guid familyId)
         {
             familyId = Guid.Parse("417d7e43-fe2f-44d6-a8c4-4070e841ad53");
-            var relatives = await _familiaService.GetRelativesByFamilyId(familyId);
+            var relatives = await _familiaService.GetRelativeByFamilyId(familyId);
             return View(relatives);
         }
 
         public async Task<IActionResult> Create()
         {
             var familyId = Guid.Parse("417d7e43-fe2f-44d6-a8c4-4070e841ad53");
-            var relatives = await _familiaService.GetRelativesByFamilyId(familyId);
+            var relatives = await _familiaService.GetRelativeByFamilyId(familyId);
             var homens = relatives.Where(x => x.Gender == Gender.Male).ToList();
             var mulheres = relatives.Where(x => x.Gender == Gender.Female).ToList();
 
@@ -94,7 +92,7 @@ namespace FML.WebApp.MVC.Controllers
 
         private async Task PopulateDropDownLists(Guid familyId)
         {
-            var family = await _familiaService.GetRelativesByFamilyId(familyId);
+            var family = await _familiaService.GetRelativeByFamilyId(familyId);
             var homens = family.Where(x => x.Gender == Gender.Male).ToList();
             var mulheres = family.Where(x => x.Gender == Gender.Female).ToList();
 

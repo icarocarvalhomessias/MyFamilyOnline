@@ -4,15 +4,15 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
-using FML.WebApp.MVC.Clients.HttpServices.Interface;
+using FML.WebApp.MVC.Services.Interface;
 
 namespace Familia.WebApp.MVC.Controllers
 {
     public class IdentidadeController : MainController
     {
-        private readonly IAutenticacaoHttpService _autenticacaoService;
+        private readonly IAutenticacaoService _autenticacaoService;
 
-        public IdentidadeController(IAutenticacaoHttpService autenticacaoService)
+        public IdentidadeController(IAutenticacaoService autenticacaoService)
         {
             _autenticacaoService = autenticacaoService;
         }

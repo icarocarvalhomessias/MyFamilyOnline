@@ -1,9 +1,7 @@
 ﻿using Familia.WebApp.MVC.Extensions;
-using FML.WebApp.MVC.Clients.Handlers;
-using FML.WebApp.MVC.Clients.HttpServices;
-using FML.WebApp.MVC.Clients.HttpServices.Interface;
 using FML.WebApp.MVC.Services;
-using FML.WebApp.MVC.Services.Interfaces;
+using FML.WebApp.MVC.Services.Handlers;
+using FML.WebApp.MVC.Services.Interface;
 
 namespace Familia.WebApp.MVC.Configuration
 {
@@ -11,20 +9,21 @@ namespace Familia.WebApp.MVC.Configuration
     {
         public static void RegisterServices(this IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+            services.AddTransient<IAspNetUser, AspNetUser>();
+
             services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
 
-            services.AddHttpClient<IAutenticacaoHttpService, AutenticacaoHttpService>()
+            services.AddHttpClient<IAutenticacaoService, AutenticacaoService>()
                 .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
 
-            services.AddHttpClient<IEventoHttpService, EventoHttpService>()
+            services.AddHttpClient<IEventoService, EventoService>()
                 .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
 
-            services.AddHttpClient<IFamiliaHttpService, FamiliaHttpService>()
+            services.AddHttpClient<IFamiliaService, FamiliaService>()
                 .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<IUser, AspNetUser>();
-
+            services.AddScoped<IEventoService, EventoService>();
             services.AddScoped<IFamiliaService, FamiliaService>();
         }
     }

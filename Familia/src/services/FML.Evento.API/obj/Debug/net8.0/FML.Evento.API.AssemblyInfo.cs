@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("d8911ec1-93d9-43ac-9f11-560c88b82fe0")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("FML.Evento.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3f33baa05c7f06ead63d8c8338b6f074bc2d0ae4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b44a4877f77f7ac1ccc2a4b5356d8dddc88e58fb")]
 [assembly: System.Reflection.AssemblyProductAttribute("FML.Evento.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FML.Evento.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

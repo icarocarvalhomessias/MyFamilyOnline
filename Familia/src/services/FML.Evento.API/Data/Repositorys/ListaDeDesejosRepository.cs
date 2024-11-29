@@ -29,10 +29,25 @@ namespace FML.Evento.API.Data.Repositorys
             return await _context.SaveChangesAsync() > 0;
         }
 
+        public async Task<bool> Delete(ListaDeDesejos listaDeDesejos)
+        {
+            _context.ListasDeDesejos.Remove(listaDeDesejos);
+
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> UpdateAsync(ListaDeDesejos listaDeDesejos)
+        {
+            _context.ListasDeDesejos.Update(listaDeDesejos);
+
+            return await _context.SaveChangesAsync() > 0;
+        }
+
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _context?.Dispose();
         }
+
     }
 }

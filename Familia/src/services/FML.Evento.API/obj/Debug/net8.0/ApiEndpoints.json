@@ -41,7 +41,23 @@
   },
   {
     "ContainingType": "FML.Evento.API.Controllers.ListaDeDesejosController",
-    "Method": "AddListaDeDesejos",
+    "Method": "UpdateListaDeDesejos",
+    "RelativePath": "api/lista-de-desejos",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "desejoModel",
+        "Type": "FML.Evento.API.Models.DesejoModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FML.Evento.API.Controllers.ListaDeDesejosController",
+    "Method": "Create",
     "RelativePath": "api/lista-de-desejos",
     "HttpMethod": "POST",
     "IsController": true,
@@ -50,6 +66,22 @@
       {
         "Name": "desejoModel",
         "Type": "FML.Evento.API.Models.DesejoModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FML.Evento.API.Controllers.ListaDeDesejosController",
+    "Method": "RemoveListaDeDesejos",
+    "RelativePath": "api/lista-de-desejos/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],

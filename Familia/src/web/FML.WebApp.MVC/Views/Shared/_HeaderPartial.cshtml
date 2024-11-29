@@ -1,5 +1,5 @@
 ﻿@using Familia.WebApp.MVC.Extensions
-@inject IUser AppUser
+@inject IAspNetUser AppUser
 
 <ul class="navbar-nav">
     @if (AppUser.EstaAutenticado())
@@ -13,6 +13,9 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Evento" asp-action="Index">Amigo Oculto</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="ListaDeDesejos" asp-action="Index">Lista de Desejos</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Familia" asp-action="Index">Familia</a>

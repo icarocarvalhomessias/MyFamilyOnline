@@ -1,5 +1,5 @@
 ﻿using Familia.WebApp.MVC.Models;
-using FML.WebApp.MVC.Clients.HttpServices.Interface;
+using FML.WebApp.MVC.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,23 +8,26 @@ namespace Familia.WebApp.MVC.Controllers
     [Authorize]
     public class HomeController : MainController
     {
-        private readonly IEventoHttpService _eventoService;
+        private readonly IEventoService _eventoService;
 
-        public HomeController(IEventoHttpService eventoService)
+        public HomeController(IEventoService eventoService)
         {
             _eventoService = eventoService;
         }
-
+        
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
 
+        [HttpGet]
         public IActionResult Privacy()
         {
             return View();
         }
 
+        [HttpGet]
         [Route("erro/{id:length(3,3)}")]
         public IActionResult Error(int id)
         {

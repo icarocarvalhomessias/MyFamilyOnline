@@ -25,8 +25,6 @@
 
             app.UseRouting();
 
-            app.UseIdentityConfiguration();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

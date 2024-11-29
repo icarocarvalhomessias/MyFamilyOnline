@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using FML.Evento.API.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace FML.Evento.API.Controllers
 {
     [Route("api/eventos")]
+    [Authorize]
     public class EventosController : MainController
     {
         private readonly IEventoService _eventoService;

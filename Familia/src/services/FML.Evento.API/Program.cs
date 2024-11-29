@@ -1,76 +1,42 @@
 using FML.Evento.API.Configuration;
-using FML.Evento.API.Data;
-using FML.Evento.API.Extensions;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using System.Text.Json.Serialization;
+using FML.WebApi.Core.Identidade;
 
 internal class Program
 {
     private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        var configuration = builder.Configuration;
+        var hostEnvironment = builder.Environment;
 
-        // Add services to the container.
+        builder.Configuration
+            .SetBasePath(hostEnvironment.ContentRootPath)
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{hostEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+            .AddEnvironmentVariables();
 
-        builder.Services.AddControllers();
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
-        builder.Services.RegisterServices();
-
-        builder.Services.AddControllers()
-                    .AddJsonOptions(options =>
-                    {
-                        options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-                        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-                        options.JsonSerializerOptions.MaxDepth = 64; // Increase the maximum depth if needed
-                    });
-        builder.Services.AddDbContext<EventoContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-        var appSettingsSection = builder.Configuration.GetSection("AppSettings");
-        builder.Services.Configure<AppSettings>(appSettingsSection);
-
-        var appSettings = appSettingsSection.Get<AppSettings>();
-        var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-
-        builder.Services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
-            options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
-        }).AddJwtBearer(bearerOptions =>
-        {
-            bearerOptions.RequireHttpsMetadata = true;
-            bearerOptions.SaveToken = true;
-            bearerOptions.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidAudience = appSettings.ValidoEm,
-                ValidIssuer = appSettings.Emissor
-            };
-        });
-
-
+        ConfigureServices(builder);
         var app = builder.Build();
-
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
-        app.MapControllers();
-
+        Configure(app);
         app.Run();
     }
+
+    private static void ConfigureServices(WebApplicationBuilder builder)
+    {
+        var configuration = builder.Configuration;
+        builder.Services.AddApiConfiguration(configuration);
+        builder.Services.AddJwtConfiguration(configuration);
+        builder.Services.AddSwaggerConfiguration();
+        builder.Services.RegisterServices();
+        builder.Services.RegisterJson();
+    }
+
+    private static void Configure(WebApplication app)
+    {
+        app.UseSwaggerConfiguration();
+
+        app.UseApiConfiguration(app.Environment);
+    }
+
 }
+

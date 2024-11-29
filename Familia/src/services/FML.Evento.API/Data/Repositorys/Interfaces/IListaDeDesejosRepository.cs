@@ -7,5 +7,7 @@ namespace FML.Evento.API.Data.Repositorys.Interfaces
     {
         Task<IEnumerable<ListaDeDesejos>> GetListaDeDesejos();
         Task<bool> AddAsync(ListaDeDesejos listaDeDesejos);
+        Task<bool> Delete(ListaDeDesejos listaDeDesejos);
+        Task<bool> UpdateAsync(ListaDeDesejos listaDeDesejos);
     }
 }

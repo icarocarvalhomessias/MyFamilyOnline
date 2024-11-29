@@ -80,6 +80,38 @@ namespace FML.Evento.API.Services
             throw new NotImplementedException();
         }
 
-       
+        public async Task<bool> UpdateListaDeDesejos(ListaDeDesejos desejo)
+        {
+            var listaDeDesejos = await _listaDeDesejosRepository.GetListaDeDesejos();
+
+            var desejoToUpdate = listaDeDesejos.FirstOrDefault(d => d.Id == desejo.Id);
+
+            if (desejoToUpdate == null)
+                return false;
+
+            desejoToUpdate.Nome = desejo.Nome;
+            desejoToUpdate.Descricao = desejo.Descricao;
+            desejoToUpdate.Preco = desejo.Preco;
+            desejoToUpdate.Link = desejo.Link;
+            desejoToUpdate.Loja = desejo.Loja;
+            desejoToUpdate.Observacao = desejo.Observacao;
+            desejoToUpdate.ParenteId = desejo.ParenteId;
+
+
+            return await _listaDeDesejosRepository.UpdateAsync(desejoToUpdate);
+
+        }
+
+        public async Task<bool> DeleteListaDeDesejos(Guid id)
+        {
+            var listaDeDesejos = await _listaDeDesejosRepository.GetListaDeDesejos();
+
+            var desejoToDelete = listaDeDesejos.FirstOrDefault(d => d.Id == id);
+
+            if (desejoToDelete == null)
+                return false;
+
+            return await _listaDeDesejosRepository.Delete(desejoToDelete);
+        }
     }
 }

@@ -140,6 +140,7 @@ C:\Workspace\Familia\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FM
 C:\Workspace\Familia\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\ref\FML.Familiares.API.dll
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debug\net8.0\appsettings.Development.json
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debug\net8.0\appsettings.json
+C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debug\net8.0\appsettings.Production.json
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debug\net8.0\FML.Familiares.API.exe
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debug\net8.0\FML.Familiares.API.deps.json
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debug\net8.0\FML.Familiares.API.runtimeconfig.json
@@ -258,8 +259,8 @@ C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debu
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debug\net8.0\FML.Core.dll
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debug\net8.0\FML.WebApi.Core.dll
-C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debug\net8.0\FML.WebApi.Core.pdb
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debug\net8.0\FML.Core.pdb
+C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\bin\Debug\net8.0\FML.WebApi.Core.pdb
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.csproj.AssemblyReference.cache
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.GeneratedMSBuildEditorConfig.editorconfig
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Familiares.API\obj\Debug\net8.0\FML.Familiares.API.AssemblyInfoInputs.cache
