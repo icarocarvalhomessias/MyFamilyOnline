@@ -266,13 +266,6 @@ C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Identidade.API\bin\Debu
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Identidade.API\bin\Debug\net8.0\FML.WebApp.MVC.dll
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Identidade.API\bin\Debug\net8.0\FML.WebApi.Core.pdb
 C:\Workspace\MinhaFamiliaOnline\Familia\src\services\FML.Identidade.API\bin\Debug\net8.0\FML.WebApp.MVC.pdb
-C:\Workspace\MinhaFamiliaOnline\Familia\bin\Debug\FML.Identidade.API\net8.0\FML.WebApp.MVC.deps.json
-C:\Workspace\MinhaFamiliaOnline\Familia\bin\Debug\FML.Identidade.API\net8.0\FML.WebApp.MVC.runtimeconfig.json
-C:\Workspace\MinhaFamiliaOnline\Familia\bin\Debug\FML.Identidade.API\net8.0\FML.WebApp.MVC\appsettings.Development.json
-C:\Workspace\MinhaFamiliaOnline\Familia\bin\Debug\FML.Identidade.API\net8.0\FML.WebApp.MVC\appsettings.json
-C:\Workspace\MinhaFamiliaOnline\Familia\bin\Debug\FML.Identidade.API\net8.0\FML.WebApp.MVC\appsettings.Production.json
-C:\Workspace\MinhaFamiliaOnline\Familia\bin\Debug\FML.Identidade.API\net8.0\FML.WebApp.MVC.staticwebassets.runtime.json
-C:\Workspace\MinhaFamiliaOnline\Familia\bin\Debug\FML.Identidade.API\net8.0\FML.WebApp.MVC.exe
 C:\Workspace\MinhaFamiliaOnline\Familia\bin\Debug\FML.Identidade.API\net8.0\FML.Identidade.API\appsettings.Development.json
 C:\Workspace\MinhaFamiliaOnline\Familia\bin\Debug\FML.Identidade.API\net8.0\FML.Identidade.API\appsettings.json
 C:\Workspace\MinhaFamiliaOnline\Familia\bin\Debug\FML.Identidade.API\net8.0\FML.Identidade.API\appsettings.Production.json

@@ -13,11 +13,10 @@ COPY ["./building blocks/FML.WebApi.Core/FML.WebApi.Core.csproj", "building bloc
 RUN dotnet restore "services/FML.Evento.API/FML.Evento.API.csproj"
 COPY . .
 WORKDIR "services/FML.Evento.API/"
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet build "FML.Evento.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "FML.Evento.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "FML.Evento.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "FML.Evento.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

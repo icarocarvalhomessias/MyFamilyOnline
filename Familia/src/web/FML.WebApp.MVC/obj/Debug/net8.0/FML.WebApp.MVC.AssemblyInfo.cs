@@ -11,11 +11,11 @@
 using System;
 using System.Reflection;
 
-[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("6c2cab38-4cfa-43d2-a06a-8950a7f56d69")]
+[assembly: Microsoft.AspNetCore.Identity.UI.UIFrameworkAttribute("Bootstrap5")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("FML.WebApp.MVC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b44a4877f77f7ac1ccc2a4b5356d8dddc88e58fb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5e146b1df04a90f52c7aba484e09ea781ef6b37e")]
 [assembly: System.Reflection.AssemblyProductAttribute("FML.WebApp.MVC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FML.WebApp.MVC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

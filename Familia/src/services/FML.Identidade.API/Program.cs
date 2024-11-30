@@ -1,52 +1,27 @@
-using Familia.Identidade.API.Data;
 using FML.Identidade.API.Configuration;
-using FML.WebApi.Core.Identidade;
-using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
 
-internal class Program
-{
-    private static void Main(string[] args)
-    {
-        var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
-        builder.Configuration
-           .SetBasePath(builder.Environment.ContentRootPath)
-           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-           .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-           .AddEnvironmentVariables();
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-        ConfigureServices(builder);
+builder.Configuration
+        .SetBasePath(builder.Environment.ContentRootPath)
+        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+        .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+        .AddEnvironmentVariables();
 
-        var app = builder.Build();
-        ConfigureMiddleware(app);
-        app.Run();
-    }
+var configuration = builder.Configuration;
 
-    private static void ConfigureServices(WebApplicationBuilder builder)
-    {
-        var configuration = builder.Configuration;
+builder.Services.AddIdentityConfiguration(configuration);
+builder.Services.AddApiConfiguration();
+builder.Services.AddSwaggerConfiguration();
 
-        builder.Services.AddIdentityConfiguration(configuration);
-        builder.Services.AddApiConfiguration();
-        builder.Services.AddSwaggerConfiguration();
+var app = builder.Build();
 
-        builder.Services.AddControllers()
-            .AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-                options.JsonSerializerOptions.MaxDepth = 64;
-            });
-    }
+app.UseSwaggerConfiguration();
 
-    private static void ConfigureMiddleware(WebApplication app)
-    {
-        app.UseSwaggerConfiguration();
+app.UseApiConfiguration(app.Environment);
 
-        app.UseApiConfiguration(app.Environment);
-
-        app.UseCors("AllowAll");
-    }
-
-}
+app.Run();

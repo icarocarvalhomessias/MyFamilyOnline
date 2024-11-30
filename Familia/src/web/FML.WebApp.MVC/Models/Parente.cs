@@ -1,4 +1,7 @@
-﻿namespace Familia.WebApp.MVC.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace Familia.WebApp.MVC.Models
 {
     public class Parente
     {

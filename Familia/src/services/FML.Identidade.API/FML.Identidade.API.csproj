@@ -27,8 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\building blocks\FML.Core\FML.Core.csproj" />
     <ProjectReference Include="..\..\building blocks\FML.WebApi.Core\FML.WebApi.Core.csproj" />
-    <ProjectReference Include="..\..\web\FML.WebApp.MVC\FML.WebApp.MVC.csproj" />
   </ItemGroup>
 
   <ItemGroup>

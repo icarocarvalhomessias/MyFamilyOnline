@@ -1,6 +1,7 @@
-﻿using System.Security.Claims;
+﻿using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
-namespace Familia.WebApp.MVC.Extensions
+namespace FML.Core.Data
 {
     public interface IAspNetUser
     {

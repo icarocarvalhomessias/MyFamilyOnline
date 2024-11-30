@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FML.Evento.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b44a4877f77f7ac1ccc2a4b5356d8dddc88e58fb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5e146b1df04a90f52c7aba484e09ea781ef6b37e")]
 [assembly: System.Reflection.AssemblyProductAttribute("FML.Evento.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FML.Evento.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

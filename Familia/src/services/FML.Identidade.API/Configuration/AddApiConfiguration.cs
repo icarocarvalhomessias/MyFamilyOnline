@@ -1,4 +1,4 @@
-﻿using Familia.WebApp.MVC.Extensions;
+﻿using FML.Core.Data;
 using FML.WebApi.Core.Identidade;
 using Microsoft.AspNetCore.Authentication;
 
@@ -12,6 +12,7 @@ namespace FML.Identidade.API.Configuration
 
             services.AddScoped<AuthenticationService>();
             services.AddScoped<IAspNetUser, AspNetUser>();
+
 
             return services;
         }
@@ -29,12 +30,12 @@ namespace FML.Identidade.API.Configuration
 
             app.UseAuthConfiguration();
 
+            app.UseCors("AllowAll");
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-
-            //app.UseJwksDiscovery();
 
             return app;
         }

@@ -1,4 +1,6 @@
-﻿namespace FML.WebApp.MVC.Models
+﻿using System;
+
+namespace FML.WebApp.MVC.Models
 {
     public class ListaDeDesejos : Entity
     {

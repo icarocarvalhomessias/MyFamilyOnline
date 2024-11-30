@@ -21,3 +21,4 @@ C:\Workspace\MinhaFamiliaOnline\Familia\src\building blocks\FML.Core\obj\Debug\n
 C:\Workspace\MinhaFamiliaOnline\Familia\src\building blocks\FML.Core\obj\Debug\net8.0\refint\FML.Core.dll
 C:\Workspace\MinhaFamiliaOnline\Familia\src\building blocks\FML.Core\obj\Debug\net8.0\FML.Core.pdb
 C:\Workspace\MinhaFamiliaOnline\Familia\src\building blocks\FML.Core\obj\Debug\net8.0\ref\FML.Core.dll
+C:\Workspace\MinhaFamiliaOnline\Familia\src\building blocks\FML.Core\obj\Debug\net8.0\FML.Core.csproj.AssemblyReference.cache

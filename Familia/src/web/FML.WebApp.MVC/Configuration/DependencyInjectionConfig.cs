@@ -1,7 +1,9 @@
 ﻿using Familia.WebApp.MVC.Extensions;
+using FML.Core.Data;
 using FML.WebApp.MVC.Services;
 using FML.WebApp.MVC.Services.Handlers;
 using FML.WebApp.MVC.Services.Interface;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Familia.WebApp.MVC.Configuration
 {
@@ -14,14 +16,11 @@ namespace Familia.WebApp.MVC.Configuration
 
             services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
 
-            services.AddHttpClient<IAutenticacaoService, AutenticacaoService>()
-                .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
+            services.AddHttpClient<IAutenticacaoService, AutenticacaoService>();
 
-            services.AddHttpClient<IEventoService, EventoService>()
-                .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
+            services.AddHttpClient<IEventoService, EventoService>();
 
-            services.AddHttpClient<IFamiliaService, FamiliaService>()
-                .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
+            services.AddHttpClient<IFamiliaService, FamiliaService>();
 
             services.AddScoped<IEventoService, EventoService>();
             services.AddScoped<IFamiliaService, FamiliaService>();
