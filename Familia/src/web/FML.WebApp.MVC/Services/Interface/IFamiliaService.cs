@@ -6,7 +6,7 @@ namespace FML.WebApp.MVC.Services.Interface;
 
 public interface IFamiliaService
 {
-    Task<List<Relative>> GetRelativeByFamilyId(Guid familyId);
+    Task<List<Relative>> GetRelatives();
 
     Task<Relative> GetRelativeById(Guid relativeId);
 

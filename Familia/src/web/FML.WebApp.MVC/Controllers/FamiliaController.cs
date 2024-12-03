@@ -15,31 +15,22 @@ namespace FML.WebApp.MVC.Controllers
     public class FamiliaController : Controller
     {
         private readonly IFamiliaService _familiaService;
-        private readonly IAspNetUser _user;
 
-		public FamiliaController(IFamiliaService familiaService, IAspNetUser aspNetUser)
+        public FamiliaController(IFamiliaService familiaService)
         {
             _familiaService = familiaService;
-			_user = aspNetUser;
-		}
+        }
 
-		[HttpGet]
-		public async Task<IActionResult> Index()
-		{
-			var familyClaim = _user.ObterClaims().FirstOrDefault(x => x.Type == "Familia")?.Value;
-			if (Guid.TryParse(familyClaim, out var parsedFamilyId))
-			{
-				var relatives = await _familiaService.GetRelativeByFamilyId(parsedFamilyId);
-				var familyTree = OrganizeFamilyTree(relatives);
-				return View(familyTree);
-			}
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var relatives = await _familiaService.GetRelatives();
+            var familyTree = OrganizeFamilyTree(relatives);
+            return View(familyTree);
+        }
 
-			// Handle the case where the claim is not present or not a valid Guid
-			return BadRequest("Invalid family claim.");
-		}
-
-		// Método para organizar a lista de Relative em FamilyTreeViewModel
-		private FamilyTreeViewModel OrganizeFamilyTree(List<Relative> relatives)
+        // Método para organizar a lista de Relative em FamilyTreeViewModel
+        private FamilyTreeViewModel OrganizeFamilyTree(List<Relative> relatives)
         {
             var TESTE = relatives.Where(x => x.Id != Guid.Parse("1a9cedd7-4493-4c7b-c81c-08dd0d7371ad")
             && x.Id != Guid.Parse("9c6a8126-180b-40b2-65bf-08dd0d73fbc5")).ToList();
@@ -48,7 +39,7 @@ namespace FML.WebApp.MVC.Controllers
             // Esta é uma implementação simplificada e pode precisar de ajustes
             var root = new FamilyTreeViewModel
             {
-                Pessoa1 = TESTE.FirstOrDefault(r => r.Patriarch), 
+                Pessoa1 = TESTE.FirstOrDefault(r => r.Patriarch),
                 Pessoa2 = TESTE.FirstOrDefault(r => r.Matriarch)
             };
 
@@ -62,7 +53,7 @@ namespace FML.WebApp.MVC.Controllers
 
         private void AddChildren(FamilyTreeViewModel parent, List<Relative> relatives)
         {
-            if(parent.Pessoa1 is null || parent.Pessoa2 is null)
+            if (parent.Pessoa1 is null || parent.Pessoa2 is null)
             {
                 return;
             }
@@ -98,15 +89,14 @@ namespace FML.WebApp.MVC.Controllers
 
         public async Task<IActionResult> Create()
         {
-            var familyId = Guid.Parse("417d7e43-fe2f-44d6-a8c4-4070e841ad53");
-            var relatives = await _familiaService.GetRelativeByFamilyId(familyId);
+            var relatives = await _familiaService.GetRelatives();
             var homens = relatives.Where(x => x.Gender == Gender.Male).ToList();
             var mulheres = relatives.Where(x => x.Gender == Gender.Female).ToList();
 
             ViewBag.Homens = new SelectList(homens, "Id", "FullName");
             ViewBag.Mulheres = new SelectList(mulheres, "Id", "FullName");
 
-            await PopulateDropDownLists(familyId);
+            await PopulateDropDownLists();
 
             return View("Create", new Relative());
         }
@@ -120,7 +110,7 @@ namespace FML.WebApp.MVC.Controllers
                 return RedirectToAction(nameof(Index), new { familyId = relative.FamilyId });
             }
 
-            await PopulateDropDownLists(relative.FamilyId);
+            await PopulateDropDownLists();
             return View(relative);
         }
 
@@ -138,7 +128,7 @@ namespace FML.WebApp.MVC.Controllers
             }
 
             ViewBag.Relative = relative;
-            await PopulateDropDownLists(relative.FamilyId);
+            await PopulateDropDownLists();
 
             return View("Create", relative);
         }
@@ -149,7 +139,7 @@ namespace FML.WebApp.MVC.Controllers
             if (!ModelState.IsValid)
             {
                 LogModelErrors();
-                await PopulateDropDownLists(model.FamilyId);
+                await PopulateDropDownLists();
                 return View("Create", model);
             }
 
@@ -163,9 +153,9 @@ namespace FML.WebApp.MVC.Controllers
             return RedirectToAction("Index");
         }
 
-        private async Task PopulateDropDownLists(Guid familyId)
+        private async Task PopulateDropDownLists()
         {
-            var family = await _familiaService.GetRelativeByFamilyId(familyId);
+            var family = await _familiaService.GetRelatives();
             var homens = family.Where(x => x.Gender == Gender.Male).ToList();
             var mulheres = family.Where(x => x.Gender == Gender.Female).ToList();
 
@@ -173,7 +163,7 @@ namespace FML.WebApp.MVC.Controllers
             ViewBag.Mulheres = new SelectList(mulheres, "Id", "FirstName");
 
             var familias = await _familiaService.GetFamilies();
-            var houses = await _familiaService.GetHousesByFamilyId(familyId);
+            var houses = await _familiaService.GetHousesByFamilyId(familias.First().Id);
 
             ViewBag.Familias = new SelectList(familias, "Id", "Name");
             ViewBag.Casas = new SelectList(houses, "Id", "Name");

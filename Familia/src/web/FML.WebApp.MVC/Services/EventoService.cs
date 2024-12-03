@@ -1,5 +1,4 @@
-﻿using Familia.WebApp.MVC.Extensions;
-using FML.Core.Data;
+﻿using FML.Core.Data;
 using FML.WebApp.MVC.Extensions;
 using FML.WebApp.MVC.Models;
 using FML.WebApp.MVC.Services.Interface;
@@ -8,7 +7,6 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace FML.WebApp.MVC.Services
@@ -24,14 +22,7 @@ namespace FML.WebApp.MVC.Services
                          ILogger<EventoService> logger,
                          IAspNetUser user)
         {
-            var handler = new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true
-            };
-            _user = user;
-
-            _httpClient = new HttpClient(handler);
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _user.ObterUserToken());
+            _httpClient = httpClient;
             _httpClient.BaseAddress = new Uri(settings.Value.EventoUrl);
         }
 

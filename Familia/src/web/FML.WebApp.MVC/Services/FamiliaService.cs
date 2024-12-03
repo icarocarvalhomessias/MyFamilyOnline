@@ -1,4 +1,4 @@
-﻿using Familia.WebApp.MVC.Extensions;
+﻿using Azure;
 using FML.Core.Data;
 using FML.WebApp.MVC.Extensions;
 using FML.WebApp.MVC.Services.Interface;
@@ -6,8 +6,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace FML.WebApp.MVC.Services
@@ -22,29 +22,26 @@ namespace FML.WebApp.MVC.Services
                                    ILogger<FamiliaService> logger,
                                    IAspNetUser user)
         {
-            var handler = new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true
-            };
-
+            _httpClient = httpClient;
+            _httpClient.BaseAddress = new Uri(settings.Value.EventoUrl);
             _user = user;
-            _httpClient = new HttpClient(handler);
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _user.ObterUserToken());
-            _httpClient.BaseAddress = new Uri(settings.Value.FamiliaUrl);
-
         }
 
-        public async Task<List<Relative>> GetRelativeByFamilyId(Guid familyId)
+        public async Task<List<Relative>> GetRelatives()
         {
-            var endpoint = $"/family/{familyId}";
-            var response = await _httpClient.GetAsync(endpoint);
+            var familyId = _user.ObterClaims().FirstOrDefault(x => x.Type == "Familia")?.Value;
 
-            if (!TratarErrosResponse(response))
+            if (Guid.TryParse(familyId, out var parsedFamilyId))
             {
+                var endpoint = $"family/{parsedFamilyId}";
+                var response = await _httpClient.GetAsync(endpoint);
+                if (!TratarErrosResponse(response)) return await DeserializarObjetoResponse<List<Relative>>(response);
+                
                 return await DeserializarObjetoResponse<List<Relative>>(response);
+
             }
 
-            return await DeserializarObjetoResponse<List<Relative>>(response);
+            return new List<Relative>();
 
         }
 

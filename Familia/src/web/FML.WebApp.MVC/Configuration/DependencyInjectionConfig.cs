@@ -17,10 +17,17 @@ namespace Familia.WebApp.MVC.Configuration
             services.AddHttpContextAccessor();
             services.AddScoped<IAspNetUser, AspNetUser>();
 
+            services.AddHttpClient<IEventoService, EventoService>()
+                .AddHttpMessageHandler<AuthorizationHandler>()
+                .ConfigurePrimaryHttpMessageHandler(() => new CustomHttpClientHandler());
+
+            services.AddHttpClient<IFamiliaService, FamiliaService>()
+                .AddHttpMessageHandler<AuthorizationHandler>()
+                .ConfigurePrimaryHttpMessageHandler(() => new CustomHttpClientHandler());
+
+            services.AddTransient<AuthorizationHandler>();
             services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
             services.AddHttpClient<IAutenticacaoService, AutenticacaoService>();
-            services.AddHttpClient<IEventoService, EventoService>();
-            services.AddHttpClient<IFamiliaService, FamiliaService>();
 
         }
     }
