@@ -15,28 +15,11 @@ internal class Program
             .AddJsonFile($"appsettings.{hostEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true)
             .AddEnvironmentVariables();
 
-        ConfigureServices(builder);
+        builder.Services.AddApiConfiguration(configuration);
+
         var app = builder.Build();
-        Configure(app);
+        app.UseApiConfiguration(app.Environment);
         app.Run();
     }
-
-    private static void ConfigureServices(WebApplicationBuilder builder)
-    {
-        var configuration = builder.Configuration;
-        builder.Services.AddApiConfiguration(configuration);
-        builder.Services.AddJwtConfiguration(configuration);
-        builder.Services.AddSwaggerConfiguration();
-        builder.Services.RegisterServices();
-        builder.Services.RegisterJson();
-    }
-
-    private static void Configure(WebApplication app)
-    {
-        app.UseSwaggerConfiguration();
-
-        app.UseApiConfiguration(app.Environment);
-    }
-
 }
 

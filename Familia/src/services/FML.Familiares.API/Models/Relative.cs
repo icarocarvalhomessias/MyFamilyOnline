@@ -1,21 +1,4 @@
 ﻿using FML.Core.DomainObjects;
-using System.ComponentModel.DataAnnotations.Schema;
-
-public abstract class Entity
-{
-    public Guid Id { get; set; }
-}
-
-public class Family : Entity, IAggregateRoot
-{
-    public string Name { get; set; }
-    public DateTime StartDate { get; set; }
-    public bool IsActive { get; set; }
-    public string History { get; set; }
-
-    public List<Relative> Relatives { get; set; }
-    public List<House> Houses { get; set; }
-}
 
 public class Relative : Entity, IAggregateRoot
 {
@@ -54,27 +37,4 @@ public class Relative : Entity, IAggregateRoot
             HouseId = house.Id;
         }
     }
-}
-
-public class House : Entity, IAggregateRoot
-{
-    public string Name { get; set; }
-    public bool IsActive { get; set; }
-    public Guid FamilyId { get; set; }
-    public string? Address { get; set; }
-    public string? City { get; set; }
-    public string? State { get; set; }
-    public string? ZipCode { get; set; }
-
-    [NotMapped]
-    public Family Family { get; set; }
-    [NotMapped]
-    public List<Relative> Residents { get; set; }
-}
-
-public enum Gender
-{
-    Male,
-    Female,
-    Other
 }

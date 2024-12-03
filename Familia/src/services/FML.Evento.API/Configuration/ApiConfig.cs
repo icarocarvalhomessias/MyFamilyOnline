@@ -22,10 +22,16 @@ namespace FML.Evento.API.Configuration
             });
 
             services.AddControllers();
+            services.AddJwtConfiguration(configuration);
+            services.AddSwaggerConfiguration();
+            services.RegisterServices();
+            services.RegisterJson();
         }
 
         public static void UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwaggerConfiguration();
+
             // Configure the HTTP request pipeline.
             if (env.IsDevelopment())
             {
