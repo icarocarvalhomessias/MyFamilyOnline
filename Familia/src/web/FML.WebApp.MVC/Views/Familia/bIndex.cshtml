@@ -5,36 +5,41 @@
     ViewData["Title"] = "Familia2";
     Layout = "~/Views/Shared/_Layout.cshtml"; // Assuming you have a shared layout file
 }
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var toggles = document.querySelectorAll('.toggle');
-        toggles.forEach(function (toggle) {
-            toggle.addEventListener('click', function (e) {
-                e.preventDefault();
-                var nextUl = this.nextElementSibling;
-                if (nextUl && nextUl.tagName === 'UL') {
-                    nextUl.classList.toggle('hidden');
-                }
-            });
-        });
-    });
-</script>
-
 <!--
 We will create a family tree using just CSS(3)
 The markup will be simple nested lists
 -->
-<div class="tab-pane full-screen">
-
-    <div class="tree-container">
-        <div class="tree">
-            @Html.Partial("_FamilyTree", Model)
-        </div>
-    </div>
+<div class="tree">
+    <ul>
+        <li>
+            <a href="#">Francisco e Maria Jovita</a>
+            <ul>
+                <li>
+                    <a href="#">Maria e Mario</a>
+                    <ul>
+                        <li>
+                            <a href="#">Marcelo E Marlene</a>
+                            <ul>
+                                <li>
+                                    <a href="#">Icaro</a>
+                                </li>
+                                <li>
+                                    <a href="#">Marcela</a>
+                                </li>
+                                <li>
+                                    <a href="#">Natasha</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Lidia</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
 </div>
-
-
 
 <style>
     /*Now the CSS*/
@@ -49,10 +54,11 @@ The markup will be simple nested lists
         transition: all 0.5s;
         -webkit-transition: all 0.5s;
         -moz-transition: all 0.5s;
+        display: flex;
+        justify-content: center;
     }
 
     .tree li {
-        float: left;
         text-align: center;
         list-style-type: none;
         position: relative;
@@ -60,6 +66,9 @@ The markup will be simple nested lists
         transition: all 0.5s;
         -webkit-transition: all 0.5s;
         -moz-transition: all 0.5s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
         /*We will use ::before and ::after to draw the connectors*/
@@ -81,7 +90,7 @@ The markup will be simple nested lists
         }
 
         /*We need to remove left-right connectors from elements without
-            any siblings*/
+        any siblings*/
         .tree li:only-child::after, .tree li:only-child::before {
             display: none;
         }
@@ -92,7 +101,7 @@ The markup will be simple nested lists
         }
 
         /*Remove left connector from first child and
-            right connector from last child*/
+        right connector from last child*/
         .tree li:first-child::before, .tree li:last-child::after {
             border: 0 none;
         }
@@ -153,27 +162,5 @@ The markup will be simple nested lists
             }
 
     /*Thats all. I hope you enjoyed it.
-            Thanks :)*/
-    .full-screen {
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .tree-container {
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .tree {
-        display: inline-block;
-        transform-origin: top left;
-        transition: transform 0.5s;
-    }
+        Thanks :)*/
 </style>

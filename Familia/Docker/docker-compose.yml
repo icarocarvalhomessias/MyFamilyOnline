@@ -2,18 +2,18 @@ version: '3.8'
 
 services:
 #------------------------------------------------------------------------------------------------------------------------------------------------
-  # webapp.mvc:
-  #   image: webapp.mvc
-  #   container_name: webappMvc
-  #   build:
-  #     context: ../src
-  #     dockerfile: ./web/FML.WebApp.MVC/Dockerfile
-  #   ports:
-  #     - "5001:5001"
-  #     - "5003:5003"
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Production
-  #     - ASPNETCORE_URLS=http://+:44303
+  webapp.mvc:
+    image: webapp.mvc
+    container_name: webappMvc
+    build:
+      context: ../src
+      dockerfile: ./web/FML.WebApp.MVC/Dockerfile
+    ports:
+      - "5001:5001"
+      - "5003:5003"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:44303
 
 #------------------------------------------------------------------------------------------------------------------------------------------------
   identidade.api:

@@ -13,6 +13,8 @@ namespace FML.Core.Data
         bool PossuiRole(string role);
         IEnumerable<Claim> ObterClaims();
         HttpContext ObterHttpContext();
+        string ObterUserName();
+
     }
 
     public class AspNetUser : IAspNetUser
@@ -59,6 +61,11 @@ namespace FML.Core.Data
         public HttpContext ObterHttpContext()
         {
             return _accessor.HttpContext;
+        }
+
+        public string ObterUserName()
+        {
+            return EstaAutenticado() ? _accessor.HttpContext.User.Identity.Name : "";
         }
     }
 

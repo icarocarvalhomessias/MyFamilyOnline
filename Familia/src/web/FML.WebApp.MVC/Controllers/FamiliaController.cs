@@ -1,8 +1,11 @@
-﻿using FML.WebApp.MVC.Services.Interface;
+﻿using FML.Core.Data;
+using FML.WebApp.MVC.Services.Interface;
+using FML.WebApp.MVC.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,19 +15,86 @@ namespace FML.WebApp.MVC.Controllers
     public class FamiliaController : Controller
     {
         private readonly IFamiliaService _familiaService;
+        private readonly IAspNetUser _user;
 
-        public FamiliaController(IFamiliaService familiaService)
+		public FamiliaController(IFamiliaService familiaService, IAspNetUser aspNetUser)
         {
             _familiaService = familiaService;
+			_user = aspNetUser;
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> Index()
+		{
+			var familyClaim = _user.ObterClaims().FirstOrDefault(x => x.Type == "Familia")?.Value;
+			if (Guid.TryParse(familyClaim, out var parsedFamilyId))
+			{
+				var relatives = await _familiaService.GetRelativeByFamilyId(parsedFamilyId);
+				var familyTree = OrganizeFamilyTree(relatives);
+				return View(familyTree);
+			}
+
+			// Handle the case where the claim is not present or not a valid Guid
+			return BadRequest("Invalid family claim.");
+		}
+
+		// Método para organizar a lista de Relative em FamilyTreeViewModel
+		private FamilyTreeViewModel OrganizeFamilyTree(List<Relative> relatives)
+        {
+            var TESTE = relatives.Where(x => x.Id != Guid.Parse("1a9cedd7-4493-4c7b-c81c-08dd0d7371ad")
+            && x.Id != Guid.Parse("9c6a8126-180b-40b2-65bf-08dd0d73fbc5")).ToList();
+
+            // Implementação do método para organizar a árvore genealógica
+            // Esta é uma implementação simplificada e pode precisar de ajustes
+            var root = new FamilyTreeViewModel
+            {
+                Pessoa1 = TESTE.FirstOrDefault(r => r.Patriarch), 
+                Pessoa2 = TESTE.FirstOrDefault(r => r.Matriarch)
+            };
+
+            root.Id = GenerateId(root);
+
+            // Adicionar filhos recursivamente
+            AddChildren(root, TESTE);
+
+            return root;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Index(Guid familyId)
+        private void AddChildren(FamilyTreeViewModel parent, List<Relative> relatives)
         {
-            familyId = Guid.Parse("417d7e43-fe2f-44d6-a8c4-4070e841ad53");
-            var relatives = await _familiaService.GetRelativeByFamilyId(familyId);
-            return View(relatives);
+            if(parent.Pessoa1 is null || parent.Pessoa2 is null)
+            {
+                return;
+            }
+
+            // Filtra os filhos que têm o pai ou a mãe como Pessoa1 ou Pessoa2
+            var children = relatives.Where(r =>
+                (r.MotherId.HasValue && (r.MotherId == parent.Pessoa1.Id || r.MotherId == parent.Pessoa2.Id)) ||
+                (r.FatherId.HasValue && (r.FatherId == parent.Pessoa1.Id || r.FatherId == parent.Pessoa2.Id))
+            ).Distinct().ToList();
+
+            foreach (var child in children)
+            {
+                var childNode = new FamilyTreeViewModel
+                {
+                    Pessoa1 = child,
+                    Pessoa2 = relatives.FirstOrDefault(r => r.Id == child.Spouse) // Exemplo de cônjuge
+                };
+
+                childNode.Id = GenerateId(childNode);
+
+                parent.Filhos.Add(childNode);
+                AddChildren(childNode, relatives);
+            }
         }
+
+        private string GenerateId(FamilyTreeViewModel familyTreeViewModel)
+        {
+            var id1 = familyTreeViewModel.Pessoa1?.Id.ToString() ?? string.Empty;
+            var id2 = familyTreeViewModel.Pessoa2?.Id.ToString() ?? string.Empty;
+            return id1 + id2;
+        }
+
 
         public async Task<IActionResult> Create()
         {

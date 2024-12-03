@@ -12,6 +12,7 @@ C:\Workspace\Familia\Familia\src\building blocks\FML.Core\obj\Debug\net8.0\ref\F
 C:\Workspace\MinhaFamiliaOnline\Familia\src\building blocks\FML.Core\bin\Debug\net8.0\FML.Core.deps.json
 C:\Workspace\MinhaFamiliaOnline\Familia\src\building blocks\FML.Core\bin\Debug\net8.0\FML.Core.dll
 C:\Workspace\MinhaFamiliaOnline\Familia\src\building blocks\FML.Core\bin\Debug\net8.0\FML.Core.pdb
+C:\Workspace\MinhaFamiliaOnline\Familia\src\building blocks\FML.Core\obj\Debug\net8.0\FML.Core.csproj.AssemblyReference.cache
 C:\Workspace\MinhaFamiliaOnline\Familia\src\building blocks\FML.Core\obj\Debug\net8.0\FML.Core.GeneratedMSBuildEditorConfig.editorconfig
 C:\Workspace\MinhaFamiliaOnline\Familia\src\building blocks\FML.Core\obj\Debug\net8.0\FML.Core.AssemblyInfoInputs.cache
 C:\Workspace\MinhaFamiliaOnline\Familia\src\building blocks\FML.Core\obj\Debug\net8.0\FML.Core.AssemblyInfo.cs
@@ -21,4 +22,3 @@ C:\Workspace\MinhaFamiliaOnline\Familia\src\building blocks\FML.Core\obj\Debug\n
 C:\Workspace\MinhaFamiliaOnline\Familia\src\building blocks\FML.Core\obj\Debug\net8.0\refint\FML.Core.dll
 C:\Workspace\MinhaFamiliaOnline\Familia\src\building blocks\FML.Core\obj\Debug\net8.0\FML.Core.pdb
 C:\Workspace\MinhaFamiliaOnline\Familia\src\building blocks\FML.Core\obj\Debug\net8.0\ref\FML.Core.dll
-C:\Workspace\MinhaFamiliaOnline\Familia\src\building blocks\FML.Core\obj\Debug\net8.0\FML.Core.csproj.AssemblyReference.cache

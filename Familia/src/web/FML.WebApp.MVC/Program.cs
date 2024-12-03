@@ -1,5 +1,6 @@
 using Familia.WebApp.MVC.Configuration;
 using Familia.WebApp.MVC.Extensions;
+using FML.Core.Data;
 using FML.WebApp.MVC.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +13,14 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        // Add services to the container.
+        builder.Services.AddControllersWithViews();
+        builder.Services.AddIdentityConfiguration();
+        builder.Services.AddControllersWithViews();
+        builder.Services.RegisterServices();
+
+        builder.Services.AddScoped<IAspNetUser, AspNetUser>();
+
         // Configuração do host environment
         var hostEnvironment = builder.Environment;
         builder.Configuration
@@ -22,12 +31,6 @@ internal class Program
 
         var appSettingsSection = builder.Configuration.GetSection("AppSettings");
         builder.Services.Configure<AppSettings>(appSettingsSection);
-
-        // Add services to the container.
-        builder.Services.AddControllersWithViews();
-        builder.Services.AddIdentityConfiguration();
-        builder.Services.AddControllersWithViews();
-        builder.Services.RegisterServices();
 
         var app = builder.Build();
 

@@ -58,6 +58,8 @@ public class Relative : Entity
             HouseId = house.Id;
         }
     }
+
+    public string FullName => $"{FirstName} {LastName}";
 }
 
 

@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FML.Identidade.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5e146b1df04a90f52c7aba484e09ea781ef6b37e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+94523f13b3fcb33fc557582e9b84e4cd1861b644")]
 [assembly: System.Reflection.AssemblyProductAttribute("FML.Identidade.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FML.Identidade.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

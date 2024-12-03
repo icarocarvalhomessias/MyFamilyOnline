@@ -20,4 +20,11 @@
 		<ProjectReference Include="..\..\building blocks\FML.WebApi.Core\FML.WebApi.Core.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Content Update="Views\Familia\bIndex.cshtml">
+	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	</ItemGroup>
+
 </Project>

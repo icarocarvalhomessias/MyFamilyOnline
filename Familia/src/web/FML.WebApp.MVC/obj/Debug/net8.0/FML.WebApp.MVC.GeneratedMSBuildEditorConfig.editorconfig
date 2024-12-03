@@ -30,12 +30,24 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXZlbnRvXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Workspace/MinhaFamiliaOnline/Familia/src/web/FML.WebApp.MVC/Views/Familia/bIndex.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFtaWxpYVxiSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Workspace/MinhaFamiliaOnline/Familia/src/web/FML.WebApp.MVC/Views/Familia/cIndex.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFtaWxpYVxjSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Workspace/MinhaFamiliaOnline/Familia/src/web/FML.WebApp.MVC/Views/Familia/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFtaWxpYVxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Workspace/MinhaFamiliaOnline/Familia/src/web/FML.WebApp.MVC/Views/Familia/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFtaWxpYVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Workspace/MinhaFamiliaOnline/Familia/src/web/FML.WebApp.MVC/Views/Familia/_FamilyTree.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFtaWxpYVxfRmFtaWx5VHJlZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Workspace/MinhaFamiliaOnline/Familia/src/web/FML.WebApp.MVC/Views/Home/Index.cshtml]
