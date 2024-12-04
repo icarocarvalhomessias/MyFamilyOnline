@@ -1,5 +1,4 @@
 using FML.Evento.API.Configuration;
-using FML.WebApi.Core.Identidade;
 
 internal class Program
 {
@@ -19,6 +18,7 @@ internal class Program
 
         var app = builder.Build();
         app.UseApiConfiguration(app.Environment);
+
         app.Run();
     }
 }

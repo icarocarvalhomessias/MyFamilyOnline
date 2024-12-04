@@ -1,16 +1,17 @@
-﻿using FML.WebApi.Core.Identidade;
+﻿using FML.WebApi.Core.Controllers;
+using FML.WebApi.Core.Identidade;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FML.Familiares.API.Controllers
 {
-    [Route("api/family")]
     [Authorize]
-    public class FamilyController : MainController
+    [Route("api/[controller]")]
+    public class FamiliasController : MainController
     {
         private readonly IFamilyService _familiaService;
 
-        public FamilyController(IFamilyService familiaService)
+        public FamiliasController(IFamilyService familiaService)
         {
             _familiaService = familiaService;
         }
@@ -23,7 +24,8 @@ namespace FML.Familiares.API.Controllers
             return CustomResponse(family);
         }
 
-        [HttpGet("/families")]
+        [HttpGet]
+        [ClaimsAuthorize("Familia", "Read/Write")]
         public async Task<IActionResult> GetFamilies()
         {
             var families = await _familiaService.GetFamilies();

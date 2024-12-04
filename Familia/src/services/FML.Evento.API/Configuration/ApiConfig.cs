@@ -25,7 +25,6 @@ namespace FML.Evento.API.Configuration
             services.AddJwtConfiguration(configuration);
             services.AddSwaggerConfiguration();
             services.RegisterServices();
-            services.RegisterJson();
         }
 
         public static void UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)

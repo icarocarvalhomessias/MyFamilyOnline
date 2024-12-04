@@ -1,26 +1,27 @@
 ﻿using FML.Familiares.API.Services.Interface;
+using FML.WebApi.Core.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FML.Familiares.API.Controllers
 {
-    [Route("api/relative")]
     [Authorize]
-    public class RelativeController : MainController
+    [Route("api/[controller]")]
+    public class FamiliaresController : MainController
     {
 
         private readonly IRelativeService _relativeService;
 
-        public RelativeController(IRelativeService relativeService)
+        public FamiliaresController(IRelativeService relativeService)
         {
             _relativeService = relativeService;
         }
 
 
-        [HttpGet("/family/{id:guid}")]
-        public async Task<IActionResult> GetRelativeByFamilyId(Guid id)
+        [HttpGet]
+        public async Task<IActionResult> GetRelatives()
         {
-            var resposta = await _relativeService.GetRelativeByFamilyId(id);
+            var resposta = await _relativeService.GetRelatives();
             return CustomResponse(resposta);
         }
 
@@ -50,6 +51,7 @@ namespace FML.Familiares.API.Controllers
             return CustomResponse(relative);
         }
 
+
         [HttpDelete("{relativeId:guid}")]
         public async Task<IActionResult> RemoveRelative(Guid relativeId)
         {
@@ -63,6 +65,7 @@ namespace FML.Familiares.API.Controllers
 
             return CustomResponse();
         }
+
 
         [HttpGet("{relativeId:guid}")]
         public async Task<IActionResult> GetRelativeById(Guid relativeId)

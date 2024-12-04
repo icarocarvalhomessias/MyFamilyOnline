@@ -8,11 +8,9 @@ namespace Familia.WebApp.MVC.Controllers
     [Authorize]
     public class HomeController : MainController
     {
-        private readonly IEventoService _eventoService;
 
-        public HomeController(IEventoService eventoService)
+        public HomeController()
         {
-            _eventoService = eventoService;
         }
         
         [HttpGet]

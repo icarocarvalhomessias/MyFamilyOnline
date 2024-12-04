@@ -10,9 +10,9 @@ namespace FML.WebApp.MVC.Controllers
 {
     public class ListaDeDesejosController : MainController
     {
-        private readonly IEventoService _eventoService;
+        private readonly IEventoServiceRefit _eventoService;
 
-        public ListaDeDesejosController(IEventoService eventoService)
+        public ListaDeDesejosController(IEventoServiceRefit eventoService)
         {
             _eventoService = eventoService;
         }

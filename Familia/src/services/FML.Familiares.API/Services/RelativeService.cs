@@ -20,8 +20,9 @@ namespace FML.Familiares.API.Services
         }
 
 
-        public async Task<IEnumerable<Relative>> GetRelativeByFamilyId(Guid id)
+        public async Task<IEnumerable<Relative>> GetRelatives()
         {
+            var id = Guid.Parse("417d7e43-fe2f-44d6-a8c4-4070e841ad53");
             return await _relativeRepository.GetRelativesByFamilyId(id);
         }
 

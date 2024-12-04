@@ -1,13 +1,14 @@
 ﻿using FML.Evento.API.Data.Entities;
 using FML.Evento.API.Models;
 using FML.Evento.API.Services.Interface;
+using FML.WebApi.Core.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FML.Evento.API.Controllers
-{
-    [Route("api/lista-de-desejos")]
+{ 
     [Authorize]
+    [Route("api/lista-de-desejos")]
     public class ListaDeDesejosController : MainController
     {
         private readonly IEventoService _eventoService;

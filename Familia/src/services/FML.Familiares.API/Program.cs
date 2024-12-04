@@ -1,5 +1,4 @@
 using FML.Familiares.API.Configuration;
-using FML.WebApi.Core.Identidade;
 
 internal class Program
 {

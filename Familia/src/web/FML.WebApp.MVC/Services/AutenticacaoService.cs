@@ -16,13 +16,7 @@ namespace FML.WebApp.MVC.Services
         public AutenticacaoService(HttpClient httpClient,
                                    IOptions<AppSettings> settings)
         {
-            var handler = new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true
-            };
-
-            _httpClient = new HttpClient(handler);
-            _httpClient.BaseAddress = new Uri(settings.Value.AutenticacaoUrl);
+            _httpClient = httpClient;
         }
 
         public async Task<UsuarioRespostaLogin> Login(UsuarioLogin usuarioLogin)

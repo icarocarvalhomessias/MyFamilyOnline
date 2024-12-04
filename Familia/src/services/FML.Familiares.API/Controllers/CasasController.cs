@@ -1,23 +1,24 @@
 ﻿using FML.Familiares.API.Services.Interface;
+using FML.WebApi.Core.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FML.Familiares.API.Controllers
 {
-    [Route("api/house")]
     [Authorize]
-    public class HouseController : MainController
+    [Route("api/[controller]")]
+    public class CasasController : MainController
     {
 
         private readonly IHouseService _houseService;
 
-        public HouseController(IHouseService houseService)
+        public CasasController(IHouseService houseService)
         {
             _houseService = houseService;
         }
 
-        [HttpGet("/house/family/{id:guid}")]
-        public async Task<IActionResult> GetHouseByFamilyId(Guid id)
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> Casas(Guid id)
         {
             var resposta = await _houseService.GetHousesByFamilyId(id);
             return CustomResponse(resposta);

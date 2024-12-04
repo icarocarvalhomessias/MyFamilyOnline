@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
-using FML.WebApp.MVC.Services.Interface;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System;
+using FML.WebApp.MVC.Services.Interface;
 
 namespace Familia.WebApp.MVC.Controllers
 {

@@ -26,7 +26,6 @@ namespace FML.Familiares.API.Configuration
             services.AddSwaggerConfiguration();
             services.RegisterServices();
             services.RegisterJson();
-
         }
 
         public static void UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)

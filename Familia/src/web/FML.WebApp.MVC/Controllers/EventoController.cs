@@ -13,10 +13,10 @@ namespace FML.WebApp.MVC.Controllers
     [Authorize]
     public class EventoController : MainController
     {
-        private readonly IEventoService _eventoService;
+        private readonly IEventoServiceRefit _eventoService;
 
 
-        public EventoController(IEventoService eventoService)
+        public EventoController(IEventoServiceRefit eventoService)
         {
             _eventoService = eventoService;
         }

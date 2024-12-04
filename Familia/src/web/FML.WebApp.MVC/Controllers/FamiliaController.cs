@@ -1,4 +1,4 @@
-﻿using FML.Core.Data;
+﻿using Familia.WebApp.MVC.Controllers;
 using FML.WebApp.MVC.Services.Interface;
 using FML.WebApp.MVC.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 namespace FML.WebApp.MVC.Controllers
 {
     [Authorize]
-    public class FamiliaController : Controller
+    public class FamiliaController : MainController
     {
-        private readonly IFamiliaService _familiaService;
+        private readonly IFamiliaServiceRefit _familiaService;
 
-        public FamiliaController(IFamiliaService familiaService)
+        public FamiliaController(IFamiliaServiceRefit familiaService)
         {
             _familiaService = familiaService;
         }
@@ -28,6 +28,7 @@ namespace FML.WebApp.MVC.Controllers
             var familyTree = OrganizeFamilyTree(relatives);
             return View(familyTree);
         }
+
 
         // Método para organizar a lista de Relative em FamilyTreeViewModel
         private FamilyTreeViewModel OrganizeFamilyTree(List<Relative> relatives)

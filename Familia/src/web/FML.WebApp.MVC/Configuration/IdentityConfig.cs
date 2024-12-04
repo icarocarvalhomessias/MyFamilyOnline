@@ -17,7 +17,7 @@ namespace Familia.WebApp.MVC.Configuration
                 .SetBasePath(hostEnvironment.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{hostEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-            .AddEnvironmentVariables();
+                .AddEnvironmentVariables();
 
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
@@ -26,11 +26,11 @@ namespace Familia.WebApp.MVC.Configuration
                     options.AccessDeniedPath = "/acesso-negado";
                 });
 
-
             var appSettingsSection = builder.Configuration.GetSection("AppSettings");
             builder.Services.Configure<AppSettings>(appSettingsSection);
-
-            builder.Services.RegisterServices();
+            
+            var configuration = builder.Configuration;
+            builder.Services.RegisterServices(configuration);
         }
 
         public static void UseIdentityConfiguration(this WebApplication app)
