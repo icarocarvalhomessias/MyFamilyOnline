@@ -23,7 +23,7 @@ namespace FML.WebApp.MVC.Services
                                    IAspNetUser user)
         {
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri(settings.Value.EventoUrl);
+            _httpClient.BaseAddress = new Uri(settings.Value.FamiliaUrl);
             _user = user;
         }
 
