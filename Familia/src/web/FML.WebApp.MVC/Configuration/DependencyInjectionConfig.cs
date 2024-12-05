@@ -4,6 +4,7 @@ using FML.WebApp.MVC.Services;
 using FML.WebApp.MVC.Services.Interface;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Polly;
 using Refit;
 using System;
 
@@ -17,7 +18,10 @@ namespace Familia.WebApp.MVC.Configuration
             services.AddHttpContextAccessor();
             services.AddScoped<IAspNetUser, AspNetUser>();
 
+            #region REFIT CONFIG
+
             var refitSettings = RefitConfig.GetRefitSettings();
+            var retryConfig = RefitConfig.GetRetryPolicy();
 
             services.AddHttpClient("EventoRefit", options =>
             {
@@ -27,7 +31,8 @@ namespace Familia.WebApp.MVC.Configuration
                 .AddHttpMessageHandler<AuthorizationHandler>()
                 .ConfigurePrimaryHttpMessageHandler(() => new CustomHttpClientHandler())
                 .AddTypedClient(client => RestService.For<IEventoServiceRefit>(client, refitSettings))
-                .AddJsonOptions();
+                .AddPolicyHandler(retryConfig)
+                .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
             services.AddHttpClient("FamiliaRefit", options =>
             {
@@ -37,17 +42,10 @@ namespace Familia.WebApp.MVC.Configuration
                 .AddHttpMessageHandler<AuthorizationHandler>()
                 .ConfigurePrimaryHttpMessageHandler(() => new CustomHttpClientHandler())
                 .AddTypedClient(client => RestService.For<IFamiliaServiceRefit>(client, refitSettings))
-                .AddJsonOptions();
+                .AddPolicyHandler(retryConfig)
+                .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
-            services.AddHttpClient("AuteRefit", options =>
-            {
-                var familiaUrl = configuration.GetSection("FamiliaUrl").Value;
-                options.BaseAddress = new Uri(familiaUrl);
-            })
-                .AddHttpMessageHandler<AuthorizationHandler>()
-                .ConfigurePrimaryHttpMessageHandler(() => new CustomHttpClientHandler())
-                .AddTypedClient(client => RestService.For<IFamiliaServiceRefit>(client, refitSettings))
-                .AddJsonOptions();
+            #endregion
 
             services.AddTransient<AuthorizationHandler>();
             services.AddHttpClient<IAutenticacaoService, AutenticacaoService>(options =>
