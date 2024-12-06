@@ -80,7 +80,7 @@ public class House : Entity
 
 public enum Gender
 {
-    Male,
-    Female,
-    Other
+    Homen,
+    Mulher,
+    Outros
 }

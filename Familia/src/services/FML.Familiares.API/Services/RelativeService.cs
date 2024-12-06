@@ -20,7 +20,7 @@ namespace FML.Familiares.API.Services
         }
 
 
-        public async Task<IEnumerable<Relative>> GetRelatives()
+        public async Task<IEnumerable<Familiar>> GetRelatives()
         {
             var id = Guid.Parse("417d7e43-fe2f-44d6-a8c4-4070e841ad53");
             return await _relativeRepository.GetRelativesByFamilyId(id);
@@ -108,27 +108,27 @@ namespace FML.Familiares.API.Services
 
             #endregion
 
-            Relative chicada, mariaJovita;
+            Familiar chicada, mariaJovita;
             GetChicada(carvalho, out chicada, out mariaJovita);
 
-            Relative inha, mario, cacalo, lidia, rosane, joseEugenio, marcelo, marlene, icaro, lidiaMara, natasha, marcela, huncas, yuri, raissa;
+            Familiar inha, mario, cacalo, lidia, rosane, joseEugenio, marcelo, marlene, icaro, lidiaMara, natasha, marcela, huncas, yuri, raissa;
             CarvalhoMessias(carvalhoMessias, chicada, mariaJovita, out inha, out mario, out cacalo, out lidia, out rosane, out joseEugenio, out marcelo, out marlene, out icaro, out lidiaMara, out natasha, out marcela, out huncas, out yuri, out raissa);
 
-            Relative miguel, lidinha, andre, lidiane, arthur, luizGustavo, marcusVinicius, isabela;
+            Familiar miguel, lidinha, andre, lidiane, arthur, luizGustavo, marcusVinicius, isabela;
             CarvalhoOliveira(carvalhoOliveira, out miguel, out lidinha, out andre, out lidiane, out arthur, out luizGustavo, out marcusVinicius, out isabela);
 
-            Relative roseli, jurandyr, belisa, eduardo, vital, renata, manuela, benicio;
+            Familiar roseli, jurandyr, belisa, eduardo, vital, renata, manuela, benicio;
             CarvalhoValverde(carvalhoValverde, chicada, mariaJovita, out roseli, out jurandyr, out belisa, out eduardo, out vital, out renata, out manuela, out benicio);
 
-            Relative tina, renataAscencio, rodrigo, patricia, paulo, daniela, adrianoMaretti, julia, duda, guilherme, drizinho, henrique, pauloFerreira;
+            Familiar tina, renataAscencio, rodrigo, patricia, paulo, daniela, adrianoMaretti, julia, duda, guilherme, drizinho, henrique, pauloFerreira;
             CarvalhoFerreira(carvalhoFerreira, chicada, mariaJovita, out tina, out renataAscencio, out rodrigo, out patricia, out paulo, out daniela, out adrianoMaretti, out julia, out duda, out guilherme, out drizinho, out henrique, out pauloFerreira);
 
-            Relative dalila, airthon, mayra, adrianoDorna, bruna, leonardo, marina, gustavo, otavio;
+            Familiar dalila, airthon, mayra, adrianoDorna, bruna, leonardo, marina, gustavo, otavio;
             CarvalhoJunqueira(carvalhoJunqueira, chicada, mariaJovita, out dalila, out airthon, out mayra, out adrianoDorna, out bruna, out leonardo, out marina, out gustavo, out otavio);
 
             Final(inha, cacalo, icaro, lidiaMara, natasha, marcela, lidinha, arthur, luizGustavo, roseli, jurandyr, belisa, eduardo, manuela, benicio, tina, renataAscencio, rodrigo, daniela, adrianoMaretti, julia, duda, guilherme, drizinho, henrique, mayra, adrianoDorna, marina, gustavo, otavio);
 
-            var relatives = new List<Relative>
+            var relatives = new List<Familiar>
             {
                 chicada, mariaJovita,
                 inha, mario,
@@ -153,24 +153,30 @@ namespace FML.Familiares.API.Services
                 relative.FamilyId = familia.Id;
                 relative.HouseId = relative.House.Id;
 
-                await _relativeRepository.AddRelative(relative);
+                _relativeRepository.AddRelative(relative);
             }
+
+            if (!await _relativeRepository.UnitOfWork.Commit())
+            {
+                Console.WriteLine("Erro ao salvar os dados");
+            }
+
 
             return familia.Id;
         }
 
-        public async Task<bool> Update(Relative relative)
+        public async Task<bool> Update(Familiar relative)
         {
             return await _relativeRepository.UpdateRelative(relative);
         }
 
 
-        public async Task<Relative> GetRelativeById(Guid relativeId)
+        public async Task<Familiar> GetRelativeById(Guid relativeId)
         {
             return await _relativeRepository.GetRelativeById(relativeId);
         }
 
-        public async Task<bool> AddRelative(Relative relative)
+        public async Task<bool> AddRelative(Familiar relative)
         {
             return await _familyRepository.AddRelative(relative);
         }
@@ -184,9 +190,9 @@ namespace FML.Familiares.API.Services
         #region Private Methods
 
 
-        private static void CarvalhoJunqueira(House carvalhoJunqueira, Relative chicada, Relative mariaJovita, out Relative dalila, out Relative airthon, out Relative mayra, out Relative adrianoDorna, out Relative bruna, out Relative leonardo, out Relative marina, out Relative gustavo, out Relative otavio)
+        private static void CarvalhoJunqueira(House carvalhoJunqueira, Familiar chicada, Familiar mariaJovita, out Familiar dalila, out Familiar airthon, out Familiar mayra, out Familiar adrianoDorna, out Familiar bruna, out Familiar leonardo, out Familiar marina, out Familiar gustavo, out Familiar otavio)
         {
-            dalila = new Relative()
+            dalila = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Dalila",
@@ -197,7 +203,7 @@ namespace FML.Familiares.API.Services
                 FatherId = chicada.Id,
                 MotherId = mariaJovita.Id
             };
-            airthon = new Relative()
+            airthon = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Airthon",
@@ -209,7 +215,7 @@ namespace FML.Familiares.API.Services
             airthon.Spouse = dalila.Id;
             dalila.Spouse = airthon.Id;
 
-            mayra = new Relative()
+            mayra = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Mayra",
@@ -220,7 +226,7 @@ namespace FML.Familiares.API.Services
                 FatherId = airthon.Id,
                 MotherId = dalila.Id
             };
-            adrianoDorna = new Relative()
+            adrianoDorna = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Adriano",
@@ -232,7 +238,7 @@ namespace FML.Familiares.API.Services
             adrianoDorna.Spouse = mayra.Id;
             mayra.Spouse = adrianoDorna.Id;
 
-            bruna = new Relative()
+            bruna = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Bruna",
@@ -241,7 +247,7 @@ namespace FML.Familiares.API.Services
                 House = carvalhoJunqueira,
                 IsActive = false
             };
-            leonardo = new Relative()
+            leonardo = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Leonardo",
@@ -256,7 +262,7 @@ namespace FML.Familiares.API.Services
             bruna.Spouse = leonardo.Id;
 
 
-            marina = new Relative()
+            marina = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Marina",
@@ -267,7 +273,7 @@ namespace FML.Familiares.API.Services
                 FatherId = leonardo.Id,
                 MotherId = bruna.Id
             };
-            gustavo = new Relative()
+            gustavo = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Gustavo",
@@ -278,7 +284,7 @@ namespace FML.Familiares.API.Services
                 FatherId = adrianoDorna.Id,
                 MotherId = mayra.Id
             };
-            otavio = new Relative()
+            otavio = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Otavio",
@@ -291,9 +297,9 @@ namespace FML.Familiares.API.Services
             };
         }
 
-        private static void CarvalhoFerreira(House carvalhoFerreira, Relative chicada, Relative mariaJovita, out Relative tina, out Relative renataAscencio, out Relative rodrigo, out Relative patricia, out Relative paulo, out Relative daniela, out Relative adrianoMaretti, out Relative julia, out Relative duda, out Relative guilherme, out Relative drizinho, out Relative henrique, out Relative pauloFerreira)
+        private static void CarvalhoFerreira(House carvalhoFerreira, Familiar chicada, Familiar mariaJovita, out Familiar tina, out Familiar renataAscencio, out Familiar rodrigo, out Familiar patricia, out Familiar paulo, out Familiar daniela, out Familiar adrianoMaretti, out Familiar julia, out Familiar duda, out Familiar guilherme, out Familiar drizinho, out Familiar henrique, out Familiar pauloFerreira)
         {
-            pauloFerreira = new Relative()
+            pauloFerreira = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Paulo",
@@ -303,7 +309,7 @@ namespace FML.Familiares.API.Services
                 IsAlive = false
             };
 
-            tina = new Relative()
+            tina = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Tina",
@@ -317,7 +323,7 @@ namespace FML.Familiares.API.Services
             tina.Spouse = pauloFerreira.Id;
             pauloFerreira.Spouse = tina.Id;
 
-            renataAscencio = new Relative()
+            renataAscencio = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Renata",
@@ -326,7 +332,7 @@ namespace FML.Familiares.API.Services
                 House = carvalhoFerreira,
                 IsActive = false
             };
-            rodrigo = new Relative()
+            rodrigo = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Rodrigo",
@@ -340,7 +346,7 @@ namespace FML.Familiares.API.Services
             rodrigo.Spouse = renataAscencio.Id;
             renataAscencio.Spouse = rodrigo.Id;
 
-            patricia = new Relative()
+            patricia = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Patricia",
@@ -349,7 +355,7 @@ namespace FML.Familiares.API.Services
                 House = carvalhoFerreira,
                 IsActive = false,
             };
-            paulo = new Relative()
+            paulo = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Paulo",
@@ -363,7 +369,7 @@ namespace FML.Familiares.API.Services
             paulo.Spouse = patricia.Id;
             patricia.Spouse = paulo.Id;
 
-            daniela = new Relative()
+            daniela = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Daniela",
@@ -374,7 +380,7 @@ namespace FML.Familiares.API.Services
                 FatherId = pauloFerreira.Id,
                 MotherId = tina.Id
             };
-            adrianoMaretti = new Relative()
+            adrianoMaretti = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Adriano",
@@ -387,7 +393,7 @@ namespace FML.Familiares.API.Services
             adrianoMaretti.Spouse = daniela.Id;
 
 
-            julia = new Relative()
+            julia = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Julia",
@@ -398,7 +404,7 @@ namespace FML.Familiares.API.Services
                 FatherId = rodrigo.Id,
                 MotherId = renataAscencio.Id
             };
-            duda = new Relative()
+            duda = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Duda",
@@ -409,7 +415,7 @@ namespace FML.Familiares.API.Services
                 FatherId = paulo.Id,
                 MotherId = patricia.Id
             };
-            guilherme = new Relative()
+            guilherme = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Guilherme",
@@ -420,7 +426,7 @@ namespace FML.Familiares.API.Services
                 FatherId = paulo.Id,
                 MotherId = patricia.Id
             };
-            drizinho = new Relative()
+            drizinho = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Drizinho",
@@ -431,7 +437,7 @@ namespace FML.Familiares.API.Services
                 FatherId = adrianoMaretti.Id,
                 MotherId = daniela.Id
             };
-            henrique = new Relative()
+            henrique = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Henrique",
@@ -444,9 +450,9 @@ namespace FML.Familiares.API.Services
             };
         }
 
-        private static void CarvalhoValverde(House carvalhoValverde, Relative chicada, Relative mariaJovita, out Relative roseli, out Relative jurandyr, out Relative belisa, out Relative eduardo, out Relative vital, out Relative renata, out Relative manuela, out Relative benicio)
+        private static void CarvalhoValverde(House carvalhoValverde, Familiar chicada, Familiar mariaJovita, out Familiar roseli, out Familiar jurandyr, out Familiar belisa, out Familiar eduardo, out Familiar vital, out Familiar renata, out Familiar manuela, out Familiar benicio)
         {
-            roseli = new Relative()
+            roseli = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Roseli",
@@ -455,7 +461,7 @@ namespace FML.Familiares.API.Services
                 House = carvalhoValverde,
                 IsActive = false
             };
-            jurandyr = new Relative()
+            jurandyr = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Jurandyr",
@@ -469,7 +475,7 @@ namespace FML.Familiares.API.Services
             jurandyr.Spouse = roseli.Id;
             roseli.Spouse = jurandyr.Id;
 
-            belisa = new Relative()
+            belisa = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Belisa",
@@ -478,7 +484,7 @@ namespace FML.Familiares.API.Services
                 House = carvalhoValverde,
                 IsActive = false
             };
-            eduardo = new Relative()
+            eduardo = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Eduardo",
@@ -492,7 +498,7 @@ namespace FML.Familiares.API.Services
             eduardo.Spouse = belisa.Id;
             belisa.Spouse = eduardo.Id;
 
-            vital = new Relative()
+            vital = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Vital",
@@ -501,7 +507,7 @@ namespace FML.Familiares.API.Services
                 House = carvalhoValverde,
                 IsActive = false
             };
-            renata = new Relative()
+            renata = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Renata",
@@ -515,7 +521,7 @@ namespace FML.Familiares.API.Services
             renata.Spouse = vital.Id;
             vital.Spouse = renata.Id;
 
-            manuela = new Relative()
+            manuela = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Manuela",
@@ -525,7 +531,7 @@ namespace FML.Familiares.API.Services
                 FatherId = vital.Id,
                 MotherId = renata.Id
             };
-            benicio = new Relative()
+            benicio = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Benicio",
@@ -537,9 +543,9 @@ namespace FML.Familiares.API.Services
             };
         }
 
-        private static void CarvalhoOliveira(House carvalhoOliveira, out Relative miguel, out Relative lidinha, out Relative andre, out Relative lidiane, out Relative arthur, out Relative luizGustavo, out Relative marcusVinicius, out Relative isabela)
+        private static void CarvalhoOliveira(House carvalhoOliveira, out Familiar miguel, out Familiar lidinha, out Familiar andre, out Familiar lidiane, out Familiar arthur, out Familiar luizGustavo, out Familiar marcusVinicius, out Familiar isabela)
         {
-            miguel = new Relative()
+            miguel = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Miguel",
@@ -548,7 +554,7 @@ namespace FML.Familiares.API.Services
                 House = carvalhoOliveira,
                 IsActive = false
             };
-            lidinha = new Relative()
+            lidinha = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Lidinha",
@@ -560,7 +566,7 @@ namespace FML.Familiares.API.Services
             lidinha.Spouse = miguel.Id;
             miguel.Spouse = lidinha.Id;
 
-            andre = new Relative()
+            andre = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Andre",
@@ -570,7 +576,7 @@ namespace FML.Familiares.API.Services
                 FatherId = miguel.Id,
                 MotherId = lidinha.Id
             };
-            lidiane = new Relative()
+            lidiane = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Lidiane",
@@ -580,7 +586,7 @@ namespace FML.Familiares.API.Services
                 FatherId = miguel.Id,
                 MotherId = lidinha.Id
             };
-            arthur = new Relative()
+            arthur = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Arthur",
@@ -589,7 +595,7 @@ namespace FML.Familiares.API.Services
                 House = carvalhoOliveira,
                 MotherId = lidiane.Id
             };
-            luizGustavo = new Relative()
+            luizGustavo = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Luiz Gustavo",
@@ -598,7 +604,7 @@ namespace FML.Familiares.API.Services
                 House = carvalhoOliveira,
                 MotherId = lidiane.Id
             };
-            marcusVinicius = new Relative()
+            marcusVinicius = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Marcus Vinicius",
@@ -607,7 +613,7 @@ namespace FML.Familiares.API.Services
                 House = carvalhoOliveira,
                 MotherId = lidiane.Id
             };
-            isabela = new Relative()
+            isabela = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Isabela",
@@ -618,9 +624,9 @@ namespace FML.Familiares.API.Services
             };
         }
 
-        private static void CarvalhoMessias(House carvalhoMessias, Relative chicada, Relative mariaJovita, out Relative inha, out Relative mario, out Relative cacalo, out Relative lidia, out Relative rosane, out Relative joseEugenio, out Relative marcelo, out Relative marlene, out Relative icaro, out Relative lidiaMara, out Relative natasha, out Relative marcela, out Relative huncas, out Relative yuri, out Relative raissa)
+        private static void CarvalhoMessias(House carvalhoMessias, Familiar chicada, Familiar mariaJovita, out Familiar inha, out Familiar mario, out Familiar cacalo, out Familiar lidia, out Familiar rosane, out Familiar joseEugenio, out Familiar marcelo, out Familiar marlene, out Familiar icaro, out Familiar lidiaMara, out Familiar natasha, out Familiar marcela, out Familiar huncas, out Familiar yuri, out Familiar raissa)
         {
-            inha = new Relative()
+            inha = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Inha",
@@ -631,7 +637,7 @@ namespace FML.Familiares.API.Services
                 MotherId = mariaJovita.Id,
                 Gender = Gender.Female,
             };
-            mario = new Relative()
+            mario = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Mario",
@@ -643,7 +649,7 @@ namespace FML.Familiares.API.Services
             inha.Spouse = mario.Id;
             mario.Spouse = inha.Id;
 
-            cacalo = new Relative()
+            cacalo = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Cacalo",
@@ -653,7 +659,7 @@ namespace FML.Familiares.API.Services
                 FatherId = mario.Id,
                 MotherId = inha.Id
             };
-            lidia = new Relative()
+            lidia = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Lidia",
@@ -663,7 +669,7 @@ namespace FML.Familiares.API.Services
                 FatherId = mario.Id,
                 MotherId = inha.Id
             };
-            rosane = new Relative()
+            rosane = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Rosane",
@@ -673,7 +679,7 @@ namespace FML.Familiares.API.Services
                 FatherId = mario.Id,
                 MotherId = inha.Id
             };
-            joseEugenio = new Relative()
+            joseEugenio = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Jose Eugenio",
@@ -685,7 +691,7 @@ namespace FML.Familiares.API.Services
             rosane.Spouse = joseEugenio.Id;
             joseEugenio.Spouse = rosane.Id;
 
-            marcelo = new Relative()
+            marcelo = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Marcelo",
@@ -695,7 +701,7 @@ namespace FML.Familiares.API.Services
                 FatherId = mario.Id,
                 MotherId = inha.Id
             };
-            marlene = new Relative()
+            marlene = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Marlene",
@@ -707,7 +713,7 @@ namespace FML.Familiares.API.Services
             marcelo.Spouse = marlene.Id;
             marlene.Spouse = marcelo.Id;
 
-            icaro = new Relative()
+            icaro = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Icaro",
@@ -717,7 +723,7 @@ namespace FML.Familiares.API.Services
                 FatherId = marcelo.Id,
                 MotherId = marlene.Id
             };
-            lidiaMara = new Relative()
+            lidiaMara = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Lidia Mara",
@@ -729,7 +735,7 @@ namespace FML.Familiares.API.Services
             lidiaMara.Spouse = icaro.Id;
             icaro.Spouse = lidiaMara.Id;
 
-            natasha = new Relative()
+            natasha = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Natasha",
@@ -739,7 +745,7 @@ namespace FML.Familiares.API.Services
                 FatherId = marcelo.Id,
                 MotherId = marlene.Id
             };
-            marcela = new Relative()
+            marcela = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Marcela",
@@ -749,7 +755,7 @@ namespace FML.Familiares.API.Services
                 FatherId = marcelo.Id,
                 MotherId = marlene.Id
             };
-            huncas = new Relative()
+            huncas = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Huncas",
@@ -759,7 +765,7 @@ namespace FML.Familiares.API.Services
                 FatherId = joseEugenio.Id,
                 MotherId = rosane.Id
             };
-            yuri = new Relative()
+            yuri = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Yuri",
@@ -769,7 +775,7 @@ namespace FML.Familiares.API.Services
                 FatherId = joseEugenio.Id,
                 MotherId = rosane.Id
             };
-            raissa = new Relative()
+            raissa = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Raissa",
@@ -781,9 +787,9 @@ namespace FML.Familiares.API.Services
             };
         }
 
-        private static void GetChicada(House carvalho, out Relative chicada, out Relative mariaJovita)
+        private static void GetChicada(House carvalho, out Familiar chicada, out Familiar mariaJovita)
         {
-            chicada = new Relative()
+            chicada = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Chicada",
@@ -795,7 +801,7 @@ namespace FML.Familiares.API.Services
                 FamilyId = carvalho.FamilyId,
                 IsActive = false
             };
-            mariaJovita = new Relative()
+            mariaJovita = new Familiar()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Maria Jovita",
@@ -812,7 +818,7 @@ namespace FML.Familiares.API.Services
             mariaJovita.Spouse = chicada.Id;
         }
 
-        private static void Final(Relative inha, Relative cacalo, Relative icaro, Relative lidiaMara, Relative natasha, Relative marcela, Relative lidinha, Relative arthur, Relative luizGustavo, Relative roseli, Relative jurandyr, Relative belisa, Relative eduardo, Relative manuela, Relative benicio, Relative tina, Relative renataAscencio, Relative rodrigo, Relative daniela, Relative adrianoMaretti, Relative julia, Relative duda, Relative guilherme, Relative drizinho, Relative henrique, Relative mayra, Relative adrianoDorna, Relative marina, Relative gustavo, Relative otavio)
+        private static void Final(Familiar inha, Familiar cacalo, Familiar icaro, Familiar lidiaMara, Familiar natasha, Familiar marcela, Familiar lidinha, Familiar arthur, Familiar luizGustavo, Familiar roseli, Familiar jurandyr, Familiar belisa, Familiar eduardo, Familiar manuela, Familiar benicio, Familiar tina, Familiar renataAscencio, Familiar rodrigo, Familiar daniela, Familiar adrianoMaretti, Familiar julia, Familiar duda, Familiar guilherme, Familiar drizinho, Familiar henrique, Familiar mayra, Familiar adrianoDorna, Familiar marina, Familiar gustavo, Familiar otavio)
         {
             mayra.SecretSanta = true;
             mayra.Phone = "35 98416-2072";

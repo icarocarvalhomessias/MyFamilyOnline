@@ -1,4 +1,6 @@
-﻿using FML.Core.Data;
+﻿using FluentValidation.Results;
+using FML.Core.Data;
+using FML.Core.Messages;
 using FML.Evento.API.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +17,9 @@ namespace FML.Evento.API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Ignore<Event>();
+            modelBuilder.Ignore<ValidationResult>();
+
             base.OnModelCreating(modelBuilder);
 
             // Configuring EventoFamilia entity

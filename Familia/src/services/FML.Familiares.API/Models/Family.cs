@@ -7,6 +7,6 @@ public class Family : Entity, IAggregateRoot
     public bool IsActive { get; set; }
     public string History { get; set; }
 
-    public List<Relative> Relatives { get; set; }
+    public List<Familiar> Relatives { get; set; }
     public List<House> Houses { get; set; }
 }

@@ -1,4 +1,6 @@
-﻿using FML.Familiares.API.Services.Interface;
+﻿using FML.Core.Mediator;
+using FML.Familiares.API.Application.Commands;
+using FML.Familiares.API.Services.Interface;
 using FML.WebApi.Core.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +13,13 @@ namespace FML.Familiares.API.Controllers
     {
 
         private readonly IRelativeService _relativeService;
+        private readonly IMediatorHandler _mediator;
 
-        public FamiliaresController(IRelativeService relativeService)
+        public FamiliaresController(IRelativeService relativeService,
+            IMediatorHandler mediator)
         {
             _relativeService = relativeService;
+            _mediator = mediator;
         }
 
 
@@ -26,26 +31,22 @@ namespace FML.Familiares.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AdicionarRelative(Relative relative)
+        public async Task<IActionResult> AdicionarRelative()
         {
             if (!ModelState.IsValid)
             {
                 return CustomResponse(ModelState);
             }
 
-            var result = await _relativeService.AddRelative(relative);
+            var resultado = await _mediator.EnviarComando
+                (new RegistrarFamiliarCommand(Guid.NewGuid(), "TESTEEEEEEEE", "icaro@example.com", DateTime.Parse("14/06/1991"), Gender.Male));
 
-            if (!result)
-            {
-                AdicionarErroProcessamento("Erro ao adicionar o parente.");
-                return CustomResponse();
-            }
 
-            return CustomResponse(relative);
+            return CustomResponse(resultado);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Relative relative)
+        public async Task<IActionResult> Update([FromBody] Familiar relative)
         {
             await _relativeService.Update(relative);
             return CustomResponse(relative);

@@ -1,6 +1,8 @@
 ﻿using FML.Core.DomainObjects;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class Relative : Entity, IAggregateRoot
+[Serializable]
+public class Familiar : Entity, IAggregateRoot
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -21,8 +23,38 @@ public class Relative : Entity, IAggregateRoot
     public Guid? FatherId { get; set; }
     public Guid? MotherId { get; set; }
 
-    public Relative? SpouseObj { get; set; }
-    public List<Relative>? Children { get; set; }
+    public Familiar? SpouseObj { get; set; }
+    public List<Familiar>? Children { get; set; }
     public Family? Family { get; set; }
     public House? House { get; set; }
+
+    public Familiar()
+    {
+        
+    }
+
+    public Familiar(Guid UsuarioId, string firstName, string lastName, DateTime birthDate, Gender gender)
+    {
+        Id = UsuarioId;
+        FirstName = firstName;
+        LastName = lastName;
+        BirthDate = birthDate;
+        Gender = gender;
+    }
+
+
+        [NotMapped]
+    public string FullName => $"{FirstName} {LastName}";
+
+    [NotMapped]
+    public int Idade
+    {
+        get
+        {
+            var today = DateTime.Today;
+            var age = today.Year - BirthDate.Year;
+            if (BirthDate.Date > today.AddYears(-age)) age--;
+            return age;
+        }
+    }
 }

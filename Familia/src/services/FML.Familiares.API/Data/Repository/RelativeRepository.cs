@@ -15,7 +15,7 @@ namespace FML.Familiares.API.Data.Repository
 
         public IUnitOfWork UnitOfWork => _context;
 
-        public async Task<IEnumerable<Relative>> GetRelativesByFamilyId(Guid familyId)
+        public async Task<IEnumerable<Familiar>> GetRelativesByFamilyId(Guid familyId)
         {
             return await _context.Relatives
                 .Include(r => r.Family)
@@ -24,66 +24,60 @@ namespace FML.Familiares.API.Data.Repository
                 .Where(r => r.FamilyId == familyId).ToListAsync();
         }
 
-        public async Task<IEnumerable<Relative>> GetRelativesByFatherId(Guid fatherId)
+        public async Task<IEnumerable<Familiar>> GetRelativesByFatherId(Guid fatherId)
         {
             return await _context.Relatives.AsNoTracking().Where(r => r.FatherId == fatherId).ToListAsync();
         }
 
-        public async Task<IEnumerable<Relative>> GetRelativesByHouseId(Guid houseId)
+        public async Task<IEnumerable<Familiar>> GetRelativesByHouseId(Guid houseId)
         {
             return await _context.Relatives.AsNoTracking().Where(r => r.HouseId == houseId).ToListAsync();
         }
 
-        public async Task<IEnumerable<Relative>> GetRelativesByMotherId(Guid motherId)
+        public async Task<IEnumerable<Familiar>> GetRelativesByMotherId(Guid motherId)
         {
             return await _context.Relatives.AsNoTracking().Where(r => r.MotherId == motherId).ToListAsync();
         }
 
-        public async Task AddRelative(Relative relative)
+        public void AddRelative(Familiar relative)
         {
-            await _context.Relatives.AddAsync(relative);
-            await _context.SaveChangesAsync(); // Certifique-se de salvar as mudanças
-
+            _context.Relatives.Add(relative);
         }
 
-        public async Task AddRelatives(IEnumerable<Relative> relatives)
+        public async Task AddRelatives(IEnumerable<Familiar> relatives)
         {
-            try
+            if (relatives == null || !relatives.Any())
             {
-                if (relatives == null || !relatives.Any())
-                {
-                    throw new ArgumentException("The relatives collection is null or empty.", nameof(relatives));
-                }
+                throw new ArgumentException("The relatives collection is null or empty.", nameof(relatives));
+            }
 
-                await _context.Relatives.AddRangeAsync(relatives);
-                await _context.SaveChangesAsync(); // Certifique-se de salvar as mudanças
-            }
-            catch (Exception ex)
-            {
-                // Log a exceção (use seu mecanismo de logging preferido)
-                Console.WriteLine($"An error occurred while adding relatives: {ex.Message}");
-                throw; // Re-throw a exceção para que ela possa ser tratada em outro lugar, se necessário
-            }
+            await _context.Relatives
+                .AddRangeAsync(relatives);
         }
 
 
         public async Task<bool> RemoveRelative(Guid relativeId)
         {
-            _context.Relatives.Remove(new Relative { Id = relativeId });
+            _context.Relatives
+                .Remove(new Familiar { Id = relativeId });
             return await _context.SaveChangesAsync() > 0;
 
         }
 
-        public async Task<bool> UpdateRelative(Relative relative)
+        public async Task<bool> UpdateRelative(Familiar relative)
         {
-            _context.Relatives.Update(relative);
+            _context.Relatives
+                .Update(relative);
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<Relative> GetRelativeById(Guid relativeId)
+        public async Task<Familiar?> GetRelativeById(Guid relativeId)
         {
-            return await _context.Relatives.AsNoTracking().FirstOrDefaultAsync(r => r.Id == relativeId);
+            var teste123 = _context.Relatives.Where(x => x.Id == relativeId).ToList();
+
+            return teste123.Any() ? teste123.First() : null;
         }
+
 
 
         public void Dispose()

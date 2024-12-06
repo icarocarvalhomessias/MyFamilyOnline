@@ -9,5 +9,5 @@ public interface IFamilyRepository : IRepository<Family>
     Task<bool> AddFamily(Family family);
     Task<bool> UpdateFamily(Family family);
     Task<bool> RemoveFamily(Family family);
-    Task<bool> AddRelative(Relative relative);
+    Task<bool> AddRelative(Familiar relative);
 }

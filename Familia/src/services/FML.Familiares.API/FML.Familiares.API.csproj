@@ -32,4 +32,8 @@
     <ProjectReference Include="..\..\building blocks\FML.WebApi.Core\FML.WebApi.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\Queries\" />
+  </ItemGroup>
+
 </Project>

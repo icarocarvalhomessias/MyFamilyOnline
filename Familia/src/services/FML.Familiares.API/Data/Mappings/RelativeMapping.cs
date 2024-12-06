@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FML.Familiares.API.Data.Mappings
 {
-    public class RelativeMapping : IEntityTypeConfiguration<Relative>
+    public class RelativeMapping : IEntityTypeConfiguration<Familiar>
     {
-        public void Configure(EntityTypeBuilder<Relative> builder)
+        public void Configure(EntityTypeBuilder<Familiar> builder)
         {
             builder.HasKey(r => r.Id);
 

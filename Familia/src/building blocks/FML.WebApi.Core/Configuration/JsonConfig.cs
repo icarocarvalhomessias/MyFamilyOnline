@@ -13,6 +13,7 @@ namespace FML.Familiares.API.Configuration
                     {
                         options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
                         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+                        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                         options.JsonSerializerOptions.MaxDepth = 64; // Increase the maximum depth if needed
                     });
         }
@@ -23,6 +24,7 @@ namespace FML.Familiares.API.Configuration
             {
                 options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 options.JsonSerializerOptions.MaxDepth = 64; // Increase the maximum depth if needed
             });
 

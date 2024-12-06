@@ -14,5 +14,5 @@ public class House : Entity, IAggregateRoot
     [NotMapped]
     public Family Family { get; set; }
     [NotMapped]
-    public List<Relative> Residents { get; set; }
+    public List<Familiar> Residents { get; set; }
 }

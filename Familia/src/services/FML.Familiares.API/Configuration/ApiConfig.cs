@@ -24,6 +24,8 @@ namespace FML.Familiares.API.Configuration
             services.AddControllers();
             services.AddJwtConfiguration(configuration);
             services.AddSwaggerConfiguration();
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApiConfig).Assembly));
+
             services.RegisterServices();
             services.RegisterJson();
         }
