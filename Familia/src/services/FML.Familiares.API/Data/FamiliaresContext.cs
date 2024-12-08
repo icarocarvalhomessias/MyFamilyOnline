@@ -18,7 +18,7 @@ namespace FML.Familiares.API.Data
             ChangeTracker.AutoDetectChangesEnabled = false;
         }
 
-        public DbSet<Familiar> Relatives { get; set; }
+        public DbSet<Relative> Relatives { get; set; }
         public DbSet<Family> Families { get; set; }
         public DbSet<House> Houses { get; set; }
 
@@ -42,19 +42,19 @@ namespace FML.Familiares.API.Data
                 .HasForeignKey(r => r.HouseId);
 
             // Configure Relative-Spouse relationship
-            modelBuilder.Entity<Familiar>()
+            modelBuilder.Entity<Relative>()
                 .HasOne(r => r.SpouseObj)
                 .WithOne()
-                .HasForeignKey<Familiar>(r => r.Spouse);
+                .HasForeignKey<Relative>(r => r.Spouse);
 
             // Configure Relative-Children relationship
-            modelBuilder.Entity<Familiar>()
+            modelBuilder.Entity<Relative>()
                 .HasMany(r => r.Children)
                 .WithOne()
                 .HasForeignKey(r => r.FatherId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Familiar>()
+            modelBuilder.Entity<Relative>()
                 .HasMany(r => r.Children)
                 .WithOne()
                 .HasForeignKey(r => r.MotherId)

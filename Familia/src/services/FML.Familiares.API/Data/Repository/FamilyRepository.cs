@@ -42,7 +42,7 @@ namespace FML.Familiares.API.Data.Repository
                 .ToListAsync();
         }
 
-        public async Task<bool> AddRelative(Familiar relative)
+        public async Task<bool> AddRelative(Relative relative)
         {
             _context.Relatives.Add(relative);
             return await _context.SaveChangesAsync() > 0;

@@ -21,7 +21,7 @@ namespace FML.Familiares.API.Application.Commands
         {
             if(!message.IsValid()) return message.ValidationResult;
 
-            var novoFamiliar = new Familiar(message.Id, message.Nome, message.Email, message.BirthDate, message.Gender);
+            var novoFamiliar = new Relative(message.Id, message.Nome, message.Email, message.BirthDate, message.Gender);
             novoFamiliar.FamilyId = Constantes.FamiliaCarvalhoId;
             novoFamiliar.HouseId = Constantes.CasaCarvalhoId;
 

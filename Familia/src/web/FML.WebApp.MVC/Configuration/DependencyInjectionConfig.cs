@@ -17,6 +17,7 @@ namespace Familia.WebApp.MVC.Configuration
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();
             services.AddScoped<IAspNetUser, AspNetUser>();
+            services.RegisterJson();
 
             #region REFIT CONFIG
 

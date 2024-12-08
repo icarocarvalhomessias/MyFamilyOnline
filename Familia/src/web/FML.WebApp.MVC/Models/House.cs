@@ -1,7 +1,8 @@
 ﻿using FML.Core.DomainObjects;
-using System.ComponentModel.DataAnnotations.Schema;
+using System;
+using System.Collections.Generic;
 
-public class House : Entity, IAggregateRoot
+public class House : Entity
 {
     public string Name { get; set; }
     public bool IsActive { get; set; }
@@ -11,8 +12,6 @@ public class House : Entity, IAggregateRoot
     public string? State { get; set; }
     public string? ZipCode { get; set; }
 
-    [NotMapped]
     public Family Family { get; set; }
-    [NotMapped]
     public List<Relative> Residents { get; set; }
 }

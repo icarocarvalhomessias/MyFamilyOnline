@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 [Serializable]
-public class Familiar : Entity, IAggregateRoot
+public class Relative : Entity, IAggregateRoot
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -23,17 +23,17 @@ public class Familiar : Entity, IAggregateRoot
     public Guid? FatherId { get; set; }
     public Guid? MotherId { get; set; }
 
-    public Familiar? SpouseObj { get; set; }
-    public List<Familiar>? Children { get; set; }
+    public Relative? SpouseObj { get; set; }
+    public List<Relative>? Children { get; set; }
     public Family? Family { get; set; }
     public House? House { get; set; }
 
-    public Familiar()
+    public Relative()
     {
         
     }
 
-    public Familiar(Guid UsuarioId, string firstName, string lastName, DateTime birthDate, Gender gender)
+    public Relative(Guid UsuarioId, string firstName, string lastName, DateTime birthDate, Gender gender)
     {
         Id = UsuarioId;
         FirstName = firstName;

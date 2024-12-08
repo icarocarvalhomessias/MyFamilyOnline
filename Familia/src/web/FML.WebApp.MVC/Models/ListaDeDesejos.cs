@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FML.Core.DomainObjects;
+using System;
 
 namespace FML.WebApp.MVC.Models
 {

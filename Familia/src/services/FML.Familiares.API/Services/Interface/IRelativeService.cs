@@ -2,11 +2,11 @@
 {
     public interface IRelativeService
     {
-        Task<IEnumerable<Familiar>> GetRelatives();
+        Task<IEnumerable<Relative>> GetRelatives();
         Task<Guid> Add();
-        Task<bool> Update(Familiar relative);
-        Task<bool> AddRelative(Familiar relative);
+        Task<bool> Update(Relative relative);
+        Task<bool> AddRelative(Relative relative);
         Task<bool> RemoveRelative(Guid relativeId);
-        Task<Familiar> GetRelativeById(Guid relativeId);
+        Task<Relative> GetRelativeById(Guid relativeId);
     }
 }

@@ -46,7 +46,7 @@ namespace FML.Familiares.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Familiar relative)
+        public async Task<IActionResult> Update([FromBody] Relative relative)
         {
             await _relativeService.Update(relative);
             return CustomResponse(relative);

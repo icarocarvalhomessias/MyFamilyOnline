@@ -24,9 +24,16 @@ namespace FML.WebApp.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var relatives = await _familiaService.GetRelatives();
-            var familyTree = OrganizeFamilyTree(relatives);
-            return View(familyTree);
+            try
+            {
+                var relatives = await _familiaService.GetRelatives();
+                var familyTree = OrganizeFamilyTree(relatives.ToList());
+                return View(familyTree);
+            }
+            catch (Exception ex)
+            {
+                return View(new FamilyTreeViewModel());
+            }
         }
 
 
@@ -91,8 +98,8 @@ namespace FML.WebApp.MVC.Controllers
         public async Task<IActionResult> Create()
         {
             var relatives = await _familiaService.GetRelatives();
-            var homens = relatives.Where(x => x.Gender == Gender.Homen).ToList();
-            var mulheres = relatives.Where(x => x.Gender == Gender.Mulher).ToList();
+            var homens = relatives.Where(x => x.Gender == Gender.Male).ToList();
+            var mulheres = relatives.Where(x => x.Gender == Gender.Female).ToList();
 
             ViewBag.Homens = new SelectList(homens, "Id", "FullName");
             ViewBag.Mulheres = new SelectList(mulheres, "Id", "FullName");
@@ -157,8 +164,8 @@ namespace FML.WebApp.MVC.Controllers
         private async Task PopulateDropDownLists()
         {
             var family = await _familiaService.GetRelatives();
-            var homens = family.Where(x => x.Gender == Gender.Homen).ToList();
-            var mulheres = family.Where(x => x.Gender == Gender.Mulher).ToList();
+            var homens = family.Where(x => x.Gender == Gender.Male).ToList();
+            var mulheres = family.Where(x => x.Gender == Gender.Female).ToList();
 
             ViewBag.Homens = new SelectList(homens, "Id", "FirstName");
             ViewBag.Mulheres = new SelectList(mulheres, "Id", "FirstName");

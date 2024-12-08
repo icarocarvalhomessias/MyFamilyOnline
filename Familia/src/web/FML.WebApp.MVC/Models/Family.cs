@@ -1,6 +1,8 @@
 ﻿using FML.Core.DomainObjects;
+using System;
+using System.Collections.Generic;
 
-public class Family : Entity, IAggregateRoot
+public class Family : Entity
 {
     public string Name { get; set; }
     public DateTime StartDate { get; set; }

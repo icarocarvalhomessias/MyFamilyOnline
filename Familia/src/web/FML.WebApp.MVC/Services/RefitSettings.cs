@@ -14,6 +14,10 @@ public static class RefitConfig
         {
             PropertyNameCaseInsensitive = true,
             ReferenceHandler = ReferenceHandler.Preserve,
+            Converters =
+            {
+                new JsonStringEnumConverter()
+            },
             MaxDepth = 64 // Increase the maximum depth if needed
         };
 

@@ -15,7 +15,7 @@ namespace FML.Familiares.API.Data.Repository
 
         public IUnitOfWork UnitOfWork => _context;
 
-        public async Task<IEnumerable<Familiar>> GetRelativesByFamilyId(Guid familyId)
+        public async Task<IEnumerable<Relative>> GetRelativesByFamilyId(Guid familyId)
         {
             return await _context.Relatives
                 .Include(r => r.Family)
@@ -24,27 +24,27 @@ namespace FML.Familiares.API.Data.Repository
                 .Where(r => r.FamilyId == familyId).ToListAsync();
         }
 
-        public async Task<IEnumerable<Familiar>> GetRelativesByFatherId(Guid fatherId)
+        public async Task<IEnumerable<Relative>> GetRelativesByFatherId(Guid fatherId)
         {
             return await _context.Relatives.AsNoTracking().Where(r => r.FatherId == fatherId).ToListAsync();
         }
 
-        public async Task<IEnumerable<Familiar>> GetRelativesByHouseId(Guid houseId)
+        public async Task<IEnumerable<Relative>> GetRelativesByHouseId(Guid houseId)
         {
             return await _context.Relatives.AsNoTracking().Where(r => r.HouseId == houseId).ToListAsync();
         }
 
-        public async Task<IEnumerable<Familiar>> GetRelativesByMotherId(Guid motherId)
+        public async Task<IEnumerable<Relative>> GetRelativesByMotherId(Guid motherId)
         {
             return await _context.Relatives.AsNoTracking().Where(r => r.MotherId == motherId).ToListAsync();
         }
 
-        public void AddRelative(Familiar relative)
+        public void AddRelative(Relative relative)
         {
             _context.Relatives.Add(relative);
         }
 
-        public async Task AddRelatives(IEnumerable<Familiar> relatives)
+        public async Task AddRelatives(IEnumerable<Relative> relatives)
         {
             if (relatives == null || !relatives.Any())
             {
@@ -59,19 +59,19 @@ namespace FML.Familiares.API.Data.Repository
         public async Task<bool> RemoveRelative(Guid relativeId)
         {
             _context.Relatives
-                .Remove(new Familiar { Id = relativeId });
+                .Remove(new Relative { Id = relativeId });
             return await _context.SaveChangesAsync() > 0;
 
         }
 
-        public async Task<bool> UpdateRelative(Familiar relative)
+        public async Task<bool> UpdateRelative(Relative relative)
         {
             _context.Relatives
                 .Update(relative);
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<Familiar?> GetRelativeById(Guid relativeId)
+        public async Task<Relative?> GetRelativeById(Guid relativeId)
         {
             var teste123 = _context.Relatives.Where(x => x.Id == relativeId).ToList();
 

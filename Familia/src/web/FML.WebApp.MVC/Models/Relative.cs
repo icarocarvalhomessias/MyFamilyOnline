@@ -1,23 +1,9 @@
-﻿using System;
+﻿using FML.Core.DomainObjects;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-public abstract class Entity
-{
-    public Guid Id { get; set; }
-}
-
-public class Family : Entity
-{
-    public string Name { get; set; }
-    public DateTime StartDate { get; set; }
-    public bool IsActive { get; set; }
-    public string History { get; set; }
-
-    public List<Relative> Relatives { get; set; }
-    public List<House> Houses { get; set; }
-}
-
+[Serializable]
 public class Relative : Entity
 {
     [Required]
@@ -60,27 +46,4 @@ public class Relative : Entity
     }
 
     public string FullName => $"{FirstName} {LastName}";
-}
-
-
-
-public class House : Entity
-{
-    public string Name { get; set; }
-    public bool IsActive { get; set; }
-    public Guid FamilyId { get; set; }
-    public string? Address { get; set; }
-    public string? City { get; set; }
-    public string? State { get; set; }
-    public string? ZipCode { get; set; }
-
-    public Family Family { get; set; }
-    public List<Relative> Residents { get; set; }
-}
-
-public enum Gender
-{
-    Homen,
-    Mulher,
-    Outros
 }
