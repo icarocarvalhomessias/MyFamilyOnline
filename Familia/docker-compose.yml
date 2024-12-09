@@ -9,24 +9,24 @@ services:
       context: ../src
       dockerfile: ./web/FML.WebApp.MVC/Dockerfile
     ports:
-      - "8080:8080"
-      - "8081:8081"
+      - "5001:5001"
+      - "5003:5003"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:44303
 
 #------------------------------------------------------------------------------------------------------------------------------------------------
-  identidade.api:
-    image: identidade.api
-    container_name: identidade.api
-    build:
-      context: ../src
-      dockerfile: ./services/FML.Identidade.API/Dockerfile
-    ports:
-      - "44396:80"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-      - ASPNETCORE_URLS=http://+:44396
+  # identidade.api:
+  #   image: identidade.api
+  #   container_name: identidade.api
+  #   build:
+  #     context: ../src
+  #     dockerfile: ./services/FML.Identidade.API/Dockerfile
+  #   ports:
+  #     - "44396:80"
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Production
+  #     - ASPNETCORE_URLS=http://+:44396
 
 # #------------------------------------------------------------------------------------------------------------------------------------------------
 #   familiares.api:
