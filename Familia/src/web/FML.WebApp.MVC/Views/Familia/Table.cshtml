@@ -1,0 +1,142 @@
+﻿@model List<Relative>
+
+@{
+    ViewData["Title"] = "Familia";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Assuming you have a shared layout file
+}
+
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+        </div>
+        <div class="col-md-4 right pull-right">
+            <a class="btn btn-primary btn-s pull-right" asp-area="" asp-controller="Familia" asp-action="Create">Adicionar Familiar</a>
+        </div>
+    </div>
+    <div class="row col-md-12">
+        <div class="col-md-4">
+            <input type="text" id="searchBox" class="form-control" placeholder="Pesquisar..." oninput="searchTable()">
+        </div>
+    </div>
+    <div class="row col-md-12">
+        <table class="table table-striped custab" id="relativeTable">
+            <thead>
+                <tr>
+                    <th onclick="sortTable(0)">Nome do Parente</th>
+                    <th onclick="sortTable(1)">Data nascimento</th>
+                    <th onclick="sortTable(2)">Casa</th>
+                    <th onclick="sortTable(3)">Familia</th>
+                    <th onclick="sortTable(4)">Id</th>
+                    <th class="text-center">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var parent in Model)
+                {
+                    <tr>
+                        <td>@parent.FirstName</td>
+                        <td>@parent.BirthDate.ToShortDateString()</td>
+                        <td>@parent.House?.Name</td>
+                        <td>@parent.Family?.Name</td>
+                        <td>@parent.Id</td>
+                        <td class="text-center">
+                            <a class='btn btn-info btn-xs' asp-area="" asp-controller="Familia" asp-action="ParenteEdit" asp-route-id="@parent.Id"><span class="glyphicon glyphicon-edit"></span> Editar</a>
+                            <a class='btn btn-danger btn-xs' asp-area="" asp-controller="Familia" asp-action="RemoveRelative" asp-route-id="@parent.Id"><span class="glyphicon glyphicon-remove"></span> Remover</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .custab {
+        border: 1px solid #ccc;
+        padding: 5px;
+        margin: 5% 0;
+        box-shadow: 3px 3px 2px #ccc;
+        transition: 0.5s;
+    }
+
+        .custab:hover {
+            box-shadow: 3px 3px 0px transparent;
+            transition: 0.5s;
+        }
+
+    th {
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    function searchTable() {
+        var input, filter, table, tr, td, i, j, txtValue;
+        input = document.getElementById("searchBox");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("relativeTable");
+        tr = table.getElementsByTagName("tr");
+
+        if (filter.length < 3) {
+            for (i = 1; i < tr.length; i++) {
+                tr[i].style.display = "";
+            }
+            return;
+        }
+
+        for (i = 1; i < tr.length; i++) {
+            tr[i].style.display = "none";
+            td = tr[i].getElementsByTagName("td");
+            for (j = 0; j < td.length; j++) {
+                if (td[j]) {
+                    txtValue = td[j].textContent || td[j].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("relativeTable");
+        switching = true;
+        dir = "asc";
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+</script>

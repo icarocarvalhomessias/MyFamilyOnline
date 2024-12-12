@@ -14,7 +14,8 @@ internal class Program
                 .AddEnvironmentVariables();
 
         builder.Services.AddApiConfiguration(configuration);
-        
+        builder.Services.AddMessageBusConfiguration(configuration);
+
         var app = builder.Build();
 
         app.UseApiConfiguration(app.Environment);

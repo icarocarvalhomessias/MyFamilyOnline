@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using FML.Core.Data;
 using FML.Core.Messages;
 using MediatR;
 

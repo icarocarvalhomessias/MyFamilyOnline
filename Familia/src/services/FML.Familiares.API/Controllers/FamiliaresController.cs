@@ -1,4 +1,5 @@
-﻿using FML.Core.Mediator;
+﻿using FML.Core.Data;
+using FML.Core.Mediator;
 using FML.Familiares.API.Application.Commands;
 using FML.Familiares.API.Services.Interface;
 using FML.WebApi.Core.Controllers;
@@ -40,7 +41,6 @@ namespace FML.Familiares.API.Controllers
 
             var resultado = await _mediator.EnviarComando
                 (new RegistrarFamiliarCommand(Guid.NewGuid(), "TESTEEEEEEEE", "icaro@example.com", DateTime.Parse("14/06/1991"), Gender.Male));
-
 
             return CustomResponse(resultado);
         }

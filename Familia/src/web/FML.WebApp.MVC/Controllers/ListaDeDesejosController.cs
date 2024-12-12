@@ -1,4 +1,5 @@
 ﻿using Familia.WebApp.MVC.Controllers;
+using Familia.WebApp.MVC.Models;
 using FML.WebApp.MVC.Models;
 using FML.WebApp.MVC.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -19,8 +20,16 @@ namespace FML.WebApp.MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var listaDeDesejos = await _eventoService.GetListaDeDesejos();
-            return View(listaDeDesejos);
+            try
+            {
+                var listaDeDesejos = await _eventoService.GetListaDeDesejos();
+                return View(listaDeDesejos);
+
+            }
+            catch (Exception ex)
+            {
+                return View("Error", new ErrorViewModel {  });
+            }
         }
 
         public IActionResult Create()

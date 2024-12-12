@@ -1,4 +1,5 @@
-﻿using FML.Core.Messages;
+﻿using FML.Core.Data;
+using FML.Core.Messages;
 
 namespace FML.Familiares.API.Application.Events
 {

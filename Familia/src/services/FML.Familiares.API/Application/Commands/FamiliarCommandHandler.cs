@@ -19,26 +19,33 @@ namespace FML.Familiares.API.Application.Commands
 
         public async Task<ValidationResult> Handle(RegistrarFamiliarCommand message, CancellationToken cancellationToken)
         {
-            if(!message.IsValid()) return message.ValidationResult;
-
-            var novoFamiliar = new Relative(message.Id, message.Nome, message.Email, message.BirthDate, message.Gender);
-            novoFamiliar.FamilyId = Constantes.FamiliaCarvalhoId;
-            novoFamiliar.HouseId = Constantes.CasaCarvalhoId;
-
-            var familiar = await _relativeRepository.GetRelativeById(message.Id);
-
-            if (familiar is not null) 
+            try
             {
-                AddError("Família já adicionado");
+                if (!message.IsValid()) return message.ValidationResult;
+
+                var novoFamiliar = new Relative(message.Id, message.Nome, Constantes.FamiliaCarvalhoNome, message.Email, message.BirthDate, message.Gender);
+                novoFamiliar.FamilyId = Constantes.FamiliaCarvalhoId;
+                novoFamiliar.HouseId = Constantes.CasaCarvalhoId;
+
+                var familiar = await _relativeRepository.GetRelativeById(message.Id);
+
+                if (familiar != null)
+                {
+                    AddError("Família já adicionado");
+                    return ValidationResult;
+                }
+
+                _relativeRepository.AddRelative(novoFamiliar);
+
+                novoFamiliar.AdicionarEvento(new FamiliarRegistradoEvent(message.Id, message.Nome, message.Email, message.BirthDate, message.Gender));
+
+                return await PersistirDados(_relativeRepository.UnitOfWork);
+            }
+            catch (Exception ex)
+            {
+                AddError(ex.Message);
                 return ValidationResult;
             }
-
-            _relativeRepository.AddRelative(novoFamiliar);
-
-            novoFamiliar.AdicionarEvento(new FamiliarRegistradoEvent(message.Id, message.Nome, message.Email, message.BirthDate, message.Gender));
-
-            return await PersistirDados(_relativeRepository.UnitOfWork);
-
         }
     }
 }

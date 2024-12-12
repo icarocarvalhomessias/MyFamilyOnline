@@ -30,6 +30,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\building blocks\FML.Core\FML.Core.csproj" />
+		<ProjectReference Include="..\..\building blocks\FML.MessageBus\FML.MessageBus.csproj" />
 		<ProjectReference Include="..\..\building blocks\FML.WebApi.Core\FML.WebApi.Core.csproj" />
 	</ItemGroup>
 

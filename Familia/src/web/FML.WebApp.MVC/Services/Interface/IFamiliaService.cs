@@ -11,7 +11,7 @@ public interface IFamiliaServiceRefit
     [Get("/api/familias")]
     Task<List<Family>> GetFamilies();
 
-    [Get("/api/casas/")]
+    [Get("/api/Casas/{familyId}")]
     Task<List<House>> GetHousesByFamilyId(Guid familyId);
 
     [Get("/api/familiares")]

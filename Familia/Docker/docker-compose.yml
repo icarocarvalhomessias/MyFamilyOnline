@@ -23,7 +23,7 @@ services:
       context: ../src
       dockerfile: ./services/FML.Identidade.API/Dockerfile
     ports:
-      - "44396:80"
+      - "8282:8282"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:44396

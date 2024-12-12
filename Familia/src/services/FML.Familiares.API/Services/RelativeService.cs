@@ -1,4 +1,5 @@
-﻿using FML.Familiares.API.Data.Repository.Interface;
+﻿using FML.Core.Data;
+using FML.Familiares.API.Data.Repository.Interface;
 using FML.Familiares.API.Services.Interface;
 
 namespace FML.Familiares.API.Services

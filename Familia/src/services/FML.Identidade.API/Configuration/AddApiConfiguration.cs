@@ -18,7 +18,6 @@ namespace FML.Identidade.API.Configuration
 
             services.AddHttpContextAccessor();
             services.AddScoped<AuthenticationService>();
-            services.AddScoped<IAspNetUser, AspNetUser>();
             var appSettingsSection = configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
 

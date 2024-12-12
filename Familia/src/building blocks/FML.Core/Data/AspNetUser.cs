@@ -65,7 +65,7 @@ namespace FML.Core.Data
 
         public string ObterUserName()
         {
-            return EstaAutenticado() ? _accessor.HttpContext.User.Identity.Name : "";
+            return EstaAutenticado() ? _accessor.HttpContext.User.GetUserName() : "";
         }
     }
 
@@ -90,6 +90,17 @@ namespace FML.Core.Data
             }
 
             var claim = principal.FindFirst("email");
+            return claim?.Value;
+        }
+
+        public static string GetUserName(this ClaimsPrincipal principal)
+        {
+            if (principal == null)
+            {
+                throw new ArgumentException(nameof(principal));
+            }
+
+            var claim = principal.FindFirst("name");
             return claim?.Value;
         }
 

@@ -1,4 +1,5 @@
-﻿using FML.Core.DomainObjects;
+﻿using FML.Core.Data;
+using FML.Core.DomainObjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

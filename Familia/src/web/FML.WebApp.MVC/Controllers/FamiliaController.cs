@@ -1,4 +1,5 @@
 ﻿using Familia.WebApp.MVC.Controllers;
+using FML.Core.Data;
 using FML.WebApp.MVC.Services.Interface;
 using FML.WebApp.MVC.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace FML.WebApp.MVC.Controllers
@@ -24,6 +26,8 @@ namespace FML.WebApp.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            return await Table();
+
             try
             {
                 var relatives = await _familiaService.GetRelatives();
@@ -187,6 +191,12 @@ namespace FML.WebApp.MVC.Controllers
                     Console.WriteLine($"Property: {state.Key} Error: {error.ErrorMessage}");
                 }
             }
+        }
+
+        private async Task<IActionResult> Table()
+        {
+            var relatives = await _familiaService.GetRelatives();
+            return View("Table", relatives);
         }
     }
 }

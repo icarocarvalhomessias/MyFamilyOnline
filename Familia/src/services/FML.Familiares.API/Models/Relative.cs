@@ -1,4 +1,5 @@
-﻿using FML.Core.DomainObjects;
+﻿using FML.Core.Data;
+using FML.Core.DomainObjects;
 using System.ComponentModel.DataAnnotations.Schema;
 
 [Serializable]
@@ -33,17 +34,19 @@ public class Relative : Entity, IAggregateRoot
         
     }
 
-    public Relative(Guid UsuarioId, string firstName, string lastName, DateTime birthDate, Gender gender)
+    public Relative(Guid UsuarioId, string firstName,  string lastName, string email, DateTime birthDate, Gender gender)
     {
         Id = UsuarioId;
         FirstName = firstName;
+        Email = email;
         LastName = lastName;
         BirthDate = birthDate;
         Gender = gender;
+        IsActive = true;
     }
 
 
-        [NotMapped]
+    [NotMapped]
     public string FullName => $"{FirstName} {LastName}";
 
     [NotMapped]
