@@ -195,8 +195,8 @@ namespace FML.WebApp.MVC.Controllers
 
         private async Task<IActionResult> Table()
         {
-            var relatives = await _familiaService.GetRelatives();
-            return View("Table", relatives);
+            //var relatives = await _familiaService.GetRelatives();
+            return View();
         }
     }
 }

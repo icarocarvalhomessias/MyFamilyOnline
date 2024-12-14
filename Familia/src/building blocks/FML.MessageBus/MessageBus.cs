@@ -69,10 +69,20 @@ namespace FML.MessageBus
         }
 
         public IDisposable RespondAsync<TRequest, TResponse>(Func<TRequest, Task<TResponse>> responder)
-            where TRequest : IntegrationEvent where TResponse : ResponseMessage
+          where TRequest : IntegrationEvent where TResponse : ResponseMessage
         {
             TryConnect();
-            return _bus.Rpc.RespondAsync<TRequest, TResponse>(responder).GetAwaiter().GetResult();
+            try
+            {
+                var teste = _bus.Rpc.RespondAsync<TRequest, TResponse>(responder);
+                return teste.AsTask();
+            }
+            catch (TaskCanceledException ex)
+            {
+                // Log the exception
+                Console.WriteLine($"Task was canceled: {ex.Message}");
+                throw;
+            }
         }
 
 

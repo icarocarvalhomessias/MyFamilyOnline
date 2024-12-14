@@ -16,17 +16,17 @@ services:
       - ASPNETCORE_URLS=http://+:44303
 
 #------------------------------------------------------------------------------------------------------------------------------------------------
-  identidade.api:
-    image: identidade.api
-    container_name: identidade.api
-    build:
-      context: ../src
-      dockerfile: ./services/FML.Identidade.API/Dockerfile
-    ports:
-      - "8282:8282"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-      - ASPNETCORE_URLS=http://+:44396
+  # identidade.api:
+  #   image: identidade.api
+  #   container_name: identidade.api
+  #   build:
+  #     context: ../src
+  #     dockerfile: ./services/FML.Identidade.API/Dockerfile
+  #   ports:
+  #     - "8282:8282"
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Production
+  #     - ASPNETCORE_URLS=http://+:44396
 
 # #------------------------------------------------------------------------------------------------------------------------------------------------
 #   familiares.api:

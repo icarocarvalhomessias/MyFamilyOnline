@@ -6,7 +6,7 @@ namespace FML.Core.DomainObjects
     {
         public Guid Id { get; set; }
 
-        //public DateTime CreateAt { get; set; }
+        public DateTime CreateAt { get; set; }
         protected Entity()
         {
             Id = Guid.NewGuid();
