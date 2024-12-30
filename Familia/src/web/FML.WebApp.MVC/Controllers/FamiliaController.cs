@@ -1,4 +1,4 @@
-﻿using Familia.WebApp.MVC.Controllers;
+using Familia.WebApp.MVC.Controllers;
 using FML.Core.Data;
 using FML.WebApp.MVC.Services.Interface;
 using FML.WebApp.MVC.ViewModels;
@@ -23,6 +23,7 @@ namespace FML.WebApp.MVC.Controllers
         public FamiliaController(IFamiliaService familiaService)
         {
             _familiaService = familiaService;
+            _bus = bus;
         }
 
         /// <summary>
@@ -34,33 +35,24 @@ namespace FML.WebApp.MVC.Controllers
             return await Table();
         }
 
-        /// <summary>
-        /// Displays the family tree view.
-        /// </summary>
         [HttpGet]
         public IActionResult FamilyTree()
         {
             return View("FamilyTree");
         }
 
-        /// <summary>
-        /// Displays the table view with relatives.
-        /// </summary>
         public async Task<IActionResult> Table()
         {
             var relatives = await _familiaService.GetRelatives();
+
             return View("Table", relatives);
         }
 
-        /// <summary>
-        /// Gets the family tree nodes as JSON.
-        /// </summary>
         [HttpGet]
         public async Task<IActionResult> GetFamilyTreeNodes()
         {
             var relatives = await _familiaService.GetRelatives();
-
-            var nodes = relatives.AsParallel().Select(relative => new
+            var nodes = relatives.Select(relative => new
             {
                 id = relative.Id,
                 pids = relative.Spouse.HasValue ? new List<Guid> { relative.Spouse.Value } : new List<Guid>(),
@@ -82,9 +74,6 @@ namespace FML.WebApp.MVC.Controllers
         }
 
 
-        /// <summary>
-        /// Displays the edit view for a relative.
-        /// </summary>
         public async Task<IActionResult> ParenteEdit(Guid id)
         {
             if (id == Guid.Empty)
@@ -105,6 +94,95 @@ namespace FML.WebApp.MVC.Controllers
         }
 
 
+        [HttpPost]
+        public async Task<IActionResult> Edit(Relative model, IFormFile FotoFile)
+        {
+            if (!ModelState.IsValid)
+            {
+                LogModelErrors();
+                await PopulateDropDownLists();
+                return View("Create", model);
+            }
+
+            await _familiaService.UpdateRelative(model, FotoFile.OpenReadStream(), FotoFile.FileName);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            var relatives = await _familiaService.GetRelatives();
+            var homens = relatives.Where(x => x.Gender == Gender.Male).ToList();
+            var mulheres = relatives.Where(x => x.Gender == Gender.Female).ToList();
+
+            ViewBag.Homens = new SelectList(homens, "Id", "FullName");
+            ViewBag.Mulheres = new SelectList(mulheres, "Id", "FullName");
+
+            await PopulateDropDownLists();
+
+            return View("Create", new Relative());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Relative relative)
+        {
+            if (ModelState.IsValid)
+            {
+                await _familiaService.AddRelative(relative);
+                return RedirectToAction(nameof(Index), new { familyId = relative.FamilyId });
+            }
+
+            await PopulateDropDownLists();
+            return View(relative);
+        }
+
+
+
+        private FamilyTreeViewModel OrganizeFamilyTree(List<Relative> relatives)
+        {
+
+            var FotoFileBase64 = StringsHelper.ConvertStreamToBase64(fotoFile);
+
+            var familiarAtualizadoIntegrationEvent = new FamiliarAtualizadoIntegrationEvent(
+                relative.Id,
+                relative.FirstName,
+                relative.LastName,
+                relative.FamilyId,
+                relative.HouseId,
+                relative.FatherId ?? Guid.Empty,
+                relative.MotherId ?? Guid.Empty,
+                relative.LinkName ?? string.Empty,
+                string.Empty,
+                relative.SecretSanta,
+                relative.Email ?? string.Empty,
+                relative.BirthDate,
+                relative.IsActive,
+                relative.IsAlive,
+                relative.Patriarch,
+                relative.Matriarch,
+                relative.DeathDate ?? DateTime.MinValue,
+                relative.Gender.ToString(),
+                FotoFileBase64,
+                filename
+            );
+
+
+            try
+            {
+                return await _bus.RequestAsync<FamiliarAtualizadoIntegrationEvent, ResponseMessage>(familiarAtualizadoIntegrationEvent);
+            }
+            catch (TaskCanceledException ex)
+            {
+                Console.WriteLine("Task was canceled: " + ex.Message);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+
+        }
+
 
         /// <summary>
         /// Edits a relative.
@@ -119,117 +197,20 @@ namespace FML.WebApp.MVC.Controllers
                 return View("Create", model);
             }
 
+
             if (FotoFile is null)
             {
-                await _familiaService.UpdateRelative(model, null, null);
+                await AtualizaParent(model, null, null);
                 return RedirectToAction("Index");
             }
 
-            await _familiaService.UpdateRelative(model, FotoFile.OpenReadStream(), FotoFile.FileName);
+            await AtualizaParent(model, FotoFile.OpenReadStream(), FotoFile.FileName);
             return RedirectToAction("Index");
         }
 
-        /// <summary>
-        /// Displays the create view for a new relative.
-        /// </summary>
-        public async Task<IActionResult> Create()
-        {
-            var relatives = await _familiaService.GetRelatives();
-            var homens = relatives.Where(x => x.Gender == Gender.Male).ToList();
-            var mulheres = relatives.Where(x => x.Gender == Gender.Female).ToList();
 
-            ViewBag.Homens = new SelectList(homens, "Id", "FullName");
-            ViewBag.Mulheres = new SelectList(mulheres, "Id", "FullName");
 
-            await PopulateDropDownLists();
-
-            var relative = new Relative();
-
-            return View("Create", relative);
-        }
-
-        /// <summary>
-        /// Creates a new relative.
-        /// </summary>
-        [HttpPost]
-        public async Task<IActionResult> Create(Relative relative)
-        {
-            if (ModelState.IsValid)
-            {
-                await _familiaService.AddRelative(relative);
-                return RedirectToAction(nameof(Index), new { familyId = relative.FamilyId });
-            }
-
-            await PopulateDropDownLists();
-            return View(relative);
-        }
-
-        /// <summary>
-        /// Removes a relative.
-        /// </summary>
         public async Task<IActionResult> RemoveRelative(Relative relative)
-        {
-            await _familiaService.RemoveRelative(relative.Id);
-            return RedirectToAction("Index");
-        }
-
-
-
-        /// <summary>
-        /// Organizes the family tree.
-        /// </summary>
-        private FamilyTreeViewModel OrganizeFamilyTree(List<Relative> relatives)
-        {
-            var TESTE = relatives.Where(x => x.Id != Guid.Parse("1a9cedd7-4493-4c7b-c81c-08dd0d7371ad")
-            && x.Id != Guid.Parse("9c6a8126-180b-40b2-65bf-08dd0d73fbc5")).ToList();
-
-            var root = new FamilyTreeViewModel
-            {
-                Pessoa1 = TESTE.FirstOrDefault(r => r.Patriarch),
-                Pessoa2 = TESTE.FirstOrDefault(r => r.Matriarch)
-            };
-
-            root.Id = GenerateId(root);
-
-            AddChildren(root, TESTE);
-
-            return root;
-        }
-
-        /// <summary>
-        /// Adds children to the family tree node.
-        /// </summary>
-        private void AddChildren(FamilyTreeViewModel parent, List<Relative> relatives)
-        {
-            if (parent.Pessoa1 is null || parent.Pessoa2 is null)
-            {
-                return;
-            }
-
-            var children = relatives.Where(r =>
-                (r.MotherId.HasValue && (r.MotherId == parent.Pessoa1.Id || r.MotherId == parent.Pessoa2.Id)) ||
-                (r.FatherId.HasValue && (r.FatherId == parent.Pessoa1.Id || r.FatherId == parent.Pessoa2.Id))
-            ).Distinct().ToList();
-
-            foreach (var child in children)
-            {
-                var childNode = new FamilyTreeViewModel
-                {
-                    Pessoa1 = child,
-                    Pessoa2 = relatives.FirstOrDefault(r => r.Id == child.Spouse)
-                };
-
-                childNode.Id = GenerateId(childNode);
-
-                parent.Filhos.Add(childNode);
-                AddChildren(childNode, relatives);
-            }
-        }
-
-        /// <summary>
-        /// Generates an ID for the family tree node.
-        /// </summary>
-        private string GenerateId(FamilyTreeViewModel familyTreeViewModel)
         {
             var id1 = familyTreeViewModel.Pessoa1?.Id.ToString() ?? string.Empty;
             var id2 = familyTreeViewModel.Pessoa2?.Id.ToString() ?? string.Empty;
@@ -269,5 +250,46 @@ namespace FML.WebApp.MVC.Controllers
                 }
             }
         }
+
+
+
+
+     
+
+
+        public class Node
+        {
+            public Guid Id { get; set; }
+            public List<Guid> Pids { get; set; }
+            public string Name { get; set; }
+            public string Gender { get; set; }
+            public Guid? Mid { get; set; }
+            public Guid? Fid { get; set; }
+            public string Img { get; set; }
+        }
+
+        //var relatives = await _familiaService.GetRelatives();
+
+        //var nodes = new List<Node>();
+
+        //foreach (var relative in relatives)
+        //{
+        //    var node = new Node
+        //    {
+        //        Id = relative.Id,
+        //        Name = relative.FullName,
+        //        Gender = relative.Gender.ToString(),
+        //        Mid = relative.MotherId,
+        //        Fid = relative.FatherId,
+        //        Pids = new List<Guid> { relative.MotherId ?? Guid.Empty, relative.FatherId ?? Guid.Empty },
+        //        Img = relative.LinkName ?? string.Empty
+
+        //    };
+        //    nodes.Add(node);
+        //}
+
+        //ViewData["NodesJson"] = JsonConvert.SerializeObject(nodes);
+
+        //return View();
     }
 }
