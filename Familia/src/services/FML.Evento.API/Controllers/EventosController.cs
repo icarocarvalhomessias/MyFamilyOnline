@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using FML.Evento.API.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
+using FML.WebApi.Core.Controllers;
 
 
 namespace FML.Evento.API.Controllers
 {
-    [Route("api/eventos")]
+    [Authorize]
+    [Route("api/[controller]")]
     public class EventosController : MainController
     {
         private readonly IEventoService _eventoService;
@@ -26,14 +29,6 @@ namespace FML.Evento.API.Controllers
         public async Task<IActionResult> RefazAmigoOculto()
         {
             var resultado = await Task.Run(() => _eventoService.RefazAmigoOculto(Guid.NewGuid()));
-            return CustomResponse(resultado);
-        }
-
-        [HttpGet]
-        [Route("parentes")]
-        public async Task<IActionResult> ObterTodos()
-        {
-            var resultado = _eventoService.ObterTodos();
             return CustomResponse(resultado);
         }
     }

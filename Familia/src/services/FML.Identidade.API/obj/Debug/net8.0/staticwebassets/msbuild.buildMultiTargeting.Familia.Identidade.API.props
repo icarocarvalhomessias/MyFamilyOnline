@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\Familia.Identidade.API.props" />
-</Project>

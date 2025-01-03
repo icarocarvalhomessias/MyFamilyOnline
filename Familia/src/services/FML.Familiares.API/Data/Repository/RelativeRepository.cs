@@ -18,10 +18,10 @@ namespace FML.Familiares.API.Data.Repository
         public async Task<IEnumerable<Relative>> GetRelativesByFamilyId(Guid familyId)
         {
             return await _context.Relatives
-                .Include(r => r.Family)
-                .Include(r => r.House)
-                .AsNoTracking()
-                .Where(r => r.FamilyId == familyId).ToListAsync();
+            .Include(r => r.Family)
+            .Include(r => r.House)
+            .AsNoTracking()
+            .Where(r => r.FamilyId == familyId).ToListAsync();
         }
 
         public async Task<IEnumerable<Relative>> GetRelativesByFatherId(Guid fatherId)
@@ -39,51 +39,47 @@ namespace FML.Familiares.API.Data.Repository
             return await _context.Relatives.AsNoTracking().Where(r => r.MotherId == motherId).ToListAsync();
         }
 
-        public async Task AddRelative(Relative relative)
+        public void AddRelative(Relative relative)
         {
-            await _context.Relatives.AddAsync(relative);
-            await _context.SaveChangesAsync(); // Certifique-se de salvar as mudanças
-
+            _context.Relatives.Add(relative);
         }
 
         public async Task AddRelatives(IEnumerable<Relative> relatives)
         {
-            try
+            if (relatives == null || !relatives.Any())
             {
-                if (relatives == null || !relatives.Any())
-                {
-                    throw new ArgumentException("The relatives collection is null or empty.", nameof(relatives));
-                }
+                throw new ArgumentException("The relatives collection is null or empty.", nameof(relatives));
+            }
 
-                await _context.Relatives.AddRangeAsync(relatives);
-                await _context.SaveChangesAsync(); // Certifique-se de salvar as mudanças
-            }
-            catch (Exception ex)
-            {
-                // Log a exceção (use seu mecanismo de logging preferido)
-                Console.WriteLine($"An error occurred while adding relatives: {ex.Message}");
-                throw; // Re-throw a exceção para que ela possa ser tratada em outro lugar, se necessário
-            }
+            await _context.Relatives
+                .AddRangeAsync(relatives);
         }
 
 
         public async Task<bool> RemoveRelative(Guid relativeId)
         {
-            _context.Relatives.Remove(new Relative { Id = relativeId });
+            _context.Relatives
+                .Remove(new Relative { Id = relativeId });
             return await _context.SaveChangesAsync() > 0;
 
         }
 
         public async Task<bool> UpdateRelative(Relative relative)
         {
-            _context.Relatives.Update(relative);
+            _context.Relatives
+                .Update(relative);
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<Relative> GetRelativeById(Guid relativeId)
+        public async Task<Relative?> GetRelativeById(Guid relativeId)
         {
-            return await _context.Relatives.AsNoTracking().FirstOrDefaultAsync(r => r.Id == relativeId);
+            return await _context.Relatives
+            .Include(r => r.Family)
+            .Include(r => r.House)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(r => r.Id == relativeId);
         }
+
 
 
         public void Dispose()

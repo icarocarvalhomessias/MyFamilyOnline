@@ -1,31 +1,59 @@
-﻿using Familia.WebApp.MVC.Extensions;
-using FML.WebApp.MVC.Clients.Handlers;
-using FML.WebApp.MVC.Clients.HttpServices;
-using FML.WebApp.MVC.Clients.HttpServices.Interface;
+﻿using FML.Core.Data;
+using FML.Familiares.API.Configuration;
 using FML.WebApp.MVC.Services;
-using FML.WebApp.MVC.Services.Interfaces;
+using FML.WebApp.MVC.Services.Interface;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Polly;
+using Refit;
+using System;
 
 namespace Familia.WebApp.MVC.Configuration
 {
     public static class DependencyInjectionConfig
     {
-        public static void RegisterServices(this IServiceCollection services)
+        public static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
+            services.AddControllersWithViews();
+            services.AddHttpContextAccessor();
+            services.AddScoped<IAspNetUser, AspNetUser>();
+            services.RegisterJson();
 
-            services.AddHttpClient<IAutenticacaoHttpService, AutenticacaoHttpService>()
-                .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
+            services.AddHttpClient<IFamiliaService, FamiliaService>(options =>
+            {
+                var familiaUrl = configuration.GetSection("FamiliaUrl").Value;
+                options.BaseAddress = new Uri(familiaUrl);
+            })
+                .AddHttpMessageHandler<AuthorizationHandler>()
+                .ConfigurePrimaryHttpMessageHandler(() => new CustomHttpClientHandler())
+                .AddJsonOptions();
 
-            services.AddHttpClient<IEventoHttpService, EventoHttpService>()
-                .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
+            #region REFIT CONFIG
 
-            services.AddHttpClient<IFamiliaHttpService, FamiliaHttpService>()
-                .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
+            var refitSettings = RefitConfig.GetRefitSettings();
+            var retryConfig = RefitConfig.GetRetryPolicy();
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<IUser, AspNetUser>();
+            services.AddHttpClient("EventoRefit", options =>
+            {
+                var eventoUrl = configuration.GetSection("EventoUrl").Value;
+                options.BaseAddress = new Uri(eventoUrl);
+            })
+                .AddHttpMessageHandler<AuthorizationHandler>()
+                .ConfigurePrimaryHttpMessageHandler(() => new CustomHttpClientHandler())
+                .AddTypedClient(client => RestService.For<IEventoServiceRefit>(client, refitSettings))
+                .AddPolicyHandler(retryConfig)
+                .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
-            services.AddScoped<IFamiliaService, FamiliaService>();
+            #endregion
+
+            services.AddTransient<AuthorizationHandler>();
+            services.AddHttpClient<IAutenticacaoService, AutenticacaoService>(options =>
+            {
+                var autenticacaoUrl = configuration.GetSection("AutenticacaoUrl").Value;
+                options.BaseAddress = new Uri(autenticacaoUrl);
+            })
+            .ConfigurePrimaryHttpMessageHandler(() => new CustomHttpClientHandler())
+            .AddJsonOptions();
         }
     }
 }

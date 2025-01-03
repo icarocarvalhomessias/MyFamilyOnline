@@ -1,4 +1,7 @@
-﻿using FML.Familiares.API.Data.Repository.Interface;
+﻿using FML.Core.Data;
+using FML.Familiares.API.Clients;
+using FML.Familiares.API.Data.Repository.Interface;
+using FML.Familiares.API.Models;
 using FML.Familiares.API.Services.Interface;
 
 namespace FML.Familiares.API.Services
@@ -8,21 +11,46 @@ namespace FML.Familiares.API.Services
         private readonly IRelativeRepository _relativeRepository;
         private readonly IFamilyRepository _familyRepository;
         private readonly IHouseRepository _houseRepository;
+        private readonly IFileHttp _fileHttp;
 
         public RelativeService(
             IRelativeRepository relativeRepository, 
             IFamilyRepository familyRepository, 
-            IHouseRepository houseRepository)
+            IHouseRepository houseRepository,
+            IFileHttp fileHttp)
         {
             _relativeRepository = relativeRepository;
             _familyRepository = familyRepository;
             _houseRepository = houseRepository;
+            _fileHttp = fileHttp;
         }
 
 
-        public async Task<IEnumerable<Relative>> GetRelativeByFamilyId(Guid id)
+        public async Task<IEnumerable<Relative>> GetRelatives()
         {
-            return await _relativeRepository.GetRelativesByFamilyId(id);
+            var id = Guid.Parse("417d7e43-fe2f-44d6-a8c4-4070e841ad53");
+            var relatives = await _relativeRepository.GetRelativesByFamilyId(id);
+
+            foreach (var relative in relatives.Where(x => x.FotoId != null))
+            {
+                var url = await _fileHttp.ImageUrlAsync(relative.FotoId.Value);
+                relative.FotoPerfil = url;
+            }
+
+            return relatives;
+        }
+
+        public async Task<Relative> GetRelativeById(Guid relativeId)
+        {
+            var relative =  await _relativeRepository.GetRelativeById(relativeId);
+
+            if(relative.FotoId != null)
+            {
+                var url = await _fileHttp.ImageUrlAsync(relative.FotoId.Value);
+                relative.FotoPerfil = url;
+            }
+
+            return relative;
         }
 
         public async Task<Guid> Add()
@@ -152,21 +180,39 @@ namespace FML.Familiares.API.Services
                 relative.FamilyId = familia.Id;
                 relative.HouseId = relative.House.Id;
 
-                await _relativeRepository.AddRelative(relative);
+                _relativeRepository.AddRelative(relative);
+            }
+
+            if (!await _relativeRepository.UnitOfWork.Commit())
+            {
+                Console.WriteLine("Erro ao salvar os dados");
             }
 
             return familia.Id;
         }
 
-        public async Task<bool> Update(Relative relative)
+        public async Task<bool> Update(UpdateRelativeModel relative)
         {
-            return await _relativeRepository.UpdateRelative(relative);
-        }
+            if (!string.IsNullOrEmpty(relative.FotoFileBase64))
+            {
+                var bytes = Convert.FromBase64String(relative.FotoFileBase64);
+                var fileName = $"{relative.Relative.Id}.jpg";
+                var response = await _fileHttp.UploadPhotoAsync(bytes, fileName);
 
+                if (response.IsSuccessStatusCode)
+                {
+                    var id = await response.Content.ReadAsStringAsync();
+                    relative.Relative.FotoId = Guid.Parse(id.Trim('"'));
 
-        public async Task<Relative> GetRelativeById(Guid relativeId)
-        {
-            return await _relativeRepository.GetRelativeById(relativeId);
+                }
+                else
+                {
+                    // Handle error
+                    return false;
+                }
+            }
+
+            return await _relativeRepository.UpdateRelative(relative.Relative);
         }
 
         public async Task<bool> AddRelative(Relative relative)
@@ -939,5 +985,6 @@ namespace FML.Familiares.API.Services
 
 
         #endregion
+
     }
 }

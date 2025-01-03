@@ -1,4 +1,5 @@
 ﻿using FML.Familiares.API.Data;
+using FML.WebApi.Core.Identidade;
 using Microsoft.EntityFrameworkCore;
 
 namespace FML.Familiares.API.Configuration
@@ -10,33 +11,45 @@ namespace FML.Familiares.API.Configuration
             services.AddDbContext<FamiliaresContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddControllers();
-
             services.AddCors(options =>
             {
                 options.AddPolicy("Total",
                     builder =>
-                    {
                         builder
                             .AllowAnyOrigin()
                             .AllowAnyMethod()
-                            .AllowAnyHeader();
-                    });
+                            .AllowAnyHeader());
             });
+
+            services.AddControllers();
+            services.AddJwtConfiguration(configuration);
+            services.AddSwaggerConfiguration();
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApiConfig).Assembly));
+            services.AddHttpContextAccessor();
+            services.RegisterServices(configuration);
+            services.RegisterJson();
         }
 
         public static void UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwaggerConfiguration();
+
             // Configure the HTTP request pipeline.
             if (env.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
                 app.UseDeveloperExceptionPage();
             }
-            app.UseHttpsRedirection();
 
+            app.UseHttpsRedirection();
+            app.UseRouting();
+            app.UseCors("Total");
+            app.UseAuthConfiguration();
             app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

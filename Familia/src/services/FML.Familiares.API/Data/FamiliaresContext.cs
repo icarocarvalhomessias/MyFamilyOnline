@@ -1,12 +1,21 @@
 ﻿using FML.Core.Data;
+using FML.Core.DomainObjects;
+using FML.Core.Mediator;
+using FML.Core.Messages;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace FML.Familiares.API.Data
 {
     public class FamiliaresContext : DbContext, IUnitOfWork
     {
-        public FamiliaresContext(DbContextOptions<FamiliaresContext> options) : base(options)
+        private readonly IMediatorHandler _mediatorHandler;
+
+        public FamiliaresContext(DbContextOptions<FamiliaresContext> options, IMediatorHandler mediatorHandler) : base(options)
         {
+            _mediatorHandler = mediatorHandler;
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            ChangeTracker.AutoDetectChangesEnabled = false;
         }
 
         public DbSet<Relative> Relatives { get; set; }
@@ -15,6 +24,9 @@ namespace FML.Familiares.API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Ignore<Event>();
+            modelBuilder.Ignore<ValidationResult>();
+
             base.OnModelCreating(modelBuilder);
 
             // Configure Family-Relative relationship
@@ -51,7 +63,36 @@ namespace FML.Familiares.API.Data
 
         public async Task<bool> Commit()
         {
-            return await base.SaveChangesAsync() > 0;
+            var sucesso = await base.SaveChangesAsync() > 0;
+
+            if (sucesso) await _mediatorHandler.PublicarEventos(this);
+
+            return sucesso;
+        }
+    }
+
+    public static class MediatorExtension
+    {
+        public static async Task PublicarEventos<T>(this IMediatorHandler mediator, T context) where T : DbContext
+        {
+            var domainEntities = context.ChangeTracker
+                .Entries<Entity>()
+                .Where(x => x.Entity.Notificacoes != null && x.Entity.Notificacoes.Any());
+
+            var domainEvents = domainEntities
+                .SelectMany(x => x.Entity.Notificacoes)
+                .ToList();
+
+            domainEntities.ToList()
+                .ForEach(entity => entity.Entity.LimparEventos());
+
+            var tasks = domainEvents
+                .Select(async (domainEvent) =>
+                {
+                    await mediator.PublicarEvento(domainEvent);
+                });
+
+            await Task.WhenAll(tasks);
         }
     }
 }

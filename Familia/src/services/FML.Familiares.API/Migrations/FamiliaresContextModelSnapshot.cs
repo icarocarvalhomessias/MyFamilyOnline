@@ -30,21 +30,21 @@ namespace FML.Familiares.API.Migrations
 
                     b.Property<string>("History")
                         .IsRequired()
-                        .HasColumnType("varchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Families", (string)null);
+                    b.ToTable("Families");
                 });
 
             modelBuilder.Entity("House", b =>
@@ -54,10 +54,10 @@ namespace FML.Familiares.API.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
-                        .HasColumnType("varchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("FamilyId")
                         .HasColumnType("uniqueidentifier");
@@ -67,19 +67,19 @@ namespace FML.Familiares.API.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ZipCode")
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FamilyId");
 
-                    b.ToTable("Houses", (string)null);
+                    b.ToTable("Houses");
                 });
 
             modelBuilder.Entity("Relative", b =>
@@ -89,13 +89,13 @@ namespace FML.Familiares.API.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeathDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("FamilyId")
                         .HasColumnType("uniqueidentifier");
@@ -105,7 +105,13 @@ namespace FML.Familiares.API.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("FotoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FotoStream")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
@@ -121,10 +127,10 @@ namespace FML.Familiares.API.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LinkName")
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Matriarch")
                         .HasColumnType("bit");
@@ -136,10 +142,7 @@ namespace FML.Familiares.API.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<Guid?>("RelativeId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("SecretSanta")
                         .HasColumnType("bit");
@@ -153,20 +156,22 @@ namespace FML.Familiares.API.Migrations
 
                     b.HasIndex("HouseId");
 
-                    b.HasIndex("RelativeId");
+                    b.HasIndex("MotherId");
 
-                    b.ToTable("Relatives", (string)null);
+                    b.HasIndex("Spouse")
+                        .IsUnique()
+                        .HasFilter("[Spouse] IS NOT NULL");
+
+                    b.ToTable("Relatives");
                 });
 
             modelBuilder.Entity("House", b =>
                 {
-                    b.HasOne("Family", "Family")
+                    b.HasOne("Family", null)
                         .WithMany("Houses")
                         .HasForeignKey("FamilyId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Family");
                 });
 
             modelBuilder.Entity("Relative", b =>
@@ -174,22 +179,29 @@ namespace FML.Familiares.API.Migrations
                     b.HasOne("Family", "Family")
                         .WithMany("Relatives")
                         .HasForeignKey("FamilyId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("House", "House")
                         .WithMany("Residents")
                         .HasForeignKey("HouseId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Relative", null)
-                        .WithMany("Childrens")
-                        .HasForeignKey("RelativeId");
+                        .WithMany("Children")
+                        .HasForeignKey("MotherId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Relative", "SpouseObj")
+                        .WithOne()
+                        .HasForeignKey("Relative", "Spouse");
 
                     b.Navigation("Family");
 
                     b.Navigation("House");
+
+                    b.Navigation("SpouseObj");
                 });
 
             modelBuilder.Entity("Family", b =>
@@ -206,7 +218,7 @@ namespace FML.Familiares.API.Migrations
 
             modelBuilder.Entity("Relative", b =>
                 {
-                    b.Navigation("Childrens");
+                    b.Navigation("Children");
                 });
 #pragma warning restore 612, 618
         }

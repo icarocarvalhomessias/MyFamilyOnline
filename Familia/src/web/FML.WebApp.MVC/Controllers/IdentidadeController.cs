@@ -1,18 +1,21 @@
-﻿using Familia.WebApp.MVC.Models;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
-using FML.WebApp.MVC.Clients.HttpServices.Interface;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System;
+using FML.WebApp.MVC.Services.Interface;
+using FML.Core.Data;
 
 namespace Familia.WebApp.MVC.Controllers
 {
     public class IdentidadeController : MainController
     {
-        private readonly IAutenticacaoHttpService _autenticacaoService;
+        private readonly IAutenticacaoService _autenticacaoService;
 
-        public IdentidadeController(IAutenticacaoHttpService autenticacaoService)
+        public IdentidadeController(IAutenticacaoService autenticacaoService)
         {
             _autenticacaoService = autenticacaoService;
         }

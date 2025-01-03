@@ -1,193 +1,133 @@
-﻿using FML.WebApp.MVC.Clients.HttpServices.Interface;
-using FML.WebApp.MVC.Services.Interfaces;
+﻿using FML.WebApp.MVC.Services.Interface;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.WebSockets;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FML.WebApp.MVC.Services
 {
-    public class FamiliaService : IFamiliaService
+    public class FamiliaService : Service, IFamiliaService
     {
-        private readonly IFamiliaHttpService _familiaHttpService;
+        private readonly HttpClient _httpClient;
 
-        public FamiliaService(IFamiliaHttpService familiaService)
+        public FamiliaService(HttpClient httpClient)
         {
-            _familiaHttpService = familiaService;
-        }
-
-        public  async Task<Dictionary<string, Dictionary<Relative, Relative>>> GetFamilyTree(Guid familyId)
-        {
-            var parentes = _familiaHttpService.GetRelativeByFamilyId(familyId).Result;
-            var matriarca = parentes.FirstOrDefault(p => p.Matriarch == true);
-            var patriarca = parentes.FirstOrDefault(p => p.Patriarch == true);
-
-            if (patriarca == null || matriarca == null)
-            {
-                return null;
-            }
-
-            var resposta = new Dictionary<string, Dictionary<Relative, Relative>>();
-
-            var patriarcas = new Dictionary<Relative, Relative>
-            {
-                { patriarca, matriarca }
-            };
-
-            resposta.Add("Patriarcas", patriarcas);
-
-
-            var filhos = parentes.Where(p => p.FatherId == patriarca.Id)
-                                 .Concat(parentes.Where(p => p.MotherId == patriarca.Id)).ToList();
-
-            var filhosComConjugues = new Dictionary<Relative, Relative>();
-
-            foreach (var filho in filhos)
-            {
-                var conjuge = parentes.FirstOrDefault(p => p.Id == filho.Spouse);
-
-                if (conjuge != null)
-                {
-                    filhosComConjugues.Add(filho, conjuge);
-                }
-            }
-
-            var filhosSemConjugues = filhos.Except(filhosComConjugues.Keys).ToList();
-
-            foreach (var filho in filhosSemConjugues)
-            {
-                filhosComConjugues.Add(filho, null);
-            }
-
-            resposta.Add("Filhos", filhosComConjugues);
-
-
-            var netos = new List<Relative>();
-
-            foreach (var filho in filhos)
-            {
-                var filhoDosFilhos = parentes.Where(p => p.FatherId == filho.Id)
-                                              .Concat(parentes.Where(p => p.MotherId == filho.Id)).ToList();
-
-                netos.AddRange(filhoDosFilhos);
-            }
-
-            var netosComConjugues = new Dictionary<Relative, Relative>();
-
-            foreach (var neto in netos)
-            {
-                var conjuge = parentes.FirstOrDefault(p => p.Id == neto.Spouse);
-
-                if (conjuge != null)
-                {
-                    netosComConjugues.Add(neto, conjuge);
-                }
-            }
-
-            var netosSemConjugues = netos.Except(netosComConjugues.Keys).ToList();
-
-            foreach (var neto in netosSemConjugues)
-            {
-                netosComConjugues.Add(neto, null);
-            }
-
-            resposta.Add("Netos", netosComConjugues);
-
-            var bisnetos = new List<Relative>();
-
-            foreach (var neto in netos)
-            {
-                var filhoDosNetos = parentes.Where(p => p.FatherId == neto.Id)
-                                            .Concat(parentes.Where(p => p.MotherId == neto.Id)).ToList();
-
-                bisnetos.AddRange(filhoDosNetos);
-            }
-
-            var bisnetosComConjugues = new Dictionary<Relative, Relative>();
-
-            foreach (var bisneto in bisnetos)
-            {
-                var conjuge = parentes.FirstOrDefault(p => p.Id == bisneto.Spouse);
-
-                if (conjuge != null)
-                {
-                    bisnetosComConjugues.Add(bisneto, conjuge);
-                }
-            }
-
-            var bisnetosSemConjugues = bisnetos.Except(bisnetosComConjugues.Keys).ToList();
-
-            foreach (var bisneto in bisnetosSemConjugues)
-            {
-                bisnetosComConjugues.Add(bisneto, null);
-            }
-
-            resposta.Add("Bisnetos", bisnetosComConjugues);
-
-            var trinetos = new List<Relative>();
-
-            foreach (var bisneto in bisnetos)
-            {
-                var filhoDosBisnetos = parentes.Where(p => p.FatherId == bisneto.Id)
-                                               .Concat(parentes.Where(p => p.MotherId == bisneto.Id)).ToList();
-
-                trinetos.AddRange(filhoDosBisnetos);
-            }
-
-            var trinetosComConjugues = new Dictionary<Relative, Relative>();
-
-            foreach (var trineto in trinetos)
-            {
-                var conjuge = parentes.FirstOrDefault(p => p.Id == trineto.Spouse);
-
-                if (conjuge != null)
-                {
-                    trinetosComConjugues.Add(trineto, conjuge);
-                }
-            }
-
-            var trinetosSemConjugues = trinetos.Except(trinetosComConjugues.Keys).ToList();
-
-            foreach (var trineto in trinetosSemConjugues)
-            {
-                trinetosComConjugues.Add(trineto, null);
-            }
-
-            resposta.Add("Trinetos", trinetosComConjugues);
-
-            return resposta;
-        }
-
-
-        public async Task AddRelative(Relative relative)
-        {
-            await _familiaHttpService.AddRelative(relative);
-        }
-
-        public async Task UpdateRelative(Relative relative)
-        {
-            await _familiaHttpService.UpdateRelative(relative);
-        }
-
-        public async Task RemoveRelative(Guid relativeId)
-        {
-            await _familiaHttpService.RemoveRelative(relativeId);
-        }
-
-        public async Task<Relative> GetRelativeById(Guid relativeId)
-        {
-            return await _familiaHttpService.GetRelativeById(relativeId);
-        }
-
-        public async Task<List<Relative>> GetRelativesByFamilyId(Guid familyId)
-        {
-            return await _familiaHttpService.GetRelativeByFamilyId(familyId);
+            _httpClient = httpClient;
         }
 
         public async Task<List<Family>> GetFamilies()
         {
-            return await _familiaHttpService.GetFamilies();
+            var response = await _httpClient.GetAsync("/api/familias");
+
+            TratarErrosResponse(response);
+
+            return await DeserializarObjetoResponse<List<Family>>(response);
         }
 
         public async Task<List<House>> GetHousesByFamilyId(Guid familyId)
         {
-            return await _familiaHttpService.GetHousesByFamilyId(familyId);
+            var response = await _httpClient.GetAsync($"/api/Casas/{familyId}");
+
+            TratarErrosResponse(response);
+
+            return await DeserializarObjetoResponse<List<House>>(response);
         }
+
+        public async Task<List<Relative>> GetRelatives()
+        {
+            var response = await _httpClient.GetAsync("/api/familiares");
+
+            TratarErrosResponse(response);
+
+            return await DeserializarObjetoResponse<List<Relative>>(response);
+        }
+
+        public async Task<Relative> GetRelativeById(Guid relativeId)
+        {
+            var response = await _httpClient.GetAsync($"/api/familiares/{relativeId}");
+
+            TratarErrosResponse(response);
+
+            return await DeserializarObjetoResponse<Relative>(response);
+        }
+
+        public async Task AddRelative(Relative relative)
+        {
+            var content = ObterConteudo(relative);
+            var response = await _httpClient.PostAsync("/api/familiares/adicionar", content);
+
+            TratarErrosResponse(response);
+        }
+
+        public async Task UpdateRelative(Relative relative)
+        {
+            var content = ObterConteudo(relative);
+
+            var response = await _httpClient.PatchAsync("/api/familiares", content);
+
+            TratarErrosResponse(response);
+        }
+
+        public async Task RemoveRelative(Guid relativeId)
+        {
+            var response = await _httpClient.DeleteAsync($"/api/familiares/{relativeId}");
+
+            TratarErrosResponse(response);
+        }
+
+        public async Task UpdateRelative(Relative relative, Stream? fotoFile, string? fileName)
+        {
+            try
+            {
+                var updateRelativeModel = new UpdateRelativeModel
+                {
+                    Relative = relative,
+                    FotoFileBase64 = ConvertStreamToBase64(fotoFile)
+                };
+
+                var jsonContent = new StringContent(JsonConvert.SerializeObject(updateRelativeModel), Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync("/api/familiares", jsonContent);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error updating relative: {errorMessage}");
+                }
+
+                TratarErrosResponse(response);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                throw new Exception("An error occurred while updating the relative.", ex);
+            }
+        }
+
+        private string ConvertStreamToBase64(Stream? stream)
+        {
+            if (stream == null)
+            {
+                return string.Empty;
+            }
+
+            using (var memoryStream = new MemoryStream())
+            {
+                stream.CopyTo(memoryStream);
+                return Convert.ToBase64String(memoryStream.ToArray());
+            }
+        }
+    }
+
+    public class UpdateRelativeModel
+    {
+        public Relative Relative { get; set; }
+        public string FotoFileBase64 { get; set; }
     }
 }

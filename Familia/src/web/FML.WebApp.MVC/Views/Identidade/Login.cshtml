@@ -1,4 +1,4 @@
-﻿@model Familia.WebApp.MVC.Models.UsuarioLogin
+﻿@model FML.Core.Data.UsuarioLogin
 
 @{
     ViewData["Title"] = "Login";
@@ -12,7 +12,7 @@
     <div class="card mx-auto" style="max-width: 380px; margin-top: 100px;">
 
         <div class="card-body">
-            <h4 class="card-title mb-4">Welcome!</h4>
+            <h4 class="card-title mb-4">Bem Vindo!</h4>
             <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
                 <div class="form-group">
                     <label asp-for="Email"></label>
@@ -31,7 +31,7 @@
                 </div>
             </form>
         </div>
-        <div class="card-footer text-center">Dont have an account?<a asp-controller="Identity" asp-action="Register"> Sign Up</a></div>
+        <div class="card-footer text-center">Não tem conta?<a asp-controller="Identidade" asp-action="Registro"> Nova Conta</a></div>
     </div>
 
 </section>

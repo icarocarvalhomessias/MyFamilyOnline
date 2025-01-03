@@ -1,5 +1,4 @@
 ﻿using Familia.WebApp.MVC.Models;
-using FML.WebApp.MVC.Clients.HttpServices.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,23 +7,34 @@ namespace Familia.WebApp.MVC.Controllers
     [Authorize]
     public class HomeController : MainController
     {
-        private readonly IEventoHttpService _eventoService;
 
-        public HomeController(IEventoHttpService eventoService)
+        [Route("sistema-indisponivel")]
+        public IActionResult SistemIndisponivel()
         {
-            _eventoService = eventoService;
+            var modelerro = new ErrorViewModel
+            {
+                ErroCode = 500,
+                Titulo = "Sistema Indisponível",
+                Mensagem = "O sistema está temporariamente indisponível, isto pode ocorrer em momentos de sobrecarga. Tente novamente mais tarde."
+            };
+
+            return View("Error", modelerro);
         }
 
+
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
 
+        [HttpGet]
         public IActionResult Privacy()
         {
             return View();
         }
 
+        [HttpGet]
         [Route("erro/{id:length(3,3)}")]
         public IActionResult Error(int id)
         {

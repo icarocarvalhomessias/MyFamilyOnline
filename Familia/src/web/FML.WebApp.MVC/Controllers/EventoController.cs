@@ -1,17 +1,22 @@
 ﻿using Familia.WebApp.MVC.Controllers;
-using FML.WebApp.MVC.Clients.HttpServices.Interface;
+using FML.WebApp.MVC.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FML.WebApp.MVC.Controllers
 {
     [Authorize]
     public class EventoController : MainController
     {
-        private readonly IEventoHttpService _eventoService;
+        private readonly IEventoServiceRefit _eventoService;
 
 
-        public EventoController(IEventoHttpService eventoService)
+        public EventoController(IEventoServiceRefit eventoService)
         {
             _eventoService = eventoService;
         }
@@ -23,16 +28,16 @@ namespace FML.WebApp.MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult RealizarAmigoOculto()
+        public async Task<IActionResult> RealizarAmigoOculto()
         {
-            var resultado = _eventoService.RealizaAmigoOculto().Result;
+            var resultado = await _eventoService.RealizaAmigoOculto();
 
-            resultado = ImproveResults(resultado);
+            resultado = MelhoraResposta(resultado);
 
             return View("Index", resultado);
         }
 
-        private static List<SecretSantaPair> ImproveResults(List<SecretSantaPair> resultado)
+        private static List<SecretSantaPair> MelhoraResposta(List<SecretSantaPair> resultado)
         {
             // Ordena o resultado para que Icaro, Lidia, Natasha e Marcela fiquem em primeiro
             var nomesPrioritarios = new List<string> { "Natasha Brito de Carvalho Messias", "Icaro Brito de Carvalho Messias", "Lidia Mara Pereira Aguiar", "Marcela Brito de Carvalho Messias" };
@@ -64,7 +69,7 @@ namespace FML.WebApp.MVC.Controllers
         {
             var resultado = await _eventoService.RefazAmigoOculto();
 
-            resultado = ImproveResults(resultado);
+            resultado = MelhoraResposta(resultado);
 
             return View("Index", resultado);
 

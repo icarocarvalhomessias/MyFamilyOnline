@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Familia.WebApp.MVC.Models
 {
     public class ErrorViewModel

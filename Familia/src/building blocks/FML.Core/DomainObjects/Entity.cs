@@ -1,8 +1,41 @@
-﻿namespace FML.Core.DomainObjects
+﻿using FML.Core.Messages;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
+namespace FML.Core.DomainObjects
 {
     public abstract class Entity
     {
+        [Required]
         public Guid Id { get; set; }
+
+        protected Entity()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        private List<Event> _notificacoes;
+
+        [ValidateNever]
+        public IReadOnlyCollection<Event> Notificacoes => _notificacoes?.AsReadOnly();
+
+        public void AdicionarEvento(Event evento)
+        {
+            _notificacoes ??= new List<Event>();
+            _notificacoes.Add(evento);
+        }
+
+        public void RemoverEvento(Event evento)
+        {
+            _notificacoes?.Remove(evento);
+        }
+
+        public void LimparEventos()
+        {
+            _notificacoes?.Clear();
+        }
+
+        #region comparacao
 
         public override bool Equals(object? obj)
         {
@@ -36,5 +69,7 @@
         {
             return !(a == b);
         }
+
+        #endregion
     }
 }
