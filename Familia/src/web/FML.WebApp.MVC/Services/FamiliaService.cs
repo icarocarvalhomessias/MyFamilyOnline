@@ -39,9 +39,9 @@ namespace FML.WebApp.MVC.Services
             return await DeserializarObjetoResponse<List<House>>(response);
         }
 
-        public async Task<List<Relative>> GetRelatives()
+        public async Task<List<Relative>> GetRelatives(Guid familyId)
         {
-            var response = await _httpClient.GetAsync("/api/familiares");
+            var response = await _httpClient.GetAsync($"/api/familiares/");
 
             TratarErrosResponse(response);
 

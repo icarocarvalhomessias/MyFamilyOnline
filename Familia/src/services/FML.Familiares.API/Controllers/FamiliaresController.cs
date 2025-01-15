@@ -1,11 +1,10 @@
-using FML.Core.Data;
 using FML.Core.Mediator;
-using FML.Familiares.API.Application.Commands;
 using FML.Familiares.API.Models;
 using FML.Familiares.API.Services.Interface;
 using FML.WebApi.Core.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading;
 
 namespace FML.Familiares.API.Controllers
 {
@@ -37,38 +36,6 @@ namespace FML.Familiares.API.Controllers
             return NoContent();
         }
 
-
-
-        [HttpGet]
-        public async Task<IActionResult> GetRelatives()
-        {
-            if (updateRelativeModel == null)
-            {
-                return BadRequest("Relative cannot be null");
-            }
-
-            await _relativeService.Update(updateRelativeModel, cancellationToken);
-            return NoContent();
-        }
-
-        //[HttpPut]
-        //public async Task<IActionResult> UpdateRelative(Relative relative)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    var result = await _relativeService.Update(relative);
-        //    if (!result)
-        //    {
-        //        return BadRequest("Failed to update relative.");
-        //    }
-
-        //    return Ok();
-        //}
-
-
         [HttpDelete("{relativeId:guid}")]
         public async Task<IActionResult> RemoveRelative(Guid relativeId)
         {
@@ -88,6 +55,13 @@ namespace FML.Familiares.API.Controllers
         public async Task<IActionResult> GetRelativeById(Guid relativeId)
         {
             var resposta = await _relativeService.GetRelativeById(relativeId);
+            return CustomResponse(resposta);
+        }
+
+        [HttpGet("")]
+        public async Task<IActionResult> GetRelatives()
+        {
+            var resposta = await _relativeService.GetRelatives();
             return CustomResponse(resposta);
         }
 

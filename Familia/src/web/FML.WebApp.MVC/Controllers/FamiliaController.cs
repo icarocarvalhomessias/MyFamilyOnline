@@ -23,41 +23,31 @@ namespace FML.WebApp.MVC.Controllers
     public class FamiliaController : MainController
     {
         private readonly IFamiliaService _familiaService;
-
         private readonly IMessageBus _bus;
+        private readonly IAspNetUser _aspNetUser;
 
-
-        public FamiliaController(IFamiliaService familiaService, IMessageBus bus)
+        public FamiliaController(IFamiliaService familiaService, IMessageBus bus, IAspNetUser aspNetUser)
         {
             _familiaService = familiaService;
             _bus = bus;
+            _aspNetUser = aspNetUser;
         }
-
-        /// <summary>
-        /// Displays the index page.
-        /// </summary>
+        
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             return await Table();
         }
 
-        /// <summary>
-        /// Displays the family tree view.
-        /// </summary>
         [HttpGet]
         public IActionResult FamilyTree()
         {
             return View("FamilyTree");
         }
 
-        /// <summary>
-        /// Displays the table view with relatives.
-        /// </summary>
         public async Task<IActionResult> Table()
         {
-            var relatives = await _familiaService.GetRelatives();
-            return View("Table", relatives);
+            return View("Table", await GetRelatives());
         }
 
         /// <summary>
@@ -66,7 +56,7 @@ namespace FML.WebApp.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> GetFamilyTreeNodes()
         {
-            var relatives = await _familiaService.GetRelatives();
+            var relatives = await GetRelatives();
 
             var nodes = relatives.AsParallel().Select(relative => new
             {
@@ -159,10 +149,6 @@ namespace FML.WebApp.MVC.Controllers
 
         }
 
-
-        /// <summary>
-        /// Edits a relative.
-        /// </summary>
         [HttpPost]
         public async Task<IActionResult> Edit(Relative model, IFormFile FotoFile)
         {
@@ -184,12 +170,9 @@ namespace FML.WebApp.MVC.Controllers
             return RedirectToAction("Index");
         }
 
-        /// <summary>
-        /// Displays the create view for a new relative.
-        /// </summary>
         public async Task<IActionResult> Create()
         {
-            var relatives = await _familiaService.GetRelatives();
+            var relatives = await GetRelatives();
             var homens = relatives.Where(x => x.Gender == Gender.Male).ToList();
             var mulheres = relatives.Where(x => x.Gender == Gender.Female).ToList();
 
@@ -203,9 +186,6 @@ namespace FML.WebApp.MVC.Controllers
             return View("Create", relative);
         }
 
-        /// <summary>
-        /// Creates a new relative.
-        /// </summary>
         [HttpPost]
         public async Task<IActionResult> Create(Relative relative)
         {
@@ -219,84 +199,16 @@ namespace FML.WebApp.MVC.Controllers
             return View(relative);
         }
 
-        /// <summary>
-        /// Removes a relative.
-        /// </summary>
         public async Task<IActionResult> RemoveRelative(Relative relative)
         {
             await _familiaService.RemoveRelative(relative.Id);
             return RedirectToAction("Index");
         }
 
-
-
-        /// <summary>
-        /// Organizes the family tree.
-        /// </summary>
-        private FamilyTreeViewModel OrganizeFamilyTree(List<Relative> relatives)
-        {
-            var TESTE = relatives.Where(x => x.Id != Guid.Parse("1a9cedd7-4493-4c7b-c81c-08dd0d7371ad")
-            && x.Id != Guid.Parse("9c6a8126-180b-40b2-65bf-08dd0d73fbc5")).ToList();
-
-            var root = new FamilyTreeViewModel
-            {
-                Pessoa1 = TESTE.FirstOrDefault(r => r.Patriarch),
-                Pessoa2 = TESTE.FirstOrDefault(r => r.Matriarch)
-            };
-
-            root.Id = GenerateId(root);
-
-            AddChildren(root, TESTE);
-
-            return root;
-        }
-
-        /// <summary>
-        /// Adds children to the family tree node.
-        /// </summary>
-        private void AddChildren(FamilyTreeViewModel parent, List<Relative> relatives)
-        {
-            if (parent.Pessoa1 is null || parent.Pessoa2 is null)
-            {
-                return;
-            }
-
-            var children = relatives.Where(r =>
-                (r.MotherId.HasValue && (r.MotherId == parent.Pessoa1.Id || r.MotherId == parent.Pessoa2.Id)) ||
-                (r.FatherId.HasValue && (r.FatherId == parent.Pessoa1.Id || r.FatherId == parent.Pessoa2.Id))
-            ).Distinct().ToList();
-
-            foreach (var child in children)
-            {
-                var childNode = new FamilyTreeViewModel
-                {
-                    Pessoa1 = child,
-                    Pessoa2 = relatives.FirstOrDefault(r => r.Id == child.Spouse)
-                };
-
-                childNode.Id = GenerateId(childNode);
-
-                parent.Filhos.Add(childNode);
-                AddChildren(childNode, relatives);
-            }
-        }
-
-        /// <summary>
-        /// Generates an ID for the family tree node.
-        /// </summary>
-        private string GenerateId(FamilyTreeViewModel familyTreeViewModel)
-        {
-            var id1 = familyTreeViewModel.Pessoa1?.Id.ToString() ?? string.Empty;
-            var id2 = familyTreeViewModel.Pessoa2?.Id.ToString() ?? string.Empty;
-            return id1 + id2;
-        }
-
-        /// <summary>
-        /// Populates the dropdown lists for the view.
-        /// </summary>
+        
         private async Task PopulateDropDownLists()
         {
-            var family = await _familiaService.GetRelatives();
+            var family = await GetRelatives();
             var homens = family.Where(x => x.Gender == Gender.Male).ToList();
             var mulheres = family.Where(x => x.Gender == Gender.Female).ToList();
 
@@ -311,9 +223,6 @@ namespace FML.WebApp.MVC.Controllers
             ViewBag.Spouses = new SelectList(family, "Id", "FirstName");
         }
 
-        /// <summary>
-        /// Logs model errors to the console.
-        /// </summary>
         private void LogModelErrors()
         {
             foreach (var state in ModelState)
@@ -323,6 +232,11 @@ namespace FML.WebApp.MVC.Controllers
                     Console.WriteLine($"Property: {state.Key} Error: {error.ErrorMessage}");
                 }
             }
+        }
+
+        private async Task<List<Relative>> GetRelatives()
+        {
+            return await _familiaService.GetRelatives(Constantes.FamiliaCarvalhoId);
         }
     }
 }
