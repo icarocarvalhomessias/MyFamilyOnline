@@ -1,4 +1,5 @@
 using FML.Familiares.API.Configuration;
+using FML.MessageBus;
 
 internal class Program
 {

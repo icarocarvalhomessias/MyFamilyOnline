@@ -38,8 +38,7 @@ namespace FML.File.API.Configuration
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors("Total");
-            app.UseAuthConfiguration();
-            app.UseAuthorization();
+            //app.UseAuthConfiguration();
 
             app.UseEndpoints(endpoints =>
             {

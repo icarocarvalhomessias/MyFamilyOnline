@@ -7,7 +7,7 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         builder.UseIdentityConfiguration();
-        
+
         var app = builder.Build();
         app.UseIdentityConfiguration();
 

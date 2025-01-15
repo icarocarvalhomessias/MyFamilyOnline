@@ -1,4 +1,5 @@
 using FML.Identidade.API.Configuration;
+using FML.MessageBus;
 
 internal class Program
 {

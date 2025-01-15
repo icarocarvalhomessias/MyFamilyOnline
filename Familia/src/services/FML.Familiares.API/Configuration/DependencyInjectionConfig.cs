@@ -42,7 +42,7 @@ namespace FML.Familiares.API.Configuration
                 }
                 client.BaseAddress = new Uri(fileUrl);
             })
-            .AddHttpMessageHandler<AuthorizationHandler>()
+            //.AddHttpMessageHandler<AuthorizationHandler>()
             .ConfigurePrimaryHttpMessageHandler(() => new CustomHttpClientHandler())
             .AddJsonOptions();
 

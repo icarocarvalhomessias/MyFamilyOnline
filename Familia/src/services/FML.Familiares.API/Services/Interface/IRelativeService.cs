@@ -6,7 +6,7 @@ namespace FML.Familiares.API.Services.Interface
     {
         Task<IEnumerable<Relative>> GetRelatives();
         Task<Guid> Add();
-        Task<bool> Update(UpdateRelativeModel relative);
+        Task<bool> Update(UpdateRelativeModel relative, CancellationToken cancellationToken);
         Task<bool> AddRelative(Relative relative);
         Task<bool> RemoveRelative(Guid relativeId);
         Task<Relative> GetRelativeById(Guid relativeId);

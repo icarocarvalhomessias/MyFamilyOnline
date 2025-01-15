@@ -1,4 +1,7 @@
 ﻿using Familia.WebApp.MVC.Extensions;
+using FML.Core.Messages.Integrations;
+using FML.MessageBus;
+using FML.WebApp.MVC.Configuration;
 using FML.WebApp.MVC.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -31,6 +34,9 @@ namespace Familia.WebApp.MVC.Configuration
             
             var configuration = builder.Configuration;
             builder.Services.RegisterServices(configuration);
+
+            builder.Services.AddMessageBusConfiguration(configuration);
+
         }
 
         public static void UseIdentityConfiguration(this WebApplication app)

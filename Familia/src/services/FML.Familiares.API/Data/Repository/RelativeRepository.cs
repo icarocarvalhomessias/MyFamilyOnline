@@ -64,11 +64,10 @@ namespace FML.Familiares.API.Data.Repository
 
         }
 
-        public async Task<bool> UpdateRelative(Relative relative)
+        public async Task<bool> UpdateRelative(Relative relative, CancellationToken cancellationToken)
         {
-            _context.Relatives
-                .Update(relative);
-            return await _context.SaveChangesAsync() > 0;
+            _context.Entry(relative).State = EntityState.Modified;
+            return await _context.SaveChangesAsync(cancellationToken) > 0;
         }
 
         public async Task<Relative?> GetRelativeById(Guid relativeId)

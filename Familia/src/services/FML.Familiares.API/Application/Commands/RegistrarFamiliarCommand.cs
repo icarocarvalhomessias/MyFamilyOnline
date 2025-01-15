@@ -2,7 +2,6 @@
 using FluentValidation.Results;
 using FML.Core.Data;
 using FML.Core.Messages;
-using MediatR;
 
 namespace FML.Familiares.API.Application.Commands
 {

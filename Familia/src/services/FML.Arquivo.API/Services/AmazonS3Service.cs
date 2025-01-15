@@ -2,6 +2,9 @@
 using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.S3.Transfer;
+using Amazon.SecretsManager;
+using Amazon.SecretsManager.Model;
+using FML.File.API.Data.Cont;
 using FML.File.API.Services.Interfaces;
 
 namespace FML.File.API.Services
@@ -10,10 +13,14 @@ namespace FML.File.API.Services
     {
         private readonly IAmazonS3 _awsS3Client;
 
-        public AmazonS3Service()
+        public AmazonS3Service(IConfiguration configuration)
         {
-            var awsKeyID = "AKIAUYQ3B2764L3767E2";
-            var awsSecretKey = "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";
+            //var secretsManagerClient = new AmazonSecretsManagerClient();
+            //var awsKeyID = GetSecretValue(secretsManagerClient, Constants.AwsKeyID);
+            //var awsSecretKey = GetSecretValue(secretsManagerClient, Constants.AwsSecretKey);
+
+            var awsKeyID = configuration[Constants.AwsKeyID];
+            var awsSecretKey = configuration[Constants.AwsSecretKey];
 
             if (string.IsNullOrEmpty(awsKeyID) || string.IsNullOrEmpty(awsSecretKey))
             {
@@ -56,6 +63,17 @@ namespace FML.File.API.Services
                 Expires = DateTime.Now.AddHours(1)
             };
             return _awsS3Client.GetPreSignedURL(request);
+        }
+
+        private string GetSecretValue(IAmazonSecretsManager secretsManagerClient, string secretName)
+        {
+            var request = new GetSecretValueRequest
+            {
+                SecretId = secretName
+            };
+
+            var response = secretsManagerClient.GetSecretValueAsync(request).Result;
+            return response.SecretString;
         }
     }
 }

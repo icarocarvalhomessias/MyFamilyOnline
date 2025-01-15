@@ -1,4 +1,4 @@
-﻿@model Relative
+@model Relative
 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
@@ -22,7 +22,7 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<form class="form-horizontal" asp-action="@((Model.FirstName == null) ? "Create" : "Edit")" id="createForm" enctype="multipart/form-data">
+<form class="form-horizontal" asp-action="@((Model.Id == Guid.Empty) ? "Create" : "Edit")" id="createForm" enctype="multipart/form-data">
 
     <fieldset>
         <div class="panel panel-primary">
@@ -99,14 +99,17 @@
                     </div>
                 </div>
 
-                @if (!string.IsNullOrEmpty(Model.FotoPerfil))
+                @if (!string.IsNullOrEmpty(Model.FotoUrl))
                 {
                     <div class="form-group">
                         <div class="col-md-4 col-md-offset-1">
-                            <img src="@Model.FotoPerfil" alt="Foto" class="img-thumbnail" style="max-width: 200px; max-height: 200px;" />
+                            <img src="@Model.FotoUrl" alt="Foto" class="img-thumbnail" style="max-width: 200px; max-height: 200px;" />
                         </div>
                     </div>
                 }
+
+
+
 
                 <div class="form-group">
                     <label class="col-md-1  control-label" for="SecretSanta">Amigo Secreto</label>
@@ -216,7 +219,7 @@
                 <!-- Submit Button -->
                 <div class="form-group">
                     <div class="col-md-1  col-md-offset-2">
-                        <input type="submit" value="@((Model.FirstName == null) ? "Create" : "Save")" class="btn btn-primary" />
+                        <input type="submit" value="@((Model.Id == Guid.Empty) ? "Create" : "Save")" class="btn btn-primary" />
                     </div>
                 </div>
             </div>
