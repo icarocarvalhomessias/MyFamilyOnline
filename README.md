@@ -1,12 +1,21 @@
-# FML API Suite
+# Family Management Application
 
-## Description
-The FML API Suite is a collection of services designed to manage various aspects of the FML system. This suite includes multiple projects, each targeting specific functionalities.
+This repository contains a comprehensive application for managing family data. The application is divided into several APIs, each responsible for different aspects of the family management system. Below is an overview of the entire application, including the technologies used, communication methods, and main functionalities of each API.
+
+## Overview
+
+The Family Management Application is designed to help users manage family information, including relatives, houses, and family trees. The application is built using modern web technologies and follows a microservices architecture.
+
+# Reference
+
+Guided by ASP.NET Core Enterprise Applications by Eduardo Pires, in his project we created an e-commerce and in my idea I wanted to transpose what I learned in the course, so I created a system that manages the Genealogical Tree, Hidden Friend (Christmas), List of desires among others.
 
 ## Technologies Used
 - **.NET 8.0**: Development platform.
 - **C# 12.0**: Programming language.
 - **Blazor**: Framework for building interactive web UIs.
+- **RESTful API**: Comunication betwen some API's
+- **RabbitMq**: Comunication betwen some API's 
 - **FluentValidation**: Library for data validation.
 - **Entity Framework Core**: ORM for database access.
 - **IdentityServer4**: OpenID Connect and OAuth 2.0 framework for ASP.NET Core.
