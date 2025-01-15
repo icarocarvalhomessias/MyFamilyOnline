@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FML.File.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ArquivoController : MainController

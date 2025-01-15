@@ -70,4 +70,7 @@ public class Relative : Entity, IAggregateRoot
 
     [NotMapped]
     public string? FotoBase64Image { get; set; }
+
+    [NotMapped]
+    public string FileName => $"{Guid.NewGuid()}{FullName}";
 }

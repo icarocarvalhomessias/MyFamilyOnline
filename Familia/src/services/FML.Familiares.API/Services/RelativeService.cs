@@ -191,7 +191,7 @@ namespace FML.Familiares.API.Services
             return familia.Id;
         }
 
-        public async Task<bool> Update(UpdateRelativeModel relative)
+        public async Task<bool> Update(UpdateRelativeModel relative, CancellationToken cancellationToken)
         {
             if (!string.IsNullOrEmpty(relative.FotoFileBase64))
             {
@@ -212,7 +212,7 @@ namespace FML.Familiares.API.Services
                 }
             }
 
-            return await _relativeRepository.UpdateRelative(relative.Relative);
+            return await _relativeRepository.UpdateRelative(relative.Relative, cancellationToken);
         }
 
 

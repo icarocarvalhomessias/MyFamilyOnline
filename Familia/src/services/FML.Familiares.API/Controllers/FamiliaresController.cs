@@ -26,14 +26,14 @@ namespace FML.Familiares.API.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> AtualizaRelative([FromBody] UpdateRelativeModel updateRelativeModel)
+        public async Task<IActionResult> AtualizaRelative([FromBody] UpdateRelativeModel updateRelativeModel, CancellationToken cancellationToken)
         {
             if (updateRelativeModel == null)
             {
                 return BadRequest("Relative cannot be null");
             }
 
-            await _relativeService.Update(updateRelativeModel);
+            await _relativeService.Update(updateRelativeModel, cancellationToken);
             return NoContent();
         }
 

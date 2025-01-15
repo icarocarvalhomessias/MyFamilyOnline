@@ -1,7 +1,9 @@
 ﻿using FML.Core.Utils;
 using FML.MessageBus;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace FML.Identidade.API.Configuration
+namespace FML.WebApp.MVC.Configuration
 {
     public static class MessageBusConfig
     {

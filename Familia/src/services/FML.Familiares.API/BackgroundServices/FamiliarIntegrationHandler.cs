@@ -21,8 +21,11 @@ namespace FML.Familiares.API.BackgroundServices
 
         private void SetResponder()
         {
-            _bus.RespondAsync<FamiliarRegistradoIntegrationEvent, ResponseMessage>(async request =>
-                await RegistrarFamiliar(request));
+            //_bus.RespondAsync<FamiliarRegistradoIntegrationEvent, ResponseMessage>(async request =>
+            //    await RegistrarFamiliar(request));
+
+            _bus.RespondAsync<FamiliarAtualizadoIntegrationEvent, ResponseMessage>(async request =>
+               await AtualizarFamiliar(request));
 
             _bus.AdvancedBus.Connected += OnConnect;
         }
@@ -51,5 +54,41 @@ namespace FML.Familiares.API.BackgroundServices
 
             return new ResponseMessage(sucesso);
         }
+
+        private async Task<ResponseMessage> AtualizarFamiliar(FamiliarAtualizadoIntegrationEvent message)
+        {
+            var familiarCommand = new AtualizarFamiliarCommand(
+                message.Id,
+                message.Nome,
+                message.Sobrenome,
+                message.Familia,
+                message.Casa,
+                message.Pai,
+                message.Mae,
+                message.NomeLink,
+                message.Foto,
+                message.AmigoSecreto,
+                message.Email,
+                message.DataNascimento,
+                message.Ativo,
+                message.EstaVivo,
+                message.Patriarca,
+                message.Matriarca,
+                message.DataFalecimento,
+                message.Genero,
+                message.FotoFileBase64,
+                message.FileName
+            );
+            ValidationResult sucesso;
+
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var mediator = scope.ServiceProvider.GetRequiredService<IMediatorHandler>();
+                sucesso = await mediator.EnviarComando(familiarCommand);
+            }
+
+            return new ResponseMessage(sucesso);
+        }
+
     }
 }
