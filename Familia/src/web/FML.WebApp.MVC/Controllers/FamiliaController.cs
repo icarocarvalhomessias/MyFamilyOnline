@@ -79,7 +79,6 @@ namespace FML.WebApp.MVC.Controllers
             return Json(nodes, options);
         }
 
-
         /// <summary>
         /// Displays the edit view for a relative.
         /// </summary>
@@ -101,7 +100,6 @@ namespace FML.WebApp.MVC.Controllers
 
             return View("Create", relative);
         }
-
 
         private async Task<ResponseMessage> AtualizaParent(Relative relative, Stream? fotoFile, string? filename)
         {

@@ -23,19 +23,6 @@ namespace FML.Familiares.API.Controllers
             _mediator = mediator;
         }
 
-
-        [HttpPost]
-        public async Task<IActionResult> AtualizaRelative([FromBody] UpdateRelativeModel updateRelativeModel, CancellationToken cancellationToken)
-        {
-            if (updateRelativeModel == null)
-            {
-                return BadRequest("Relative cannot be null");
-            }
-
-            await _relativeService.Update(updateRelativeModel, cancellationToken);
-            return NoContent();
-        }
-
         [HttpDelete("{relativeId:guid}")]
         public async Task<IActionResult> RemoveRelative(Guid relativeId)
         {
@@ -68,7 +55,7 @@ namespace FML.Familiares.API.Controllers
         [HttpPost("carga-inicial")]
         public async Task<IActionResult> CargaInicial()
         {
-            var resposta = await _relativeService.Add();
+            var resposta = await _relativeService.CargaInicial();
             return CustomResponse(resposta);
         }
 
