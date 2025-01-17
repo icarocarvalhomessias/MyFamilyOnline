@@ -101,7 +101,7 @@ namespace FML.Familiares.API.Application.Commands
                     }
                 }
 
-                await _relativeRepository.UpdateRelative(updatedRelative, cancellationToken);
+                _relativeRepository.UpdateRelative(updatedRelative);
 
                 return await PersistirDados(_relativeRepository.UnitOfWork);
             }

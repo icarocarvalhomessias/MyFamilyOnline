@@ -4,7 +4,6 @@
     ViewData["Title"] = "Login";
 }
 
-
 <section class="section-conten padding-y container" style="min-height:35vh">
 
     <vc:Summary></vc:Summary>
@@ -14,6 +13,7 @@
         <div class="card-body">
             <h4 class="card-title mb-4">Bem Vindo!</h4>
             <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Email"></label>
                     <input asp-for="Email" class="form-control" />
@@ -35,7 +35,6 @@
     </div>
 
 </section>
-
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
