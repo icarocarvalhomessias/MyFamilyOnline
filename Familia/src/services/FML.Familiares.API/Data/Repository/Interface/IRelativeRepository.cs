@@ -11,7 +11,7 @@ namespace FML.Familiares.API.Data.Repository.Interface
         Task<IEnumerable<Relative>> GetRelativesByMotherId(Guid motherId);
         void AddRelative(Relative relative);
         Task AddRelatives(IEnumerable<Relative> relatives);
-        Task<bool> UpdateRelative(Relative relative, CancellationToken cancellationToken);
+        void UpdateRelative(Relative relative);
         Task<bool> RemoveRelative(Guid relativeId);
 
         Task<Relative?> GetRelativeById(Guid relativeId);

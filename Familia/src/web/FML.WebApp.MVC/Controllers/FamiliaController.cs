@@ -82,7 +82,7 @@ namespace FML.WebApp.MVC.Controllers
         /// <summary>
         /// Displays the edit view for a relative.
         /// </summary>
-        public async Task<IActionResult> ParenteEdit(Guid id)
+        public async Task<IActionResult> EditRelative(Guid id)
         {
             if (id == Guid.Empty)
             {
@@ -101,70 +101,19 @@ namespace FML.WebApp.MVC.Controllers
             return View("Create", relative);
         }
 
-        private async Task<ResponseMessage> AtualizaParent(Relative relative, Stream? fotoFile, string? filename)
-        {
-
-            var FotoFileBase64 = StringsHelper.ConvertStreamToBase64(fotoFile);
-
-            var familiarAtualizadoIntegrationEvent = new FamiliarAtualizadoIntegrationEvent(
-                relative.Id,
-                relative.FirstName,
-                relative.LastName,
-                relative.FamilyId,
-                relative.HouseId,
-                relative.FatherId ?? Guid.Empty,
-                relative.MotherId ?? Guid.Empty,
-                relative.LinkName ?? string.Empty,
-                string.Empty,
-                relative.SecretSanta,
-                relative.Email ?? string.Empty,
-                relative.BirthDate,
-                relative.IsActive,
-                relative.IsAlive,
-                relative.Patriarch,
-                relative.Matriarch,
-                relative.DeathDate ?? DateTime.MinValue,
-                relative.Gender.ToString(),
-                FotoFileBase64,
-                filename
-            );
-
-
-            try
-            {
-                return await _bus.RequestAsync<FamiliarAtualizadoIntegrationEvent, ResponseMessage>(familiarAtualizadoIntegrationEvent);
-            }
-            catch (TaskCanceledException ex)
-            {
-                Console.WriteLine("Task was canceled: " + ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                throw;
-            }
-
-        }
-
         [HttpPost]
-        public async Task<IActionResult> Edit(Relative model, IFormFile FotoFile)
+        public async Task<IActionResult> EditRelative(Relative relative, IFormFile FotoFile)
         {
             if (!ModelState.IsValid)
             {
-                LogModelErrors();
                 await PopulateDropDownLists();
-                return View("Create", model);
+                return View("Create", relative);
             }
 
+            var response = await AtualizaParent(relative, FotoFile?.OpenReadStream(), FotoFile?.FileName);
 
-            if (FotoFile is null)
-            {
-                await AtualizaParent(model, null, null);
-                return RedirectToAction("Index");
-            }
+            if (ResponsePossuiErros(response.ValidationResult)) return View("Create", relative);
 
-            await AtualizaParent(model, FotoFile.OpenReadStream(), FotoFile.FileName);
             return RedirectToAction("Index");
         }
 
@@ -194,7 +143,7 @@ namespace FML.WebApp.MVC.Controllers
             }
 
             await PopulateDropDownLists();
-            return View(relative);
+            return View("Create", relative);
         }
 
         public async Task<IActionResult> RemoveRelative(Relative relative)
@@ -203,7 +152,41 @@ namespace FML.WebApp.MVC.Controllers
             return RedirectToAction("Index");
         }
 
-        
+
+        #region Private Methods
+
+        private async Task<ResponseMessage> AtualizaParent(Relative relative, Stream? fotoFile, string? filename)
+        {
+
+            var FotoFileBase64 = StringsHelper.ConvertStreamToBase64(fotoFile);
+
+            var familiarAtualizadoIntegrationEvent = new FamiliarAtualizadoIntegrationEvent(
+                relative.Id,
+                relative.FirstName,
+                relative.LastName,
+                relative.FamilyId,
+                relative.HouseId,
+                relative.FatherId ?? Guid.Empty,
+                relative.MotherId ?? Guid.Empty,
+                relative.LinkName ?? string.Empty,
+                string.Empty,
+                relative.SecretSanta,
+                relative.Email ?? string.Empty,
+                relative.BirthDate,
+                relative.IsActive,
+                relative.IsAlive,
+                relative.Patriarch,
+                relative.Matriarch,
+                relative.DeathDate ?? DateTime.MinValue,
+                relative.Gender.ToString(),
+                FotoFileBase64,
+                filename
+            );
+
+            return await _bus.RequestAsync<FamiliarAtualizadoIntegrationEvent, ResponseMessage>(familiarAtualizadoIntegrationEvent);
+        }
+
+
         private async Task PopulateDropDownLists()
         {
             var family = await GetRelatives();
@@ -221,20 +204,11 @@ namespace FML.WebApp.MVC.Controllers
             ViewBag.Spouses = new SelectList(family, "Id", "FirstName");
         }
 
-        private void LogModelErrors()
-        {
-            foreach (var state in ModelState)
-            {
-                foreach (var error in state.Value.Errors)
-                {
-                    Console.WriteLine($"Property: {state.Key} Error: {error.ErrorMessage}");
-                }
-            }
-        }
-
         private async Task<List<Relative>> GetRelatives()
         {
             return await _familiaService.GetRelatives(Constantes.FamiliaCarvalhoId);
         }
+
+        #endregion
     }
 }
