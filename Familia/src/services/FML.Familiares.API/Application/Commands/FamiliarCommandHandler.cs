@@ -85,7 +85,8 @@ namespace FML.Familiares.API.Application.Commands
                     Matriarch = request.Matriarca,
                     DeathDate = request.DataFalecimento,
                     Gender = Enum.Parse<Gender>(request.Genero),
-                    FotoId = existingRelative.FotoId
+                    FotoId = existingRelative.FotoId,
+                    Spouse = request.SpouseId
                 };
 
                 if (!string.IsNullOrEmpty(request.FotoFileBase64))

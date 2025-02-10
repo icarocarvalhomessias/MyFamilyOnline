@@ -91,7 +91,7 @@
                 url: '@Url.Action("GetFamilyTreeNodes", "Familia")',
                 method: 'GET',
                 success: function (nodes) {
-                    console.log(nodes);
+                    console.log(nodes); // Verifique se todos os nós estão sendo retornados aqui
                     var family = new FamilyTree(document.getElementById("tree"), {
                         mouseScrool: FamilyTree.action.zoom,
                         nodeBinding: {
@@ -108,6 +108,8 @@
                         }
                     });
 
+                    console.log(family.nodes); // Verifique se todos os nós estão sendo passados para o FamilyTree
+
                     window.searchTree = function() {
                         var searchValue = document.getElementById("searchInput").value.toLowerCase();
                         family.search(searchValue);
@@ -119,6 +121,7 @@
             });
         });
     </script>
+
 </body>
 </html>
 

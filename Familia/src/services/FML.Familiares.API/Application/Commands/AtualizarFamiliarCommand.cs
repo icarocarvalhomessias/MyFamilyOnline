@@ -26,8 +26,9 @@ namespace FML.Familiares.API.Application.Commands
         public string Genero { get; private set; }
         public string? FotoFileBase64 { get; private set; }
         public string? FileName { get; private set; }
+        public Guid? SpouseId { get; private set; }
 
-        public AtualizarFamiliarCommand(Guid id, string nome, string sobrenome, Guid familia, Guid casa, Guid pai, Guid mae, string nomeLink, string foto, bool amigoSecreto, string email, DateTime dataNascimento, bool ativo, bool estaVivo, bool patriarca, bool matriarca, DateTime dataFalecimento, string genero, string? fotoFileBase64, string? fileName)
+        public AtualizarFamiliarCommand(Guid id, string nome, string sobrenome, Guid familia, Guid casa, Guid pai, Guid mae, string nomeLink, string foto, bool amigoSecreto, string email, DateTime dataNascimento, bool ativo, bool estaVivo, bool patriarca, bool matriarca, DateTime dataFalecimento, string genero, string? fotoFileBase64, string? fileName, Guid? spouseId)
         {
             Id = id;
             Nome = nome;
@@ -49,9 +50,7 @@ namespace FML.Familiares.API.Application.Commands
             Genero = genero;
             FotoFileBase64 = fotoFileBase64;
             FileName = fileName;
+            SpouseId = spouseId;
         }
-
-
-
     }
 }

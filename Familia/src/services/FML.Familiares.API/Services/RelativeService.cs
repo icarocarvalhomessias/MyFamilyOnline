@@ -36,8 +36,18 @@ namespace FML.Familiares.API.Services
                 relative.FotoPerfil = url;
             }
 
+            // Ordene relatives colocando matriaca e patriaca primeiro, casados à esquerda, parentes com filhos e depois parentes solteiros
+            relatives = relatives
+                .OrderByDescending(x => x.Matriarch) // Matriarca primeiro
+                .ThenByDescending(x => x.Patriarch) // Patriarca primeiro
+                .ThenByDescending(x => x.FirstName == "Inha")
+                .ThenByDescending(x => x.Spouse != null) // Casados à esquerda
+                .ThenByDescending(x => x.Children != null && x.Children.Any()) // Parentes com filhos
+                .ThenBy(x => x.Spouse == null && (x.Children == null || !x.Children.Any())); // Parentes solteiros
+
             return relatives;
         }
+
 
         public async Task<Relative> GetRelativeById(Guid relativeId)
         {

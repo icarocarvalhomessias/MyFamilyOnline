@@ -77,7 +77,8 @@ namespace FML.Familiares.API.BackgroundServices
                 message.DataFalecimento,
                 message.Genero,
                 message.FotoFileBase64,
-                message.FileName
+                message.FileName,
+                message.SpouseId
             );
             ValidationResult sucesso;
 

@@ -1,7 +1,6 @@
 using Familia.WebApp.MVC.Controllers;
 using FML.Core.Data;
 using FML.WebApp.MVC.Services.Interface;
-using FML.WebApp.MVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -11,11 +10,10 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using AuthorizeAttribute = Microsoft.AspNetCore.Authorization.AuthorizeAttribute;
 using FML.MessageBus;
 using FML.Core.Messages.Integrations;
-using Microsoft.AspNetCore.Identity;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FML.WebApp.MVC.Controllers
 {
@@ -180,7 +178,9 @@ namespace FML.WebApp.MVC.Controllers
                 relative.DeathDate ?? DateTime.MinValue,
                 relative.Gender.ToString(),
                 FotoFileBase64,
-                filename
+                filename,
+                relative.Spouse
+
             );
 
             return await _bus.RequestAsync<FamiliarAtualizadoIntegrationEvent, ResponseMessage>(familiarAtualizadoIntegrationEvent);
@@ -211,4 +211,5 @@ namespace FML.WebApp.MVC.Controllers
 
         #endregion
     }
+
 }
